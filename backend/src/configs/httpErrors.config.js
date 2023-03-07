@@ -5,7 +5,7 @@ const httpErrorConfig = (app) => {
   //Internal server error && error catch
   app.use((err, req, res, next) => {
     console.log("http error: ", err);
-    logEvent(
+    logEvents(
       `id: ${uuidv4()}\n Message: ${err.message}\n URL: ${req.url}\n method: ${
         req.method
       }`
@@ -19,7 +19,7 @@ const httpErrorConfig = (app) => {
   //404 error catch
   app.use((req, res, next) => {
     const err = createError(404, "Not found");
-    logEvent(
+    logEvents(
       `id: ${uuidv4()}\n Message: ${err.message}\n URL: ${req.url}\n method: ${
         req.method
       }`

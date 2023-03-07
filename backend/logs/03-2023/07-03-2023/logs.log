@@ -1,0 +1,175 @@
+Err details:
+ id: 4ddd7a0a-9708-4585-a24a-c4508d9f3c1c
+ Message: Not found
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 13:08:30
+ ----------------------
+Err details:
+ id: d339ec87-8f07-42a0-8606-2fa3dae158c7
+ Message: undefined
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 13:26:49
+ ----------------------
+Err details:
+ id: 7b4bc569-1568-4006-9525-6a1ef8da8fd3
+ Message: undefined
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 13:39:34
+ ----------------------
+Err details:
+ id: 5d27bb13-878a-41f5-b20d-40055ac9388b
+ Message: undefined
+ URL: /api/users/register?username=user1&email=test&password=123456
+ method: POST
+ time: 07/03/2023, 13:51:25
+ ----------------------
+Err details:
+ id: 502a79d9-0faa-4645-8a4d-4c273296a6c7
+ Message: users validation failed: email: email must be a valid email
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 14:10:07
+ ----------------------
+Err details:
+ id: faa42fa9-f2af-4ffa-905e-b2ad99a99bcd
+ Message: undefined
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 14:22:50
+ ----------------------
+Err details:
+ id: cc8fb405-b45b-4bae-83ac-584b63706724
+ Message: undefined
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 14:23:16
+ ----------------------
+Err details:
+ id: c44a1287-b3fd-4929-8c46-6ee060fc994b
+ Message: undefined
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 14:23:20
+ ----------------------
+Err details:
+ id: afe04ade-d3b9-4d8e-93a2-8fef56609545
+ Message: undefined
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 14:36:29
+ ----------------------
+Err details:
+ id: a3f4cab3-e2f1-43bf-9ff3-6058cf073b22
+ Message: users validation failed: email: Path `email` is required., password: Path `password` is required., username: Path `username` is required.
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 15:20:59
+ ----------------------
+Err details:
+ id: ee2e4c87-0035-49a3-9672-d693386f55cc
+ Message: users validation failed: email: Path `email` is required., password: Path `password` is required., username: Path `username` is required.
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 15:22:17
+ ----------------------
+Err details:
+ id: 1fa0d076-3da7-4d64-88a0-071cd23b46e8
+ Message: users validation failed: email: Path `email` is required., password: Path `password` is required., username: Path `username` is required.
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 15:23:38
+ ----------------------
+Err details:
+ id: 212b0e2d-667f-4731-bf5c-ee7427c1fc3a
+ Message: undefined
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 15:25:48
+ ----------------------
+Err details:
+ id: 079bebd0-849d-4870-b90c-da92276a1269
+ Message: undefined
+ URL: /api/users/register
+ method: POST
+ time: 07/03/2023, 15:35:51
+ ----------------------
+Err details:
+ id: 9deb899d-0481-4795-8528-175eccc9ef38
+ Message: Not found
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 15:50:22
+ ----------------------
+Err details:
+ id: d361149f-806f-4c5e-be97-3742e8567219
+ Message: undefined
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 15:51:19
+ ----------------------
+Err details:
+ id: ca23d285-df31-48a0-84ff-92ecc650bf63
+ Message: undefined
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 15:51:43
+ ----------------------
+Err details:
+ id: 2ead5825-5b5c-4d0a-8f78-bc8d0b10579b
+ Message: undefined
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 15:51:56
+ ----------------------
+Err details:
+ id: cb0bfd0f-3fd1-4625-8839-252227cb7118
+ Message: Cannot read properties of null (reading 'password')
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 15:52:59
+ ----------------------
+Err details:
+ id: 0f459ecb-e793-4ada-89c0-95acc3aa94f0
+ Message: Cannot read properties of null (reading 'email')
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 15:53:33
+ ----------------------
+Err details:
+ id: d129a0f2-aca4-4c9e-a649-734d6ca15c2b
+ Message: password is not defined
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 16:09:28
+ ----------------------
+Err details:
+ id: d2251d6b-effa-460b-83a3-1b64b0ea802a
+ Message: password is not defined
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 16:10:23
+ ----------------------
+Err details:
+ id: eebed149-7bcf-4104-b4c6-f85d4adab7fc
+ Message: password is not defined
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 16:11:05
+ ----------------------
+Err details:
+ id: 68a0818c-d75d-45f8-a50b-e90a257311f6
+ Message: password is not defined
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 16:11:22
+ ----------------------
+Err details:
+ id: 08a2dd7c-a95c-4873-abca-415f6fb4fdfe
+ Message: userLogin is not defined
+ URL: /api/users/login
+ method: POST
+ time: 07/03/2023, 16:18:33
+ ----------------------

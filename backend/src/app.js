@@ -8,6 +8,7 @@ import parseConfig from "./configs/parse.config";
 import httpErrorConfig from "./configs/httpErrors.config";
 import morgan from "morgan";
 import headerConfig from "./configs/header.config";
+import * as router from "../src/api/routers";
 dotenv.config(); //dotenv config
 connectDB(); //Connect db
 const app = express(); //Defined app
@@ -16,9 +17,7 @@ corsConfig(app); //CORS configs
 parseConfig(app, express); //Parse config
 headerConfig(app); //Configs to client read file
 app.use(morgan("common")); //Morgan configs
-
-//API routes//
-
+router.usersRouter(app, express); //API routes
 app.get("/", (req, res, next) => {
   res.send("hello");
 });
