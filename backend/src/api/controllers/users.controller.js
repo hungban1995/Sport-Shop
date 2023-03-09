@@ -1,5 +1,10 @@
+import {
+  createAccessToken,
+  createRefreshToken,
+} from "../helpers/generateToken";
 import Users from "../models/users.model";
 import * as service from "../services/users.service";
+//register
 export const register = async (req, res, next) => {
   try {
     const { error, user } = await service.register(req);
@@ -14,16 +19,92 @@ export const register = async (req, res, next) => {
     next(error);
   }
 };
+//login
 export const login = async (req, res, next) => {
   try {
     const { error, user } = await service.login(req);
     if (error) {
       return next(error);
     }
-    console.log(user);
+    user.password = undefined;
+    const accessToken = createAccessToken({ _id: user._id });
+    const refreshToken = createRefreshToken({ _id: user._id });
     res.status(200).json({
       success: "Đăng nhập thành công",
       user: user,
+      accessToken,
+      refreshToken,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+// get all user
+export const getUsers = async (req, res, next) => {
+  try {
+    const { error, users } = await service.getUsers(req);
+    if (error) {
+      return next(error);
+    }
+    res.status(200).json({
+      success: "Lấy danh sách user thành công",
+      users: users,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+//get by id
+export const getUserById = async (req, res, next) => {
+  try {
+    const { error, user } = await service.getUserById(req);
+    if (error) {
+      return next(error);
+    }
+    res.status(200).json({
+      success: "Lấy thông tin user thành công",
+      user: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+//update user
+export const updateUser = async (req, res, next) => {
+  try {
+    const { error, userUpdate } = await service.updateUser(req);
+    if (error) {
+      return next(error);
+    }
+    const id = userUpdate._id;
+
+    await Users.findByIdAndUpdate(
+      id,
+      {
+        username: userUpdate.username,
+        password: userUpdate.password,
+        avatar: userUpdate.avatar,
+        role: userUpdate.role,
+      },
+      { new: true }
+    );
+    res.status(200).json({
+      success: "Cập nhật thành công",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+//delete user
+export const deleteUser = async (req, res, next) => {
+  try {
+    const { error, id } = await service.deleteUser(req);
+    if (error) {
+      return next(error);
+    }
+    await Users.findByIdAndDelete(id);
+    res.status(200).json({
+      success: "Xóa thành công",
     });
   } catch (error) {
     next(error);
