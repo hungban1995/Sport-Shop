@@ -18,6 +18,7 @@ const usersSchema = new mongoose.Schema({
     },
   },
   role: { type: String, default: "user" }, // user, admin,
+
   avatar: { type: String },
 });
 const Users = mongoose.models.users || mongoose.model("users", usersSchema);
