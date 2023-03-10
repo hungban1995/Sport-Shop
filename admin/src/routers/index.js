@@ -1,19 +1,27 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "../pages";
 import Users from "../pages/users";
+import Edit from "../pages/users/edit";
+import New from "../pages/users/new";
 
 function Routers() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/">
-            <Route index element={<Home />} />
-            <Route path="users" element={<Users />} />
+      <Routes>
+        <Route path="/">
+          <Route index element={<Home />} />
+          <Route path="users/">
+            <Route index element={<Users />} />
+            <Route path="new" element={<New />} />
+            <Route path="edit" element={<Edit />} />
           </Route>
-        </Routes>
-      </BrowserRouter>
+          <Route
+            path="*"
+            element={<p style={{ fontSize: "2rem" }}> 404 Page not found </p>}
+          />
+        </Route>
+      </Routes>
     </>
   );
 }

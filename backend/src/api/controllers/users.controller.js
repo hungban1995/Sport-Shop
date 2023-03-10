@@ -110,3 +110,19 @@ export const deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+export const refreshToken = async (req, res, next) => {
+  try {
+    const { error, userId } = await service.refreshToken(req);
+    if (error) {
+      return next(error);
+    }
+    const accessToken = createAccessToken({ _id: userId.toString() });
+
+    res.status(200).json({
+      accessToken,
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
