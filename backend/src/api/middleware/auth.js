@@ -50,11 +50,11 @@ export const verifyAccessToken = async (req) => {
   }
   return user;
 };
-//Verify refresh token
+//----------Verify refresh token----------//
 export const verifyRefreshToken = async (req) => {
   const { refreshToken } = req.body;
   if (!refreshToken) {
-    return { status: 401, error: "Hãy đăng nhập" };
+    return { status: 401, error: "Please login" };
   }
   const decode = jwt.verify(
     refreshToken,
@@ -88,4 +88,5 @@ export const verifyRefreshToken = async (req) => {
       };
     }
   }
+  return decode;
 };

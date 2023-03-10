@@ -17,9 +17,28 @@ const usersSchema = new mongoose.Schema({
       },
     },
   },
+  phoneNumber: {
+    type: String,
+    validate: {
+      validator: function (value) {
+        const phoneRegex =
+          /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
+        return phoneRegex.test(value);
+      },
+      message: `{VALUE} is not a valid phone!`,
+    },
+  },
+  address: { type: String },
+  birthday: { type: Date },
   role: { type: String, default: "user" }, // user, admin,
-
+  firstName: { type: String },
+  lastName: { type: String },
   avatar: { type: String },
 });
+// Virtuals
+usersSchema.virtual("fullName").get(function () {
+  return this.firstName + " " + this.lastName;
+});
+usersSchema.set("toJSON", { virtuals: true });
 const Users = mongoose.models.users || mongoose.model("users", usersSchema);
 export default Users;

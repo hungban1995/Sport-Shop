@@ -1,11 +1,12 @@
 import Users from "../models/users.model";
 import bcrypt from "bcryptjs";
-import { verifyAccessToken } from "../middleware/auth";
+import { verifyAccessToken, verifyRefreshToken } from "../middleware/auth";
 const salt = bcrypt.genSaltSync(10);
 //register
 export const register = async (req, res) => {
   try {
-    const { username, email, password, confirmPassword } = req.body;
+    const { username, email, firstName, lastName, password, confirmPassword } =
+      req.body;
     const alreadyUsername = await Users.findOne({ username: username });
     if (alreadyUsername) {
       return {
@@ -25,7 +26,7 @@ export const register = async (req, res) => {
     }
     const hashPassword = bcrypt.hashSync(password, salt);
     return {
-      user: { username: username, email: email, password: hashPassword },
+      user: { username, email, password: hashPassword, firstName, lastName },
     };
   } catch (error) {
     return { error: error };
@@ -213,6 +214,18 @@ export const deleteUser = async (req) => {
       };
     }
     return id;
+  } catch (error) {
+    return { error: error };
+  }
+};
+//----------Refresh token----------//
+export const refreshToken = async (req) => {
+  try {
+    const decode = await verifyRefreshToken(req);
+    if (decode.error) {
+      return { error: error };
+    }
+    return { userId: decode._id };
   } catch (error) {
     return { error: error };
   }

@@ -12,6 +12,7 @@ const usersRouter = async (app, express) => {
   router.patch("/update/:id", controller.updateUser); //update user
 
   router.delete("/delete/:id", controller.deleteUser); //delete user
+  router.post("/refresh-token", controller.refreshToken); //refreshToken
   return app.use("/api/users", router);
 };
 export default usersRouter;
