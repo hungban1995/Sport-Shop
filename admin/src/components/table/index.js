@@ -2,19 +2,22 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { getData } from "../../libs/fetchData";
 import "./table.scss";
-import { useDispatch } from "react-redux";
-import { getUserEdit } from "../../stores/usersReducer";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import Alert from "../notifications/alert";
+import { getAlert } from "../../stores/notifyReducer";
+import { IMG_URL } from "../../constants";
 function Table() {
+  const { alert } = useSelector((state) => state.notify);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
-  const [selectRow, setSelectRow] = useState({});
   useEffect(() => {
     getData("users/get-all")
       .then((res) => setUsers(res.data.users))
       .catch((err) => console.log(err));
-  }, []);
+  }, [alert]);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -27,8 +30,9 @@ function Table() {
             <img
               alt="avatar"
               src={
-                params.row.img ||
-                "https://roottogether.net/wp-content/uploads/2020/04/img-avatar-blank.jpg"
+                params.row.avatar
+                  ? `${IMG_URL}/${params.row.avatar}`
+                  : "https://roottogether.net/wp-content/uploads/2020/04/img-avatar-blank.jpg"
               }
               className="cellImg"
             />
@@ -38,8 +42,20 @@ function Table() {
       },
     },
 
-    { field: "firstName", headerName: "First name", width: 130 },
-    { field: "lastName", headerName: "Last name", width: 130 },
+    {
+      field: "birthday",
+      headerName: "Birth Day",
+      width: 130,
+      renderCell: (params) => {
+        const birthday = params?.row?.birthday;
+        if (!birthday) {
+          return <div>N/A</div>;
+        }
+        const date = new Date(birthday);
+        const formattedBirthday = date?.toISOString().slice(0, 10);
+        return <div>{formattedBirthday}</div>;
+      },
+    },
     {
       field: "email",
       headerName: "Email",
@@ -71,24 +87,30 @@ function Table() {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <div>
-              <div
-                className="editButton"
-                onClick={() => {
-                  dispatch(getUserEdit(params.row));
-                  navigate("edit");
-                }}
-              >
-                Edit
-              </div>
+            <Alert id={params.row._id} />
+            <div
+              className="editButton"
+              onClick={() => {
+                navigate(`${params.row._id}`);
+              }}
+            >
+              Edit
             </div>
-            <div className="deleteButton">Delete</div>
+            <div
+              className="deleteButton"
+              onClick={() => {
+                dispatch(
+                  getAlert({ open: true, delete: { user: params.row._id } })
+                );
+              }}
+            >
+              Delete
+            </div>
           </div>
         );
       },
     },
   ];
-
   return (
     <div className="table">
       <DataGrid

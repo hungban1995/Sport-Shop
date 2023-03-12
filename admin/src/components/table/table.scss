@@ -23,24 +23,38 @@
             background-color: rgb(0,128,0,0.05);
             color: blue;
         }
-    }
-    .cellAction{
+    }  .MuiDataGrid-cell{
+        
+        overflow: unset !important;
+    
+     .cellAction{
         display: flex;
         align-items: center;
         gap: 15px;
+        position: relative;
         .editButton{
             padding: 2px 5px;
             border-radius: 5px;
             color: darkblue;
             border: 1px dotted rgb(0, 0, 139,0.596);
             cursor: pointer;
-        }
+            &:hover{
+                background-color: rgb(10, 195, 121);
+            color:lightblue ;
+                }
+        }}
         .deleteButton{
+            background-color: aliceblue;
             padding: 2px 5px;
             border-radius: 5px;
             color: crimson;
             border: 1px dotted rgba(214, 49, 80, 0.596);
             cursor: pointer;
+            &:hover{
+                background-color:crimson;
+            color:lightblue ;
+
+                }
         }
     }
 }
