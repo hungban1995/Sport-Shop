@@ -43,9 +43,11 @@ function New() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newData = { ...user, avatar };
+    const formData = new FormData();
+    formData.append('image', avatar);
+    Object.keys(user).forEach((key) => formData.append(key, user[key]));
     try {
-      const res = await postData("users/register", newData);
+      const res = await postData("users/register", formData);
       dispatch(getNotify({
         status: "success",
         message: res.data.success

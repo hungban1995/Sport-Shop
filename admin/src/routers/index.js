@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "../pages";
 import Users from "../pages/users";
-import Edit from "../pages/users/edit";
+import Single from "../pages/users/single";
 import New from "../pages/users/new";
 
 function Routers() {
@@ -14,7 +14,7 @@ function Routers() {
           <Route path="users/">
             <Route index element={<Users />} />
             <Route path="new" element={<New />} />
-            <Route path="edit" element={<Edit />} />
+            <Route path=":id" element={<Single />} />
           </Route>
           <Route
             path="*"

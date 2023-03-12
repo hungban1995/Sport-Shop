@@ -1,9 +1,15 @@
 import Users from "../models/users.model";
 import bcrypt from "bcryptjs";
 import { verifyAccessToken, verifyRefreshToken } from "../middleware/auth";
+import { format } from "date-fns";
 const salt = bcrypt.genSaltSync(10);
 //register
 export const register = async (req, res) => {
+  const { files } = req;
+  if (files && files.length > 0) {
+    const dateTime = format(new Date(), `MM-yyyy`);
+    req.body.avatar = `uploads/${dateTime}/${files[0].filename}`;
+  }
   try {
     const { username, email, firstName, lastName, password, confirmPassword } =
       req.body;
@@ -26,7 +32,10 @@ export const register = async (req, res) => {
     }
     const hashPassword = bcrypt.hashSync(password, salt);
     return {
-      user: { username, email, password: hashPassword, firstName, lastName },
+      user: {
+        ...req.body,
+        password: hashPassword,
+      },
     };
   } catch (error) {
     return { error: error };
@@ -54,7 +63,7 @@ export const login = async (req, res) => {
         },
       };
     }
-    return { user: user };
+    return { user };
   } catch (error) {
     return { error: error };
   }
@@ -113,12 +122,15 @@ export const getUserById = async (req) => {
 };
 //update user
 export const updateUser = async (req) => {
+  const { files } = req;
+  if (files && files.length > 0) {
+    const dateTime = format(new Date(), `MM-yyyy`);
+    req.body.avatar = `uploads/${dateTime}/${files[0].filename}`;
+  }
   try {
     const { id } = req.params;
-    const { username, email, password, confirmPassword, avatar, role } =
-      req.body;
+    const { username, email, password, confirmPassword, role } = req.body;
     const userById = await Users.findById(id);
-    const userByUsername = await Users.findOne({ username: username });
     const decode = await verifyAccessToken(req);
     if (!userById) {
       return {
@@ -147,13 +159,16 @@ export const updateUser = async (req) => {
         },
       };
     }
-    if (username && username === userByUsername) {
-      return {
-        error: {
-          status: 400,
-          error: "Username đã tồn tại",
-        },
-      };
+    if (username !== userById.username) {
+      let userByUsername;
+      userByUsername = await Users.findOne({ username: username });
+      if (userByUsername?.username === username)
+        return {
+          error: {
+            status: 400,
+            error: "Username đã tồn tại",
+          },
+        };
     }
     if (role && decode.role !== "admin" && role !== userById.role) {
       return {
@@ -177,11 +192,8 @@ export const updateUser = async (req) => {
     }
     return {
       userUpdate: {
-        _id: userById._id,
-        username,
+        ...req.body,
         password: hashPassword,
-        avatar,
-        role,
       },
     };
   } catch (error) {
@@ -213,7 +225,15 @@ export const deleteUser = async (req) => {
         },
       };
     }
-    return id;
+    if (userById.role === "admin") {
+      return {
+        error: {
+          status: 403,
+          error: "Không thể xóa Admin",
+        },
+      };
+    }
+    return { id };
   } catch (error) {
     return { error: error };
   }

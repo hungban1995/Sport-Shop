@@ -28,12 +28,12 @@ const usersSchema = new mongoose.Schema({
       message: `{VALUE} is not a valid phone!`,
     },
   },
-  address: { type: String },
+  address: { type: String, default: "" },
   birthday: { type: Date },
   role: { type: String, default: "user" }, // user, admin,
-  firstName: { type: String },
-  lastName: { type: String },
-  avatar: { type: String },
+  firstName: { type: String, default: "" },
+  lastName: { type: String, default: "" },
+  avatar: { type: String, default: "" },
 });
 // Virtuals
 usersSchema.virtual("fullName").get(function () {

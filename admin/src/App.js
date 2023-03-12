@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout";
 import Login from "./components/login";
-import NotifyPop from "./components/notifications/Notify";
+import NotifyPop from "./components/notifications/notify";
 import Routers from "./routers";
 import { useSelector } from "react-redux";
 import "./styles/dark.scss";

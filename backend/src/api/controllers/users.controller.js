@@ -76,18 +76,9 @@ export const updateUser = async (req, res, next) => {
     if (error) {
       return next(error);
     }
-    const id = userUpdate._id;
+    const { id } = req.params;
 
-    await Users.findByIdAndUpdate(
-      id,
-      {
-        username: userUpdate.username,
-        password: userUpdate.password,
-        avatar: userUpdate.avatar,
-        role: userUpdate.role,
-      },
-      { new: true }
-    );
+    await Users.findByIdAndUpdate(id, userUpdate, { new: true });
     res.status(200).json({
       success: "Cập nhật thành công",
     });

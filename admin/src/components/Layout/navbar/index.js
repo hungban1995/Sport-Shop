@@ -7,13 +7,13 @@ import { getData } from "../../../libs/fetchData";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getRefresh } from "../../../stores/usersReducer";
+import { IMG_URL } from "../../../constants";
 function Navbar() {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  useEffect(() => {});
+  const userId = JSON.parse(localStorage.getItem("userId"));
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem("userId"));
     getData(`users/get-user/${userId}`)
       .then((res) => {
         setCurrentUser(res.data.user);
@@ -44,10 +44,14 @@ function Navbar() {
             <img
               className="avatar"
               alt="avatar"
-              src="https://roottogether.net/wp-content/uploads/2020/04/img-avatar-blank.jpg"
+              src={
+                currentUser.avatar
+                  ? `${IMG_URL}/${currentUser.avatar}`
+                  : "https://roottogether.net/wp-content/uploads/2020/04/img-avatar-blank.jpg"
+              }
             />
             <div className={active ? "menu-item" : "hide"}>
-              <Link to="/users/:id">
+              <Link to={`users/${userId}`}>
                 <span>Profile</span>
               </Link>
               <span
