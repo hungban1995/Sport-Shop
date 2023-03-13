@@ -1,0 +1,97 @@
+@use "base";
+$small-screen: 767px;
+.profile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .title {
+    background-color: base.$background-item;
+    width: 100%;
+    height: 150px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    span {
+      color: base.$text-color;
+      font-size: 36px;
+      font-weight: bold;
+    }
+  }
+  .bottom {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 49% 49%;
+    gap: 2%;
+    .left {
+      padding: 15px;
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .titleForm {
+          padding-bottom: 10px;
+          border-bottom: 1px solid gray;
+          font-weight: bold;
+          text-align: center;
+          span {
+            color: base.$text-color;
+          }
+        }
+        .upload {
+          position: relative;
+          margin-top: 10px;
+          .uploadImg {
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+            position: absolute;
+            opacity: 0;
+            z-index: 3;
+            cursor: pointer;
+            border-radius: 50%;
+          }
+          img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        }
+        .formInput {
+          width: 80%;
+          margin: 10px 0;
+          input {
+            background-color: base.$background-item;
+            height: 30px;
+            margin-top: 10px;
+            width: 100%;
+            padding: 5px 0;
+            border: none;
+            &:focus {
+              outline: none;
+            }
+          }
+          span {
+            color: red;
+            font-size: 13px;
+          }
+        }
+
+        button {
+          width: 150px;
+          height: 40px;
+          background-color: base.$color-button;
+          border: none;
+          color: white;
+          transition: background-color 0.5s;
+          &:hover {
+            background-color: base.$hover-button;
+          }
+        }
+      }
+    }
+  }
+}
