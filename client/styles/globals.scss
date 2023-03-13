@@ -1,5 +1,15 @@
-@import './reset.scss';
-@import './footer.scss';
-@import './header.scss';
-@import './home.scss';
-@import './layout.scss';
+@import url("https://fonts.googleapis.com/css2?family=Arimo&display=swap");
+@import "./reset.scss";
+@import "./footer.scss";
+@import "./header.scss";
+@import "./home.scss";
+@import "./layout.scss";
+@import "./register.scss";
+@import "./notify.scss";
+@import "./alert.scss";
+@import "./login.scss";
+@import "./profile.scss";
+
+body {
+  font-family: "Arimo", sans-serif;
+}

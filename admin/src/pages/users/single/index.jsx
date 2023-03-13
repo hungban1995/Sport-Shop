@@ -17,11 +17,9 @@ const schema = yup.object({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords does not match"),
   birthday: yup.date().max(new Date(), "Birthday can't be in the future")
-    .min(new Date("1900-01-01"), "Birthday must be after 1900-01-01")
-    .required("Birthday is required"),
+    .min(new Date("1900-01-01"), "Birthday must be after 1900-01-01"),
   phoneNumber: yup.string()
-    .matches(/^\+84\d{9}$/, "Invalid phone number")
-    .required("Phone number is required"),
+    .matches(/^\+84\d{9}$/, "Invalid phone number"),
 })
 function Single() {
   const dispatch = useDispatch()
@@ -169,14 +167,18 @@ function Single() {
             </div>
             <div className="formInput">
               <label htmlFor="">Password</label>
-              <input {...register("password")} />
+              <input
+                type="password"
+                {...register("password")} />
               {errors.password && (
                 <span>Field {errors.password.message}</span>
               )}
             </div>
             <div className="formInput">
               <label htmlFor="">Confirm Password</label>
-              <input disabled={!password} {...register("confirmPassword")} />
+              <input
+                type="password"
+                disabled={!password} {...register("confirmPassword")} />
               {errors.confirmPassword && (
                 <span>Field {errors.confirmPassword.message}</span>
               )}
