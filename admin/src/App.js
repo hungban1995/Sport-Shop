@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import "./styles/dark.scss";
 import Background from "./components/background";
 function App() {
-  const { dark } = useSelector((state) => state.dark);
+  const { dark } = useSelector((state) => state.themeWeb);
   const { refresh } = useSelector((state) => state.users);
   const [refreshToken, setRefreshToken] = useState(null);
   useEffect(() => {

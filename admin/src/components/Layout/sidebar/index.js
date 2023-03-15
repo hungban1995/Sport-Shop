@@ -10,7 +10,7 @@ import { BsBoxSeam, BsFilePostFill } from "react-icons/bs";
 import { BiCategory } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setDark } from "../../../stores/darkReducer";
+import { setDark } from "../../../stores/themeWebReducer";
 function SideBar() {
   const dispatch = useDispatch();
   const [isActiveProduct, setIsActiveProduct] = useState(false);
