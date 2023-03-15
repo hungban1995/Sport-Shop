@@ -8,8 +8,17 @@ function Popover({ id }) {
   const dispatch = useDispatch();
   const handleAccept = async () => {
     try {
-      if (alert && alert.delete.user) {
+      if (alert?.delete?.type === "user") {
         const res = await deleteData("users/delete/" + id);
+        dispatch(
+          getNotify({
+            status: "success",
+            message: res.data.success,
+          })
+        );
+      }
+      if (alert?.delete?.type === "category") {
+        const res = await deleteData("categories/delete/" + id);
         dispatch(
           getNotify({
             status: "success",
@@ -26,13 +35,13 @@ function Popover({ id }) {
         })
       );
     }
-    dispatch(getAlert({}));
+    dispatch(clearAlert());
   };
 
   return (
     <div
       className={`${
-        alert?.open && alert?.delete?.user === id ? "alert" : "d-none"
+        alert?.open && alert?.delete?.id === id ? "alert" : "d-none"
       }`}
     >
       <div className="content">Bạn chắc chắn muốn xóa chứ!</div>
@@ -48,7 +57,7 @@ function Popover({ id }) {
         <button
           className="cancel"
           onClick={() => {
-            dispatch(getAlert());
+            dispatch(clearAlert());
           }}
         >
           Hủy

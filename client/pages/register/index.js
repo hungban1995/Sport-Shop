@@ -41,7 +41,7 @@ function Register() {
       const res = await postData("users/register", newData);
       dispatch(
         getNotify({
-          status: "success",
+          success: true,
           message: res.data.success,
         })
       );
@@ -50,7 +50,7 @@ function Register() {
       console.log(error);
       dispatch(
         getNotify({
-          status: "error",
+          error: true,
           message: error.response.data.error,
         })
       );

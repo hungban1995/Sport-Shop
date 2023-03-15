@@ -4,6 +4,7 @@ import Home from "../pages";
 import Users from "../pages/users";
 import Single from "../pages/users/single";
 import New from "../pages/users/new";
+import Categories from "../pages/categories";
 
 function Routers() {
   return (
@@ -15,6 +16,9 @@ function Routers() {
             <Route index element={<Users />} />
             <Route path="new" element={<New />} />
             <Route path=":id" element={<Single />} />
+          </Route>
+          <Route path="categories/">
+            <Route index element={<Categories />} />
           </Route>
           <Route
             path="*"

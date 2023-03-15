@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const notifySlice = createSlice({
   name: "notify",
   initialState: {
-    notify: {},
+    notify: null,
     alert: {},
   },
   reducers: {

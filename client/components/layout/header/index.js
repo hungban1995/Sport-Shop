@@ -9,22 +9,18 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getCount } from "@/stores/userReducer";
-function Header() {
+import { BLANK_AVT, IMG_URL } from "@/constant";
+import { getShowCart } from "@/stores/cartReducer";
+function Header(props) {
   const router = useRouter();
-  const [refreshToken, setRefreshToken] = useState("");
   const [isActive, setIsActive] = useState("");
-  const { count } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  // const { co } = useSelector((state) => state.user);
 
+  const [user, setUser] = useState(null);
   useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      localStorage &&
-      localStorage.getItem("refreshToken")
-    ) {
-      setRefreshToken(JSON.parse(localStorage.getItem("refreshToken")));
-    } else setRefreshToken("");
-  }, [count]);
+    setUser(props.user);
+  }, [props.user]);
   return (
     <div className="header">
       <div className="logo">
@@ -32,10 +28,18 @@ function Header() {
         <span>Shop Name</span>
       </div>
       <ul className={`menu ${isActive}`}>
-        <li>Home</li>
-        <li>Products</li>
-        <li>Blog</li>
-        <li>Info</li>
+        <li>
+          <Link href="/">Home</Link>
+        </li>
+        <li>
+          <Link href="/product">Products</Link>
+        </li>
+        <li>
+          <Link href="/blog">Blog</Link>
+        </li>
+        <li>
+          <Link href="/info">Info</Link>
+        </li>
         <MdOutlineArrowBackIosNew
           className="icon"
           onClick={() => {
@@ -59,8 +63,21 @@ function Header() {
           </div>
         </div>
         <div className="item">
-          <CiUser className="icon" />
-          {refreshToken ? (
+          {user ? (
+            <img
+              style={{
+                width: "30px",
+                height: "30px",
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+              src={user ? `${IMG_URL}/${user.avatar}` : BLANK_AVT}
+              alt="avatar"
+            />
+          ) : (
+            <CiUser className="icon" />
+          )}
+          {user ? (
             <div className="user">
               <div className="action">
                 <Link href="/profile">Profile</Link>
@@ -71,8 +88,8 @@ function Header() {
                   localStorage.removeItem("accessToken");
                   localStorage.removeItem("refreshToken");
                   localStorage.removeItem("userId");
-                  router.push("/");
                   dispatch(getCount());
+                  router.push("/");
                 }}
               >
                 Logout
@@ -89,7 +106,12 @@ function Header() {
             </div>
           )}
         </div>
-        <div className="item">
+        <div
+          className="item"
+          onClick={() => {
+            dispatch(getShowCart(true));
+          }}
+        >
           <FaOpencart className="icon" />
           <div className="counter">0</div>
         </div>

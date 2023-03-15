@@ -1,2 +1,4 @@
 import usersRouter from "./users.router";
-export { usersRouter };
+import categoriesRouter from "./categories.router";
+
+export { usersRouter, categoriesRouter };

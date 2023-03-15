@@ -42,7 +42,7 @@ $small-screen: 767px;
         .upload {
           position: relative;
           margin-top: 10px;
-          .uploadImg {
+          .imageUpload {
             width: 100px;
             height: 100px;
             top: 0;
@@ -60,9 +60,33 @@ $small-screen: 767px;
             object-fit: cover;
           }
         }
-        .formInput {
+        .formGroup {
+          display: flex;
           width: 80%;
-          margin: 10px 0;
+          .formInput {
+            margin: 10px;
+            input {
+              background-color: base.$background-item;
+              height: 30px;
+              margin-top: 10px;
+              width: 100%;
+              padding: 5px 0;
+              border: none;
+              &:focus {
+                outline: none;
+              }
+            }
+            span {
+              color: red;
+              font-size: 13px;
+            }
+          }
+        }
+
+        .formInput {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
           input {
             background-color: base.$background-item;
             height: 30px;

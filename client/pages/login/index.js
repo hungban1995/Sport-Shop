@@ -34,17 +34,17 @@ function Login() {
       localStorage.setItem("userId", JSON.stringify(res.data.user._id));
       dispatch(
         getNotify({
-          status: "success",
+          success: true,
           message: res.data.success,
         })
       );
-      router.push("/");
       dispatch(getCount());
+      router.push("/");
     } catch (error) {
       console.log(error);
       dispatch(
         getNotify({
-          status: "error",
+          error: true,
           message: error.response.data.error,
         })
       );
