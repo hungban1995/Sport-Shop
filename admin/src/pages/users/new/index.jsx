@@ -52,6 +52,7 @@ function New() {
         status: "success",
         message: res.data.success
       }))
+      e.target.reset();
     } catch (error) {
       console.log(error);
       dispatch(getNotify({

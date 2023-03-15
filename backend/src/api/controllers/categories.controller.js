@@ -61,7 +61,7 @@ export const getById = async (req, res, next) => {
 //update
 export const updateCat = async (req, res, next) => {
   try {
-    const { error, categoryUpdate } = await service.update(req);
+    const { error, categoryUpdate } = await service.updateCat(req);
     if (error) {
       return next(error);
     }

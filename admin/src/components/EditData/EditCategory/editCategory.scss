@@ -1,4 +1,98 @@
 .editCat {
+  position: fixed;
+  display: none;
+  top: 20%;
+  left: 30%;
   width: 50%;
-  background-color: aliceblue;
+  background-color: #fff;
+  color: #333;
+  border-radius: 5px;
+  z-index: 111;
+  animation: myAnim 0.5s ease 0s 1 normal forwards;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #333;
+    padding: 15px;
+    position: relative;
+    span {
+      font-size: 23px;
+      font-weight: bold;
+    }
+    .icon {
+      position: absolute;
+      right: 0;
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+      cursor: pointer;
+      &:hover {
+        color: red;
+      }
+    }
+  }
+  &.active {
+    display: block;
+  }
+  .formUpdate {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    input {
+      padding: 10px;
+      border-radius: 5px;
+    }
+    span {
+      color: red;
+      font-size: 13px;
+    }
+    .action {
+      display: flex;
+      justify-content: center;
+      padding: 20px 10px 5px 10px;
+      height: 30px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      .accept {
+        height: 30px;
+        margin: 0 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(63, 227, 115);
+        color: rgb(139, 119, 119);
+        &:hover {
+          background-color: rgb(6, 246, 50);
+        }
+      }
+      .cancel {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        height: 30px;
+        margin: 0 10px;
+        padding: 0 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: beige;
+        color: rgb(128, 106, 106);
+        &:hover {
+          background-color: rgb(195, 100, 100);
+          color: wheat;
+        }
+      }
+    }
+  }
+}
+@keyframes myAnim {
+  0% {
+    transform: scale(0.5);
+    transform-origin: 50% 0%;
+  }
+
+  100% {
+    transform: scale(1);
+    transform-origin: 50% 0%;
+  }
 }

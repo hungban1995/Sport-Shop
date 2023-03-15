@@ -9,11 +9,15 @@ import { getAlert } from "../../stores/notifyReducer";
 import Alert from "../../components/notifications/alert";
 import "./categories.scss";
 import EditCategory from "../../components/EditData/EditCategory";
+import { setBackground } from "../../stores/themeWebReducer";
+import { setDataEdit } from "../../stores/categoriesReducer";
 function Categories() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [categories, setCategories] = useState([]);
   const { alert } = useSelector((state) => state.notify);
+  const { dataEdit } = useSelector((state) => state.categories);
+
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -24,7 +28,7 @@ function Categories() {
       }
     };
     getCategories();
-  }, [alert]);
+  }, [alert, dataEdit]);
   const columns = [
     { field: "_id", headerName: "ID", width: 250 },
     {
@@ -65,7 +69,8 @@ function Categories() {
             <div
               className="editButton"
               onClick={() => {
-                navigate(`${params.row._id}`);
+                dispatch(setBackground(true));
+                dispatch(setDataEdit({ edit: true, category: params.row }));
               }}
             >
               Edit
