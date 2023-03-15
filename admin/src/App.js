@@ -7,6 +7,7 @@ import NotifyPop from "./components/notifications/notify";
 import Routers from "./routers";
 import { useSelector } from "react-redux";
 import "./styles/dark.scss";
+import Background from "./components/background";
 function App() {
   const { dark } = useSelector((state) => state.dark);
   const { refresh } = useSelector((state) => state.users);
@@ -19,6 +20,7 @@ function App() {
   return (
     <div className={dark ? "app dark" : "app"}>
       <BrowserRouter>
+        <Background />
         <NotifyPop />
         {refreshToken ? (
           <Layout>

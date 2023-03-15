@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import "./sidebar.scss";
-import { MdDashboard } from "react-icons/md";
+import {
+  MdDashboard,
+  MdOutlineKeyboardArrowRight,
+  MdPostAdd,
+} from "react-icons/md";
 import { AiOutlineUser } from "react-icons/ai";
 import { BsBoxSeam, BsFilePostFill } from "react-icons/bs";
-import { CiDeliveryTruck } from "react-icons/ci";
+import { BiCategory } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setDark } from "../../../stores/darkReducer";
 function SideBar() {
   const dispatch = useDispatch();
+  const [isActiveProduct, setIsActiveProduct] = useState(false);
+  const [isActivePost, setIsActivePost] = useState(false);
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -18,46 +25,90 @@ function SideBar() {
       </div>
       <hr />
       <div className="center">
-        <ul>
+        <div className="action">
           <p className="title">Main</p>
           <Link to="/" style={{ textDecoration: "none" }}>
-            <li>
+            <div className="item">
               <MdDashboard className="icon" />
               <span>Dashboard</span>
-            </li>
+            </div>
           </Link>
           <p className="title">List</p>
           <Link to="users" style={{ textDecoration: "none" }}>
-            <li>
+            <div className="item">
               <AiOutlineUser className="icon" />
               <span>Người Dùng</span>
-            </li>
+            </div>
           </Link>
-          <Link to="products" style={{ textDecoration: "none" }}>
-            <li>
+          <div className="itemList">
+            <button
+              className={"accordion " + (isActiveProduct ? "active" : "")}
+              onClick={() => {
+                setIsActiveProduct(!isActiveProduct);
+              }}
+            >
+              <MdOutlineKeyboardArrowRight className="arrowIcon" />
               <BsBoxSeam className="icon" />
-              <span>Sản phẩm</span>
-            </li>
-          </Link>
+              <span>Quản lý sản phẩm</span>
+            </button>
+            <div className={"panel " + (isActiveProduct ? "active" : "")}>
+              <Link to="categories" style={{ textDecoration: "none" }}>
+                <div className="panelItem">
+                  <BiCategory className="icon" />
+                  <span>Danh mục</span>
+                </div>
+              </Link>
+              <Link to="products" style={{ textDecoration: "none" }}>
+                <div className="panelItem">
+                  <BiCategory className="icon" />
+                  <span>Sản Phẩm</span>
+                </div>
+              </Link>
+            </div>
+          </div>
+          <div className="itemList">
+            <button
+              className={"accordion " + (isActivePost ? "active" : "")}
+              onClick={() => {
+                setIsActivePost(!isActivePost);
+              }}
+            >
+              <MdOutlineKeyboardArrowRight className="arrowIcon" />
+              <MdPostAdd className="icon" />
+              <span>Quản lý bài đăng</span>
+            </button>
+            <div className={"panel " + (isActivePost ? "active" : "")}>
+              <Link to="categories-posts" style={{ textDecoration: "none" }}>
+                <div className="panelItem">
+                  <BiCategory className="icon" />
+                  <span>Danh mục</span>
+                </div>
+              </Link>
+              <Link to="posts" style={{ textDecoration: "none" }}>
+                <div className="panelItem">
+                  <MdPostAdd className="icon" />
+                  <span>Bài đăng</span>
+                </div>
+              </Link>
+            </div>
+          </div>
+
           <Link to="orders" style={{ textDecoration: "none" }}>
-            <li>
+            <div className="item">
               <BsFilePostFill className="icon" />
               <span>Đơn hàng</span>
-            </li>
+            </div>
           </Link>
-          <li>
-            <CiDeliveryTruck className="icon" />
-            <span>Giao hàng</span>
-          </li>
+
           <p className="title">Service</p>
 
-          <li>
+          <div className="item">
             <span>Hệ thống</span>
-          </li>
-          <li>
+          </div>
+          <div className="item">
             <span>Cài đặt</span>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
       <div className="bottom">
         <div

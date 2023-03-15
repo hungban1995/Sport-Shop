@@ -83,7 +83,10 @@ export const getUsers = async (req, res) => {
         },
       };
     }
-    const users = await Users.find({}, { password: 0 });
+    const users = await Users.find(
+      {},
+      { createdAt: 0, updatedAt: 0, __v: 0, password: 0 }
+    );
     if (users.length === 0) {
       return next({
         status: 404,

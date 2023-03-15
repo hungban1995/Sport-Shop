@@ -1,0 +1,71 @@
+.categories {
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  padding: 20px;
+  margin: 20px;
+  .listTitle {
+    font-weight: 500;
+    color: gray;
+    margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: auto auto;
+    a {
+      width: fit-content;
+      text-decoration: none;
+      background-color: rgba(151, 235, 95, 0.49);
+      color: rgb(6, 68, 6);
+      padding: 5px;
+      border-radius: 10px;
+      &:hover {
+        background-color: rgba(61, 119, 202, 0.429);
+      }
+    }
+  }
+  .table {
+    height: 400px;
+    width: 100%;
+    .cellWithImg {
+      display: flex;
+      align-items: center;
+      .cellImg {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+      }
+    }
+    .MuiDataGrid-cell {
+      overflow: unset !important;
+
+      .cellAction {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        .editButton {
+          padding: 2px 5px;
+          border-radius: 5px;
+          color: darkblue;
+          border: 1px dotted rgb(0, 0, 139, 0.596);
+          cursor: pointer;
+          &:hover {
+            background-color: rgb(10, 195, 121);
+            color: lightblue;
+          }
+        }
+      }
+      .deleteButton {
+        background-color: aliceblue;
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: crimson;
+        border: 1px dotted rgba(214, 49, 80, 0.596);
+        cursor: pointer;
+        &:hover {
+          background-color: crimson;
+          color: lightblue;
+        }
+      }
+    }
+  }
+}

@@ -17,7 +17,9 @@ corsConfig(app); //CORS configs
 parseConfig(app, express); //Parse config
 headerConfig(app); //Configs to client read file
 app.use(morgan("common")); //Morgan configs
-router.usersRouter(app, express); //API routes
+//API routes
+router.usersRouter(app, express);
+router.categoriesRouter(app, express);
 app.get("/", (req, res, next) => {
   res.send("hello");
 });

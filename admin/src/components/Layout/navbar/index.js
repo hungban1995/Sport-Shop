@@ -7,7 +7,7 @@ import { getData } from "../../../libs/fetchData";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getRefresh } from "../../../stores/usersReducer";
-import { IMG_URL } from "../../../constants";
+import { BLANK_AVT, IMG_URL } from "../../../constants";
 function Navbar() {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
@@ -47,7 +47,7 @@ function Navbar() {
               src={
                 currentUser.avatar
                   ? `${IMG_URL}/${currentUser.avatar}`
-                  : "https://roottogether.net/wp-content/uploads/2020/04/img-avatar-blank.jpg"
+                  : BLANK_AVT
               }
             />
             <div className={active ? "menu-item" : "hide"}>

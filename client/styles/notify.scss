@@ -14,14 +14,18 @@
   z-index: 99;
   animation-name: showNotify;
   animation-duration: 0.5s;
-  &.error {
-    background-color: rgb(244, 68, 68);
-  }
   span {
     color: #333;
     font-size: 13px;
     display: flex;
     align-items: center;
+  }
+  &.error {
+    background-color: rgb(244, 68, 68);
+  }
+
+  &.hide {
+    display: none;
   }
 }
 @keyframes showNotify {

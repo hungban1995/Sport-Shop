@@ -11,14 +11,14 @@ export const notifySlice = createSlice({
       state.notify = action.payload;
     },
     clearNotify: (state) => {
-      state.notify = state;
+      state.notify = {};
     },
     //get alert
     getAlert: (state, action) => {
       state.alert = action.payload;
     },
     clearAlert: (state) => {
-      state.notify = state;
+      state.alert = {};
     },
   },
 });

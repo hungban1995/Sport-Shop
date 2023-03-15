@@ -6,17 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from "../notifications/alert";
 import { getAlert } from "../../stores/notifyReducer";
-import { IMG_URL } from "../../constants";
+import { BLANK_AVT, IMG_URL } from "../../constants";
 function Table() {
   const { alert } = useSelector((state) => state.notify);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    getData("users/get-all")
-      .then((res) => setUsers(res.data.users))
-      .catch((err) => console.log(err));
+    const getUser = async () => {
+      try {
+        const res = await getData("users/get-all");
+        setUsers(res.data.users);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUser();
   }, [alert]);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
@@ -32,7 +37,7 @@ function Table() {
               src={
                 params.row.avatar
                   ? `${IMG_URL}/${params.row.avatar}`
-                  : "https://roottogether.net/wp-content/uploads/2020/04/img-avatar-blank.jpg"
+                  : BLANK_AVT
               }
               className="cellImg"
             />
@@ -100,7 +105,10 @@ function Table() {
               className="deleteButton"
               onClick={() => {
                 dispatch(
-                  getAlert({ open: true, delete: { user: params.row._id } })
+                  getAlert({
+                    open: true,
+                    delete: { id: params.row._id, type: "user" },
+                  })
                 );
               }}
             >

@@ -26,6 +26,10 @@ $small-screen: 767px;
       margin: 0 20px;
       font-size: 18px;
       transition: 0.5s;
+      a {
+        text-decoration: none;
+        color: unset;
+      }
       &:hover {
         color: red;
         scale: 1.4;
@@ -92,11 +96,12 @@ $small-screen: 767px;
           box-shadow: 5px 5px 15px 1px #474646ba;
           display: none;
           .action {
-            font-size: 16px;
             color: #555;
-            padding: 10px 5px;
             a {
+              font-size: 16px;
               text-decoration: none;
+              display: block;
+              padding: 10px 5px;
             }
           }
         }
