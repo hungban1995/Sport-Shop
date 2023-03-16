@@ -36,9 +36,6 @@ function Navbar() {
             <FiMessageSquare className="icon" />
             <div className="counter">1</div>
           </div>
-          <div className="item">
-            <HiBars3 className="icon" />
-          </div>
           <div className="item" onClick={() => setActive(!active)}>
             <span>{currentUser.username || "username"}</span>
             <img

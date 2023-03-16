@@ -2,22 +2,19 @@
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { BLANK_IMG, IMG_URL } from "../../constants";
 import { getData } from "../../libs/fetchData";
 import { getAlert } from "../../stores/notifyReducer";
 import Alert from "../../components/notifications/alert";
 import "./categories.scss";
-import EditCategory from "../../components/EditData/EditCategory";
+import EditCategory from "../../components/EditData/EditCategory/update";
 import { setBackground } from "../../stores/themeWebReducer";
-import { setDataEdit } from "../../stores/categoriesReducer";
+import { setCreateCat, setDataEdit } from "../../stores/categoriesReducer";
+import NewCategory from "../../components/EditData/EditCategory/newCategory";
 function Categories() {
   const dispatch = useDispatch();
-  const { alert } = useSelector((state) => state.notify);
-  const { dataEdit } = useSelector((state) => state.categories);
-
+  const { refreshCat } = useSelector((state) => state.categories);
   const [categories, setCategories] = useState([]);
-
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -28,7 +25,7 @@ function Categories() {
       }
     };
     getCategories();
-  }, [alert, dataEdit]);
+  }, [refreshCat]);
   const columns = [
     { field: "_id", headerName: "ID", width: 250 },
     {
@@ -96,8 +93,15 @@ function Categories() {
   return (
     <div className="categories">
       <div className="listTitle">
-        <span>Danh sách Categories:</span>
-        <span>new</span>
+        <p>Danh sách Categories:</p>
+        <span
+          onClick={() => {
+            dispatch(setBackground(true));
+            dispatch(setCreateCat(true));
+          }}
+        >
+          Thêm Mới!
+        </span>
       </div>
       <div className="table">
         <DataGrid
@@ -110,6 +114,7 @@ function Categories() {
           getRowId={(row) => row._id}
         />
       </div>
+      <NewCategory />
       <EditCategory />
     </div>
   );

@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 export const usersSlice = createSlice({
   name: "users",
   initialState: {
-    refresh: false,
+    refresh: 0,
   },
   reducers: {
     //setrefresh
     getRefresh: (state) => {
-      state.refresh = !state.refresh;
+      state.refresh += 1;
     },
   },
 });

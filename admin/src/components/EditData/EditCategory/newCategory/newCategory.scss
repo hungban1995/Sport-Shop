@@ -1,4 +1,4 @@
-.editCat {
+.newCat {
   position: fixed;
   display: none;
   top: 20%;
@@ -35,7 +35,7 @@
   &.active {
     display: block;
   }
-  .formUpdate {
+  .formCreate {
     display: flex;
     flex-direction: column;
     padding: 15px;

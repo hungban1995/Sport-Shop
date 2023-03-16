@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteData } from "../../../libs/fetchData";
-import { clearAlert, getAlert, getNotify } from "../../../stores/notifyReducer";
+import { clearAlert, getNotify } from "../../../stores/notifyReducer";
 import "./alert.scss";
 function Popover({ id }) {
   const { alert } = useSelector((state) => state.notify);
