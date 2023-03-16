@@ -1,3 +1,4 @@
+$small-screen: 768px;
 .sidebar {
   flex: 1;
   border: 0.5px solid #c9c6c6;
@@ -39,7 +40,8 @@
           background-color: #ece8ff;
         }
         .icon {
-          font-size: 18px;
+          width: 30px;
+          font-size: 20px;
           color: #7451f8;
         }
         span {
@@ -83,7 +85,8 @@
             }
           }
           .icon {
-            font-size: 18px;
+            width: 30px;
+            font-size: 20px;
             color: #7451f8;
           }
           span {
@@ -106,7 +109,9 @@
               background-color: #ece8ff;
             }
             .icon {
-              font-size: 18px;
+              width: 30px;
+
+              font-size: 20px;
               color: #7451f8;
             }
             span {
@@ -140,6 +145,25 @@
       &:nth-child(2) {
         background-color: #333;
       }
+    }
+  }
+}
+@media (max-width: $small-screen) {
+  .sidebar {
+    width: 50px;
+    .center {
+      .item,
+      .itemList {
+        span {
+          display: none;
+        }
+        .arrowIcon {
+          display: none;
+        }
+      }
+    }
+    .bottom {
+      flex-direction: column;
     }
   }
 }

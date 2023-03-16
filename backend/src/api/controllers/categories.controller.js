@@ -3,7 +3,7 @@ import * as service from "../services/categories.service";
 //create
 export const createCat = async (req, res, next) => {
   try {
-    const { error, category } = await service.create(req);
+    const { error, category } = await service.createCat(req);
     if (error) {
       return next(error);
     }

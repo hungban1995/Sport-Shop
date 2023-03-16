@@ -2,37 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
-import "./editCategory.scss";
-import { setBackground } from "../../../stores/themeWebReducer";
-import { setDataEdit } from "../../../stores/categoriesReducer";
+import "./newCategory.scss";
+import { setBackground } from "../../../../stores/themeWebReducer";
+import { refreshCat, setCreateCat } from "../../../../stores/categoriesReducer";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { patchData } from "../../../libs/fetchData";
-import { getNotify } from "../../../stores/notifyReducer";
+import { postData } from "../../../../libs/fetchData";
+import { getNotify } from "../../../../stores/notifyReducer";
 const schema = yup.object().shape({
   title: yup.string().required(),
 });
-function EditCategory() {
-  const { dataEdit } = useSelector((state) => state.categories);
+function NewCategory() {
+  const { createCat } = useSelector((state) => state.categories);
   const dispatch = useDispatch();
-  const [category, setCategory] = useState(null);
-  useEffect(() => {
-    setCategory(dataEdit.category);
-  }, [dataEdit.category]);
+
   const {
     register,
     handleSubmit,
-    setValue,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "all",
   });
-  useEffect(() => {
-    setValue("title", category?.title);
-    setValue("description", category?.description);
-  }, [category, setValue]);
-  //update
+
+  //create
   const onSubmit = async (data) => {
     const formData = new FormData();
     if (data.image) {
@@ -40,21 +34,22 @@ function EditCategory() {
       fileList.forEach((item) => {
         formData.append("image", item);
       });
-    } else formData.append("image", category.image);
+    }
     formData.append("title", data.title);
     formData.append("description", data.description);
-    const id = category?._id;
 
     try {
-      const res = await patchData("categories/update/" + id, formData);
+      const res = await postData("categories/create/", formData);
       dispatch(
         getNotify({
           status: "success",
           message: res.data.success,
         })
       );
+      reset();
       dispatch(setBackground(false));
-      dispatch(setDataEdit(false));
+      dispatch(setCreateCat(false));
+      dispatch(refreshCat());
     } catch (error) {
       dispatch(
         getNotify({
@@ -65,34 +60,36 @@ function EditCategory() {
     }
   };
   return (
-    <div className={"editCat " + (dataEdit?.edit ? "active" : "")}>
+    <div className={"newCat " + (createCat ? "active" : "")}>
       <div className="header">
-        <span>Edit Category</span>
+        <span>Create Category</span>
         <AiOutlineClose
           className="icon"
           onClick={() => {
             dispatch(setBackground(false));
-            dispatch(setDataEdit(false));
+            dispatch(setCreateCat(false));
+            reset();
           }}
         />
       </div>
-      <form className="formUpdate" onSubmit={handleSubmit(onSubmit)}>
+      <form className="formCreate" onSubmit={handleSubmit(onSubmit)}>
         <label>Title</label>
         <input {...register("title")} />
-        {errors.username && <span>Field {errors.username.message}</span>}
+        {errors.title && <span>Field {errors.title.message}</span>}
         <label>Image</label>
         <input type="file" {...register("image")} />
         <label>Description</label>
         <input {...register("description")} />
         <div className="action">
           <button className="accept" type="submit">
-            Cập nhật
+            Thêm mới
           </button>
           <div
             className="cancel"
             onClick={() => {
               dispatch(setBackground(false));
-              dispatch(setDataEdit(false));
+              dispatch(setCreateCat(false));
+              reset();
             }}
           >
             Hủy
@@ -103,4 +100,4 @@ function EditCategory() {
   );
 }
 
-export default EditCategory;
+export default NewCategory;

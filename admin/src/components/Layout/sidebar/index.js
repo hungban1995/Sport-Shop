@@ -4,8 +4,9 @@ import {
   MdDashboard,
   MdOutlineKeyboardArrowRight,
   MdPostAdd,
+  MdSettings,
 } from "react-icons/md";
-import { AiOutlineUser } from "react-icons/ai";
+import { AiOutlineInfoCircle, AiOutlineUser } from "react-icons/ai";
 import { BsBoxSeam, BsFilePostFill } from "react-icons/bs";
 import { BiCategory } from "react-icons/bi";
 import { Link } from "react-router-dom";
@@ -49,7 +50,7 @@ function SideBar() {
             >
               <MdOutlineKeyboardArrowRight className="arrowIcon" />
               <BsBoxSeam className="icon" />
-              <span>Quản lý sản phẩm</span>
+              <span>Sản Phẩm</span>
             </button>
             <div className={"panel " + (isActiveProduct ? "active" : "")}>
               <Link to="categories" style={{ textDecoration: "none" }}>
@@ -61,7 +62,7 @@ function SideBar() {
               <Link to="products" style={{ textDecoration: "none" }}>
                 <div className="panelItem">
                   <BiCategory className="icon" />
-                  <span>Sản Phẩm</span>
+                  <span>Các Sản Phẩm</span>
                 </div>
               </Link>
             </div>
@@ -75,7 +76,7 @@ function SideBar() {
             >
               <MdOutlineKeyboardArrowRight className="arrowIcon" />
               <MdPostAdd className="icon" />
-              <span>Quản lý bài đăng</span>
+              <span>Bài Đăng</span>
             </button>
             <div className={"panel " + (isActivePost ? "active" : "")}>
               <Link to="categories-posts" style={{ textDecoration: "none" }}>
@@ -87,7 +88,7 @@ function SideBar() {
               <Link to="posts" style={{ textDecoration: "none" }}>
                 <div className="panelItem">
                   <MdPostAdd className="icon" />
-                  <span>Bài đăng</span>
+                  <span>Các Bài đăng</span>
                 </div>
               </Link>
             </div>
@@ -103,9 +104,11 @@ function SideBar() {
           <p className="title">Service</p>
 
           <div className="item">
+            <AiOutlineInfoCircle className="icon" />
             <span>Hệ thống</span>
           </div>
           <div className="item">
+            <MdSettings className="icon" />
             <span>Cài đặt</span>
           </div>
         </div>
