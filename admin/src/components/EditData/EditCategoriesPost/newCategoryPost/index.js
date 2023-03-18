@@ -1,38 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
-import "./updateCategory.scss";
+import "./newCategoriesPost.scss";
 import { setBackground } from "../../../../stores/themeWebReducer";
-import { refreshCat, setCatEdit } from "../../../../stores/categoriesReducer";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { patchData } from "../../../../libs/fetchData";
+import { postData } from "../../../../libs/fetchData";
 import { getNotify } from "../../../../stores/notifyReducer";
+import {
+  refreshCatPost,
+  setCreateCatPost,
+} from "../../../../stores/categoriesPostReducer";
 const schema = yup.object().shape({
   title: yup.string().required(),
 });
-function UpdateCategory() {
-  const { catEdit } = useSelector((state) => state.categories);
+function NewCategoryPost() {
+  const { createCatPost } = useSelector((state) => state.categoriesPost);
   const dispatch = useDispatch();
-  const [category, setCategory] = useState(null);
-  useEffect(() => {
-    setCategory(catEdit.category);
-  }, [catEdit.category]);
   const {
     register,
     handleSubmit,
-    setValue,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "all",
   });
-  useEffect(() => {
-    setValue("title", category?.title);
-    setValue("description", category?.description);
-  }, [category, setValue]);
-  //update
+
+  //create
   const onSubmit = async (data) => {
     const formData = new FormData();
     if (data.image) {
@@ -40,22 +36,22 @@ function UpdateCategory() {
       fileList.forEach((item) => {
         formData.append("image", item);
       });
-    } else formData.append("image", category.image);
+    }
     formData.append("title", data.title);
     formData.append("description", data.description);
-    const id = category?._id;
 
     try {
-      const res = await patchData("categories/update/" + id, formData);
+      const res = await postData("categories-posts/create/", formData);
       dispatch(
         getNotify({
           status: "success",
           message: res.data.success,
         })
       );
+      reset();
       dispatch(setBackground(false));
-      dispatch(setCatEdit(false));
-      dispatch(refreshCat());
+      dispatch(setCreateCatPost(false));
+      dispatch(refreshCatPost());
     } catch (error) {
       dispatch(
         getNotify({
@@ -66,18 +62,19 @@ function UpdateCategory() {
     }
   };
   return (
-    <div className={"updateCat " + (catEdit?.edit ? "active" : "")}>
+    <div className={"newCat " + (createCatPost ? "active" : "")}>
       <div className="header">
-        <span>Edit Category</span>
+        <span>Create Category</span>
         <AiOutlineClose
           className="icon"
           onClick={() => {
             dispatch(setBackground(false));
-            dispatch(setCatEdit(false));
+            dispatch(setCreateCatPost(false));
+            reset();
           }}
         />
       </div>
-      <form className="formUpdate" onSubmit={handleSubmit(onSubmit)}>
+      <form className="formCreate" onSubmit={handleSubmit(onSubmit)}>
         <label>Title</label>
         <input {...register("title")} />
         {errors.title && <span>Field {errors.title.message}</span>}
@@ -87,13 +84,14 @@ function UpdateCategory() {
         <input {...register("description")} />
         <div className="action">
           <button className="accept" type="submit">
-            Cập nhật
+            Thêm mới
           </button>
           <div
             className="cancel"
             onClick={() => {
               dispatch(setBackground(false));
-              dispatch(setCatEdit(false));
+              dispatch(setCreateCatPost(false));
+              reset();
             }}
           >
             Hủy
@@ -104,4 +102,4 @@ function UpdateCategory() {
   );
 }
 
-export default UpdateCategory;
+export default NewCategoryPost;

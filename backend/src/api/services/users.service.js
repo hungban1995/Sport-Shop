@@ -45,7 +45,10 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await Users.findOne({ email: email });
+    const user = await Users.findOne(
+      { email: email },
+      { createdAt: 0, updatedAt: 0, __v: 0 }
+    );
     if (!user) {
       return {
         error: {

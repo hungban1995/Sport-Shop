@@ -10,13 +10,13 @@ import "./styles/dark.scss";
 import Background from "./components/background";
 function App() {
   const { dark } = useSelector((state) => state.themeWeb);
-  const { refresh } = useSelector((state) => state.users);
+  const { refreshLogin } = useSelector((state) => state.users);
   const [refreshToken, setRefreshToken] = useState(null);
   useEffect(() => {
     if (localStorage && localStorage.getItem("refreshToken")) {
       setRefreshToken(JSON.parse(localStorage.getItem("refreshToken")));
     } else setRefreshToken(null);
-  }, [refresh]);
+  }, [refreshLogin]);
   return (
     <div className={dark ? "app dark" : "app"}>
       <BrowserRouter>

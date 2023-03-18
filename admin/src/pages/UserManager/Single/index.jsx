@@ -41,7 +41,7 @@ function Single() {
   const { register, watch, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema), defaultValues: async () => {
       try {
-        const res = await getData('users/get-user/' + id)
+        const res = await getData('users/get-id/' + id)
         const user = res.data.user
         if (user.avatar) {
           setAvatar(user.avatar)

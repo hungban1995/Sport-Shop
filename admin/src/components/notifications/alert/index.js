@@ -1,7 +1,9 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteData } from "../../../libs/fetchData";
+import { refreshCatPost } from "../../../stores/categoriesPostReducer";
+import { refreshCat } from "../../../stores/categoriesReducer";
 import { clearAlert, getNotify } from "../../../stores/notifyReducer";
+import { refreshUser } from "../../../stores/usersReducer";
 import "./alert.scss";
 function Popover({ id }) {
   const { alert } = useSelector((state) => state.notify);
@@ -16,6 +18,7 @@ function Popover({ id }) {
             message: res.data.success,
           })
         );
+        dispatch(refreshUser());
       }
       if (alert?.delete?.type === "category") {
         const res = await deleteData("categories/delete/" + id);
@@ -25,6 +28,17 @@ function Popover({ id }) {
             message: res.data.success,
           })
         );
+        dispatch(refreshCat());
+      }
+      if (alert?.delete?.type === "category-post") {
+        const res = await deleteData("categories-posts/delete/" + id);
+        dispatch(
+          getNotify({
+            status: "success",
+            message: res.data.success,
+          })
+        );
+        dispatch(refreshCatPost());
       }
     } catch (error) {
       console.log(error);

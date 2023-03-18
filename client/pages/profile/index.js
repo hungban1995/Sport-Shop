@@ -57,7 +57,7 @@ function Profile() {
     defaultValues: async () => {
       if (userId) {
         try {
-          const res = await getData("users/get-user/" + userId);
+          const res = await getData("users/get-id/" + userId);
           const values = res.data.user;
           setAvatar(values.avatar);
           setImagePath(`${IMG_URL}/${values.avatar}`);

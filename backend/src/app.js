@@ -20,6 +20,9 @@ app.use(morgan("common")); //Morgan configs
 //API routes
 router.usersRouter(app, express);
 router.categoriesRouter(app, express);
+router.categoriesPostsRouter(app, express);
+router.postsRouter(app, express);
+router.postCommentRouter(app, express);
 app.get("/", (req, res, next) => {
   res.send("hello");
 });

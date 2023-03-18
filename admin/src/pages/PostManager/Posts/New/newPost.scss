@@ -1,0 +1,71 @@
+.newPost {
+  .top,
+  .bottom {
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 10px;
+    margin: 20px;
+    display: flex;
+    h1 {
+      color: rgb(192, 191, 191);
+      font-size: 20px;
+      margin: auto;
+    }
+    .back {
+      display: flex;
+      align-items: center;
+      margin-right: 50px;
+      background-color: #c07373;
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 5px;
+      box-shadow: 2px 4px 10px 1px rgba(97, 96, 96, 0.47);
+      &:hover {
+        background-color: #9d3e61;
+      }
+      span {
+        color: rgb(220, 218, 218);
+      }
+      .icon {
+        font-size: 25px;
+        color: rgba(115, 30, 42, 0.627);
+      }
+    }
+    form {
+      margin: auto;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+
+      width: 80%;
+      .formInput {
+        width: 100%;
+        margin-bottom: 20px;
+        input,
+        select {
+          width: 100%;
+          padding: 5px;
+          border: none;
+          border-bottom: 1px solid gray;
+        }
+        span {
+          color: red;
+          font-size: 13px;
+        }
+      }
+      button {
+        width: 150px;
+        padding: 10px;
+        border: none;
+        background-color: teal;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+        border-radius: 5px;
+        &:hover {
+          background-color: rgb(10, 195, 121);
+        }
+      }
+    }
+  }
+}
