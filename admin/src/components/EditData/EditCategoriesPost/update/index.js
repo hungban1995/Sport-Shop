@@ -2,23 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
-import "./updateCategory.scss";
+import "./updateCategoriesPost.scss";
 import { setBackground } from "../../../../stores/themeWebReducer";
-import { refreshCat, setCatEdit } from "../../../../stores/categoriesReducer";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { patchData } from "../../../../libs/fetchData";
 import { getNotify } from "../../../../stores/notifyReducer";
+import {
+  refreshCatPost,
+  setCatPostEdit,
+} from "../../../../stores/categoriesPostReducer";
 const schema = yup.object().shape({
   title: yup.string().required(),
 });
-function UpdateCategory() {
-  const { catEdit } = useSelector((state) => state.categories);
+function UpdateCategoryPost() {
+  const { catPostEdit } = useSelector((state) => state.categoriesPost);
   const dispatch = useDispatch();
   const [category, setCategory] = useState(null);
   useEffect(() => {
-    setCategory(catEdit.category);
-  }, [catEdit.category]);
+    setCategory(catPostEdit.category);
+  }, [catPostEdit.category]);
   const {
     register,
     handleSubmit,
@@ -44,9 +47,8 @@ function UpdateCategory() {
     formData.append("title", data.title);
     formData.append("description", data.description);
     const id = category?._id;
-
     try {
-      const res = await patchData("categories/update/" + id, formData);
+      const res = await patchData("categories-posts/update/" + id, formData);
       dispatch(
         getNotify({
           status: "success",
@@ -54,8 +56,8 @@ function UpdateCategory() {
         })
       );
       dispatch(setBackground(false));
-      dispatch(setCatEdit(false));
-      dispatch(refreshCat());
+      dispatch(setCatPostEdit(false));
+      dispatch(refreshCatPost());
     } catch (error) {
       dispatch(
         getNotify({
@@ -66,14 +68,14 @@ function UpdateCategory() {
     }
   };
   return (
-    <div className={"updateCat " + (catEdit?.edit ? "active" : "")}>
+    <div className={"updateCat " + (catPostEdit?.edit ? "active" : "")}>
       <div className="header">
         <span>Edit Category</span>
         <AiOutlineClose
           className="icon"
           onClick={() => {
             dispatch(setBackground(false));
-            dispatch(setCatEdit(false));
+            dispatch(setCatPostEdit(false));
           }}
         />
       </div>
@@ -93,7 +95,7 @@ function UpdateCategory() {
             className="cancel"
             onClick={() => {
               dispatch(setBackground(false));
-              dispatch(setCatEdit(false));
+              dispatch(setCatPostEdit(false));
             }}
           >
             Hủy
@@ -104,4 +106,4 @@ function UpdateCategory() {
   );
 }
 
-export default UpdateCategory;
+export default UpdateCategoryPost;

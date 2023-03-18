@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./navbar.scss";
 import { AiOutlineSearch } from "react-icons/ai";
-import { HiBars3 } from "react-icons/hi2";
 import { FiBell, FiMessageSquare } from "react-icons/fi";
 import { getData } from "../../../libs/fetchData";
 import { Link } from "react-router-dom";
@@ -12,14 +11,19 @@ function Navbar() {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const userId = JSON.parse(localStorage.getItem("userId"));
+  const [userId, setUserId] = useState(null);
   useEffect(() => {
-    getData(`users/get-user/${userId}`)
-      .then((res) => {
-        setCurrentUser(res.data.user);
-      })
-      .catch((err) => console.log(err));
+    setUserId(JSON.parse(localStorage.getItem("userId")));
   }, []);
+  useEffect(() => {
+    if (userId) {
+      getData(`users/get-id/${userId}`)
+        .then((res) => {
+          setCurrentUser(res.data.user);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [userId]);
   return (
     <div className="navbar">
       <div className="wrapper">

@@ -1,0 +1,76 @@
+.postItem {
+  display: grid;
+  grid-template-columns: 29% 69%;
+  gap: 2%;
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  padding: 10px;
+  margin: 10px;
+
+  .left {
+    margin: 10px;
+    img {
+      width: 200px;
+      max-width: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+  }
+  .right {
+    margin: 10px;
+    .headerPost {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      .titlePost {
+        p {
+          font-size: 24px;
+          font-weight: bold;
+          line-height: 24px;
+        }
+      }
+      .infoPost {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    .contentPost {
+      p {
+        font-weight: bold;
+      }
+      span {
+        height: 100px;
+        overflow: hidden;
+      }
+    }
+    .action {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      .editButton {
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: darkblue;
+        border: 1px dotted rgb(0, 0, 139, 0.596);
+        cursor: pointer;
+        &:hover {
+          background-color: rgb(10, 195, 121);
+          color: lightblue;
+        }
+      }
+      .deleteButton {
+        background-color: aliceblue;
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: crimson;
+        border: 1px dotted rgba(214, 49, 80, 0.596);
+        cursor: pointer;
+        &:hover {
+          background-color: crimson;
+          color: lightblue;
+        }
+      }
+    }
+  }
+}

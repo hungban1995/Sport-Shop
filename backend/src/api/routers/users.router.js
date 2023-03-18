@@ -14,7 +14,7 @@ const usersRouter = async (app, express) => {
   ); //user register
   router.post("/login", usersLoginSchemaValidate, controller.login); //user login
   router.get("/get-all", controller.getUsers); //get all user
-  router.get("/get-user/:id", controller.getUserById); //get all user
+  router.get("/get-id/:id", controller.getUserById); //get all user
   router.patch("/update/:id", uploadSingle, controller.updateUser); //update user
 
   router.delete("/delete/:id", controller.deleteUser); //delete user

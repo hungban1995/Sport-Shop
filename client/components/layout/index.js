@@ -22,7 +22,7 @@ function Layout({ children }) {
     const getUserLogin = async () => {
       if (userId) {
         try {
-          const res = await getData("users/get-user/" + userId);
+          const res = await getData("users/get-id/" + userId);
           setUser(res.data.user);
         } catch (error) {
           console.log(error);

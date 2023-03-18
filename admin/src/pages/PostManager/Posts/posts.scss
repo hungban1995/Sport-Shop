@@ -1,0 +1,28 @@
+.posts {
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  padding: 20px;
+  margin: 20px;
+  .title {
+    font-weight: 500;
+    color: gray;
+    margin-bottom: 15px;
+    display: grid;
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 20px;
+    grid-template-columns: auto auto;
+    a {
+      width: fit-content;
+      text-decoration: none;
+      background-color: rgba(151, 235, 95, 0.49);
+      color: rgb(6, 68, 6);
+      padding: 5px;
+      border-radius: 10px;
+      &:hover {
+        background-color: rgba(61, 119, 202, 0.429);
+      }
+    }
+  }
+  .body {
+    color: gray;
+  }
+}

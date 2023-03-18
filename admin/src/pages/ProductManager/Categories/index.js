@@ -2,15 +2,15 @@
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BLANK_IMG, IMG_URL } from "../../constants";
-import { getData } from "../../libs/fetchData";
-import { getAlert } from "../../stores/notifyReducer";
-import Alert from "../../components/notifications/alert";
+import { BLANK_IMG, IMG_URL } from "../../../constants";
+import { getData } from "../../../libs/fetchData";
+import { getAlert } from "../../../stores/notifyReducer";
+import Alert from "../../../components/notifications/alert";
 import "./categories.scss";
-import EditCategory from "../../components/EditData/EditCategory/update";
-import { setBackground } from "../../stores/themeWebReducer";
-import { setCreateCat, setDataEdit } from "../../stores/categoriesReducer";
-import NewCategory from "../../components/EditData/EditCategory/newCategory";
+import EditCategory from "../../../components/EditData/EditCategory/update";
+import { setBackground } from "../../../stores/themeWebReducer";
+import { setCreateCat, setCatEdit } from "../../../stores/categoriesReducer";
+import NewCategory from "../../../components/EditData/EditCategory/newCategory";
 function Categories() {
   const dispatch = useDispatch();
   const { refreshCat } = useSelector((state) => state.categories);
@@ -67,7 +67,7 @@ function Categories() {
               className="editButton"
               onClick={() => {
                 dispatch(setBackground(true));
-                dispatch(setDataEdit({ edit: true, category: params.row }));
+                dispatch(setCatEdit({ edit: true, category: params.row }));
               }}
             >
               Edit
