@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { BLANK_IMG } from "../../constants/index";
+import { BLANK_IMG, IMG_URL } from "../../constants/index";
 import moment from "moment";
 import "./postItem.scss";
+import { useDispatch } from "react-redux";
+import { getAlert } from "../../stores/notifyReducer";
+import AlertMessage from "../notifications/alert";
+import { useNavigate } from "react-router-dom";
 function PostItem(props) {
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
+  const dispatch = useDispatch();
   useEffect(() => {
     setPost(props.post);
   }, [props.post]);
-  if (!post) return <div>No data!</div>;
+  const RenderPostContent = () => {
+    return { __html: post && post.content };
+  };
   return (
     <div className="postItem">
       <div className="left">
-        <img alt="img" src={BLANK_IMG} />
+        <img
+          alt="img"
+          src={
+            post?.images.length > 0 ? `${IMG_URL}/${post.images[0]}` : BLANK_IMG
+          }
+        />
       </div>
       <div className="right">
         <div className="headerPost">
@@ -29,29 +42,33 @@ function PostItem(props) {
           </div>
         </div>
         <div className="contentPost">
-          <p>{post?.description}</p>
-          <span>{post?.content}</span>
+          <p className="description">{post?.description}</p>
+          <div
+            className="content"
+            dangerouslySetInnerHTML={RenderPostContent()}
+          ></div>
         </div>
         <div className="action">
-          {/* <AlertMessage  /> */}
+          <AlertMessage idItem={post?._id} />
           <div
             className="editButton"
             onClick={() => {
-              // navigate(`${params.row._id}`);
+              navigate(`${post?._id}`);
             }}
           >
             View and Edit
           </div>
           <div
             className="deleteButton"
-            // onClick={() => {
-            //     dispatch(
-            //         getAlert({
-            //             open: true,
-            //             delete: { id: params.row._id, type: "user" },
-            //         })
-            //     );
-            // }}
+            onClick={() => {
+              dispatch(
+                getAlert({
+                  open: true,
+                  delete: { id: post?._id, type: "post" },
+                  style: { top: "-85px", right: "unset" },
+                })
+              );
+            }}
           >
             Delete
           </div>

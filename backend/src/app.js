@@ -23,6 +23,10 @@ router.categoriesRouter(app, express);
 router.categoriesPostsRouter(app, express);
 router.postsRouter(app, express);
 router.postCommentRouter(app, express);
+router.productsVariantsRouter(app, express);
+
+router.productsRouter(app, express);
+
 app.get("/", (req, res, next) => {
   res.send("hello");
 });

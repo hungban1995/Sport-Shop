@@ -9,6 +9,7 @@ import CategoriesPost from "../pages/PostManager/CategoriesPost";
 import Posts from "../pages/PostManager/Posts";
 import Products from "../pages/ProductManager/Products";
 import NewPost from "../pages/PostManager/Posts/New";
+import SinglePost from "../pages/PostManager/Posts/SinglePost";
 
 function Routers() {
   return (
@@ -28,6 +29,7 @@ function Routers() {
           <Route path="posts/">
             <Route index element={<Posts />} />
             <Route path="new-post" element={<NewPost />} />
+            <Route path=":id" element={<SinglePost />} />
           </Route>
           <Route
             path="*"

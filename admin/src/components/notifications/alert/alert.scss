@@ -1,49 +1,49 @@
-.alert{
-    position: absolute;
-    background-color: white;
-    top: 100%;
-    right:  -65px;
-    width: 200px;
-    height: 70px;
-    border-radius: 5px;
-    padding: 5px;
-    z-index: 99;
-    box-shadow: 2px 4px 10px 1px rgb(139, 119, 119);
-    display: grid;
-    grid-template-rows: auto auto;
-    align-items: center;
+.alert {
+  position: absolute;
+  background-color: white;
+  top: -50%;
+  right: -65px;
+  width: 200px;
+  height: 70px;
+  border-radius: 5px;
+  padding: 5px;
+  z-index: 99;
+  box-shadow: 2px 4px 10px 1px rgb(139, 119, 119);
+  display: grid;
+  grid-template-rows: auto auto;
+  align-items: center;
+  justify-content: center;
+  .content {
+    font-size: 13px;
+    font-weight: bold;
+    color: rgb(195, 100, 100);
+  }
+  .action {
+    display: flex;
     justify-content: center;
-    .content{
-        font-size: 13px;
-        font-weight: bold;
-        color:rgb(195, 100, 100);  
-    }
-    .action{
-        display: flex;
-        justify-content: center;
-      button{
-        margin: 3px;
-        border: none;
-        border-radius: 5px;
-        &.accept{
-            background-color: lightblue;
+    button {
+      margin: 3px;
+      border: none;
+      border-radius: 5px;
+      &.accept {
+        background-color: lightblue;
 
-            color: rgb(139, 119, 119);
-            &:hover{
-                background-color: rgb(63, 227, 115);
-            }
+        color: rgb(139, 119, 119);
+        &:hover {
+          background-color: rgb(63, 227, 115);
         }
-        &.cancel{
-            background-color: beige;
-            color: rgb(128, 106, 106);
-            &:hover{
-                background-color: rgb(195, 100, 100);
-                color: wheat;
-            }
+      }
+      &.cancel {
+        background-color: beige;
+        color: rgb(128, 106, 106);
+        &:hover {
+          background-color: rgb(195, 100, 100);
+          color: wheat;
         }
       }
     }
+  }
 }
-.d-none{
-        display: none;
-    }
+.d-none {
+  display: none;
+}

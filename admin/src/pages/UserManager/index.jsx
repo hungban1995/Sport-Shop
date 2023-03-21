@@ -9,7 +9,7 @@ import AlertMessage from "../../components/notifications/alert";
 
 import './users.scss'
 function Users() {
-    const { alert } = useSelector((state) => state.notify);
+    const { refreshUser } = useSelector((state) => state.users);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [users, setUsers] = useState([]);
@@ -23,7 +23,7 @@ function Users() {
             }
         };
         getUser();
-    }, [alert]);
+    }, [refreshUser]);
     const columns = [
         { field: "id", headerName: "ID", width: 70 },
         {
@@ -93,7 +93,7 @@ function Users() {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <AlertMessage id={params.row._id} />
+                        <AlertMessage idItem={params.row._id} />
                         <div
                             className="editButton"
                             onClick={() => {
@@ -122,7 +122,7 @@ function Users() {
     ];
     return (
         <div className='users'>
-            <div className="listTitle">
+            <div className="title">
                 <span>Danh sách tài khoản:</span>
                 <Link to='new' >Thêm mới</Link>
             </div>

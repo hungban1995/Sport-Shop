@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PostItem from "../../../components/PostItem";
 import { getData } from "../../../libs/fetchData";
 import "./posts.scss";
 function Posts() {
+  const { refreshPosts } = useSelector((state) => state.posts);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     const getPosts = async () => {
@@ -15,7 +17,8 @@ function Posts() {
       }
     };
     getPosts();
-  }, []);
+  }, [refreshPosts]);
+  if (!posts) return <div>Post not found</div>;
   return (
     <div className="posts">
       <div className="title">

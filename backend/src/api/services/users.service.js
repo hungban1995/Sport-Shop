@@ -105,7 +105,7 @@ export const getUsers = async (req, res) => {
 export const getUserById = async (req) => {
   try {
     const { id } = req.params;
-    const userById = await Users.findOne({ _id: id }, { password: 0 });
+    const userById = await Users.findOne({ _id: id }, { password: 0, __v: 0 });
     const decode = await verifyAccessToken(req);
     if (decode.error) {
       return { error: { status: 401, error: decode.error } };

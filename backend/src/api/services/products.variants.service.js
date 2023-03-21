@@ -2,57 +2,8 @@ import { format } from "date-fns";
 import { verifyAccessToken } from "../middleware/auth";
 
 //create
-export const createPost = async (req) => {
-  try {
-    const decode = await verifyAccessToken(req);
-    if (decode.error) return { error: { status: 401, error: decode.error } };
-    if (decode.role !== "admin") {
-      return {
-        error: {
-          status: 403,
-          error: "Bạn không có quyền thực hiện",
-        },
-      };
-    }
-    req.body.author = decode._id;
-    let categories = [];
-    if (req.body.category) {
-      categories = req.body.category;
-    }
-    req.body.category = categories;
-    if (req.fileValidationError) {
-      return {
-        error: {
-          status: 400,
-          error: "Upload file error",
-        },
-      };
-    }
-    const { title } = req.body;
-    if (!title) {
-      return {
-        error: {
-          status: 400,
-          error: "Title can not empty",
-        },
-      };
-    }
-    const { files } = req;
-    if (files && files.length > 0) {
-      const images = [];
-      const dateTime = format(new Date(), "MM-yyyy");
-      files.forEach((item) => {
-        images.push(`uploads/${dateTime}/${item.filename}`);
-      });
-      req.body.images = images;
-    }
-    return { post: req.body };
-  } catch (error) {
-    return { error: error };
-  }
-};
-//update
-export const updatePost = async (req) => {
+export const createProductVariant = async (req) => {
+  console.log(req.body);
   try {
     const decode = await verifyAccessToken(req);
     if (decode.error) return { error: { status: 401, error: decode.error } };
@@ -65,11 +16,6 @@ export const updatePost = async (req) => {
       };
     }
 
-    let categories = [];
-    if (req.body.category) {
-      categories = req.body.category;
-    }
-    req.body.category = categories;
     if (req.fileValidationError) {
       return {
         error: {
@@ -78,31 +24,60 @@ export const updatePost = async (req) => {
         },
       };
     }
-    const { title } = req.body;
-    if (!title) {
-      return {
-        error: {
-          status: 400,
-          error: "Title can not empty",
-        },
-      };
-    }
     const { files } = req;
-    if (files && files.length > 0) {
-      const images = [];
-      const dateTime = format(new Date(), "MM-yyyy");
-      files.forEach((item) => {
-        images.push(`uploads/${dateTime}/${item.filename}`);
-      });
-      req.body.images = images;
+    let image = "";
+    if (files?.length > 0) {
+      const dateTime = format(new Date(), `MM-yyyy`);
+      image = `uploads/${dateTime}/${files[0].filename}`;
+      req.body.image = image;
     }
-    return { postUpdate: req.body };
+
+    return { productVariants: req.body };
   } catch (error) {
     return { error: error };
   }
 };
+//update
+export const updateProductVariant = async (req) => {
+  try {
+    const decode = await verifyAccessToken(req);
+    if (decode.error) return { error: { status: 401, error: decode.error } };
+    if (decode.role !== "admin") {
+      return {
+        error: {
+          status: 403,
+          error: "Bạn không có quyền thực hiện",
+        },
+      };
+    }
+    if (req.fileValidationError) {
+      return {
+        error: {
+          status: 400,
+          error: "Upload file error",
+        },
+      };
+    }
+    const { files } = req;
+    let image = "";
+    if (files?.length > 0) {
+      const dateTime = format(new Date(), `MM-yyyy`);
+      image = `uploads/${dateTime}/${files[0].filename}`;
+      req.body.image = image;
+    }
+    // let attributes = [];
+    // if (req.body.attributes) {
+    //   attributes = JSON.parse(req.body.attributes);
+    // }
+    // req.body.attributes = attributes;
+    return { variantUpdate: req.body };
+  } catch (error) {
+    return { error: error };
+  }
+};
+
 //delete
-export const deletePost = async (req) => {
+export const deleteProductVariant = async (req, res, next) => {
   try {
     const decode = await verifyAccessToken(req);
     if (decode.error) return { error: { status: 401, error: decode.error } };

@@ -34,7 +34,7 @@ export const getAll = async (req, res, next) => {
 export const getById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const post = await Posts.findById(id)
+    const post = await Posts.findById(id, { __v: 0 })
       .populate({ path: "category", select: "title" })
       .populate({ path: "author", select: "username avatar" });
     if (!post) {
