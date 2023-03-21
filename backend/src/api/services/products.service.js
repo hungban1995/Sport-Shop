@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { verifyAccessToken } from "../middleware/auth";
 
 //create
-export const createPost = async (req) => {
+export const createProduct = async (req) => {
   try {
     const decode = await verifyAccessToken(req);
     if (decode.error) return { error: { status: 401, error: decode.error } };
@@ -14,7 +14,6 @@ export const createPost = async (req) => {
         },
       };
     }
-    req.body.author = decode._id;
     let categories = [];
     if (req.body.category) {
       categories = req.body.category;
@@ -46,30 +45,30 @@ export const createPost = async (req) => {
       });
       req.body.images = images;
     }
-    return { post: req.body };
+    if (!req.body.variants || req.body.variants.length === 0) {
+      return {
+        error: {
+          status: 400,
+          error: "Variants can not be empty",
+        },
+      };
+    }
+    return { product: req.body };
   } catch (error) {
     return { error: error };
   }
 };
 //update
-export const updatePost = async (req) => {
+export const updateProduct = async (req, res, next) => {
   try {
     const decode = await verifyAccessToken(req);
     if (decode.error) return { error: { status: 401, error: decode.error } };
     if (decode.role !== "admin") {
-      return {
-        error: {
-          status: 403,
-          error: "Bạn không có quyền thực hiện",
-        },
-      };
+      return next({
+        status: 403,
+        error: "You do not permission to update product",
+      });
     }
-
-    let categories = [];
-    if (req.body.category) {
-      categories = req.body.category;
-    }
-    req.body.category = categories;
     if (req.fileValidationError) {
       return {
         error: {
@@ -78,31 +77,25 @@ export const updatePost = async (req) => {
         },
       };
     }
-    const { title } = req.body;
-    if (!title) {
-      return {
-        error: {
-          status: 400,
-          error: "Title can not empty",
-        },
-      };
-    }
     const { files } = req;
+    const images = [];
     if (files && files.length > 0) {
-      const images = [];
-      const dateTime = format(new Date(), "MM-yyyy");
+      const dateTime = format(new Date(), `MM-yyyy`);
+      let image = "";
       files.forEach((item) => {
-        images.push(`uploads/${dateTime}/${item.filename}`);
+        image = `uploads/${dateTime}/${item.filename}`;
+        images.push(image);
       });
       req.body.images = images;
     }
-    return { postUpdate: req.body };
+    return { productUpdate };
   } catch (error) {
     return { error: error };
   }
 };
+
 //delete
-export const deletePost = async (req) => {
+export const deleteProduct = async (req) => {
   try {
     const decode = await verifyAccessToken(req);
     if (decode.error) return { error: { status: 401, error: decode.error } };

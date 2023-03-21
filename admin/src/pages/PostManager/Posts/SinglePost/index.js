@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
-import "./newPost.scss";
+import { useNavigate, useParams } from "react-router-dom";
+import "./singlePost.scss";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { IMG_URL } from "../../../../constants";
-import { getData, postData } from "../../../../libs/fetchData";
+import { getData, patchData } from "../../../../libs/fetchData";
 import { useDispatch } from "react-redux";
 import { getNotify } from "../../../../stores/notifyReducer";
 const schema = yup.object({
   title: yup.string().required(),
 });
-function NewPost() {
+function SinglePost() {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [textValue, setTextValue] = useState("");
@@ -32,13 +33,35 @@ function NewPost() {
   }, []);
   const {
     register,
+    setValue,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "all",
   });
+  //setDefault Value
+  useEffect(() => {
+    const getPostData = async () => {
+      try {
+        const res = await getData(`posts/get-id/${id}`);
+        const { title, description, images, content, category } = res.data.post;
+        setValue("title", title);
+        setValue("description", description);
+        setValue("images", images);
+        setTextValue(content);
+        setValue(
+          "category",
+          category.map((cat) => cat._id)
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getPostData();
+  }, [id, setValue, setTextValue]);
+
+  //update
   const onSubmit = async (data) => {
     const newData = { ...data, content: textValue };
     const formData = new FormData();
@@ -58,14 +81,13 @@ function NewPost() {
     formData.append("content", newData.content);
     formData.append("title", newData.title);
     try {
-      const res = await postData("posts/create", formData);
+      const res = await patchData("posts/update/" + id, formData);
       dispatch(
         getNotify({
           status: "success",
           message: res.data.success,
         })
       );
-      reset();
     } catch (error) {
       dispatch(
         getNotify({
@@ -87,7 +109,7 @@ function NewPost() {
           <BiArrowBack className="icon" />
           <span>Back</span>
         </div>
-        <h1>Add new Post</h1>
+        <h1>Edit Post:</h1>
       </div>
       <div className="bottom">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -134,7 +156,7 @@ function NewPost() {
             />
           </div>
           <button className="btnCreate" type="submit">
-            Create
+            Update
           </button>
         </form>
       </div>
@@ -142,4 +164,4 @@ function NewPost() {
   );
 }
 
-export default NewPost;
+export default SinglePost;

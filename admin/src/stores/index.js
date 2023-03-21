@@ -4,6 +4,7 @@ import notifyReducer from "./notifyReducer";
 import usersReducer from "./usersReducer";
 import categoriesReducer from "./categoriesReducer";
 import categoriesPostReducer from "./categoriesPostReducer";
+import postsReducer from "./postsReducer";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     themeWeb: themeWebReducer,
     categories: categoriesReducer,
     categoriesPost: categoriesPostReducer,
+    posts: postsReducer,
   },
 });

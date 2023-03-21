@@ -62,7 +62,7 @@ function Categories() {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Alert id={params.row._id} />
+            <Alert idItem={params.row._id} />
             <div
               className="editButton"
               onClick={() => {
@@ -110,7 +110,6 @@ function Categories() {
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
-          checkboxSelection
           getRowId={(row) => row._id}
         />
       </div>

@@ -10,6 +10,7 @@ import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router";
 import { useForm } from 'react-hook-form'
 import { IMG_URL } from "../../../constants";
+import moment from "moment";
 const schema = yup.object({
   username: yup.string().required(),
   password: yup.string(),
@@ -48,8 +49,8 @@ function Single() {
           setImagePath(`${IMG_URL}/${user.avatar}`)
         }
         if (user.birthday) {
-          const date = new Date(user.birthday);
-          user.birthday = date.toISOString().slice(0, 10);
+          const date = moment(user?.birthday).format("DD/MM/YYYY");
+          user.birthday = date
         }
         return user
       } catch (error) {

@@ -3,43 +3,40 @@ import { deleteData } from "../../../libs/fetchData";
 import { refreshCatPost } from "../../../stores/categoriesPostReducer";
 import { refreshCat } from "../../../stores/categoriesReducer";
 import { clearAlert, getNotify } from "../../../stores/notifyReducer";
+import { refreshPosts } from "../../../stores/postsReducer";
 import { refreshUser } from "../../../stores/usersReducer";
 import "./alert.scss";
-function Popover({ id }) {
+function Popover({ idItem }) {
   const { alert } = useSelector((state) => state.notify);
   const dispatch = useDispatch();
   const handleAccept = async () => {
     try {
+      let res;
       if (alert?.delete?.type === "user") {
-        const res = await deleteData("users/delete/" + id);
-        dispatch(
-          getNotify({
-            status: "success",
-            message: res.data.success,
-          })
-        );
+        res = await deleteData("users/delete/" + idItem);
         dispatch(refreshUser());
       }
       if (alert?.delete?.type === "category") {
-        const res = await deleteData("categories/delete/" + id);
-        dispatch(
-          getNotify({
-            status: "success",
-            message: res.data.success,
-          })
-        );
+        res = await deleteData("categories/delete/" + idItem);
         dispatch(refreshCat());
       }
       if (alert?.delete?.type === "category-post") {
-        const res = await deleteData("categories-posts/delete/" + id);
-        dispatch(
-          getNotify({
-            status: "success",
-            message: res.data.success,
-          })
-        );
+        res = await deleteData("categories-posts/delete/" + idItem);
         dispatch(refreshCatPost());
       }
+      if (alert?.delete?.type === "post") {
+        res = await deleteData("posts/delete/" + idItem);
+        dispatch(refreshPosts());
+      }
+      if (alert?.delete?.type === "product") {
+        res = await deleteData("products/delete/" + idItem);
+      }
+      dispatch(
+        getNotify({
+          status: "success",
+          message: res.data.success,
+        })
+      );
     } catch (error) {
       console.log(error);
       dispatch(
@@ -54,8 +51,9 @@ function Popover({ id }) {
 
   return (
     <div
+      style={alert?.style}
       className={`${
-        alert?.open && alert?.delete?.id === id ? "alert" : "d-none"
+        alert?.open && alert?.delete?.id === idItem ? "alert" : "d-none"
       }`}
     >
       <div className="content">Bạn chắc chắn muốn xóa chứ!</div>

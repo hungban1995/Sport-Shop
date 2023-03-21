@@ -17,6 +17,7 @@
   }
   .right {
     margin: 10px;
+    height: 250px;
     .headerPost {
       padding: 10px;
       display: flex;
@@ -25,7 +26,6 @@
         p {
           font-size: 24px;
           font-weight: bold;
-          line-height: 24px;
         }
       }
       .infoPost {
@@ -34,10 +34,10 @@
       }
     }
     .contentPost {
-      p {
+      .description {
         font-weight: bold;
       }
-      span {
+      .content {
         height: 100px;
         overflow: hidden;
       }
