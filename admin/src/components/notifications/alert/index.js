@@ -4,9 +4,12 @@ import { refreshCatPost } from "../../../stores/categoriesPostReducer";
 import { refreshCat } from "../../../stores/categoriesReducer";
 import { clearAlert, getNotify } from "../../../stores/notifyReducer";
 import { refreshPosts } from "../../../stores/postsReducer";
+import { refreshVar } from "../../../stores/productVariants";
 import { refreshUser } from "../../../stores/usersReducer";
+import { refreshProducts } from "../../../stores/productsReducer";
+
 import "./alert.scss";
-function Popover({ idItem }) {
+function AlertDel({ idItem, idDel }) {
   const { alert } = useSelector((state) => state.notify);
   const dispatch = useDispatch();
   const handleAccept = async () => {
@@ -28,8 +31,14 @@ function Popover({ idItem }) {
         res = await deleteData("posts/delete/" + idItem);
         dispatch(refreshPosts());
       }
+      if (alert?.delete?.type === "variant") {
+        res = await deleteData("products-variants/delete/" + idItem);
+        dispatch(refreshVar());
+        idDel(idItem);
+      }
       if (alert?.delete?.type === "product") {
         res = await deleteData("products/delete/" + idItem);
+        dispatch(refreshProducts());
       }
       dispatch(
         getNotify({
@@ -79,4 +88,4 @@ function Popover({ idItem }) {
   );
 }
 
-export default Popover;
+export default AlertDel;

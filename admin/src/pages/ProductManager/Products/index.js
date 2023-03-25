@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import { getData } from "../../../libs/fetchData";
 import { getAlert } from "../../../stores/notifyReducer";
 import AlertMessage from "../../../components/notifications/alert";
+
 const Products = () => {
-  const { alert } = useSelector((state) => state.notify);
+  const { refreshProducts } = useSelector((state) => state.products);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
@@ -23,7 +24,7 @@ const Products = () => {
       }
     };
     getProducts();
-  }, [alert]);
+  }, [refreshProducts]);
   const columns = [
     {
       field: "title",
@@ -55,8 +56,12 @@ const Products = () => {
         const cat = params.row.category;
         return (
           <div>
-            {cat?.map((item) => {
-              return <span>{item.title}</span>;
+            {cat?.map((item, idx) => {
+              return (
+                <li key={idx} style={{ listStyle: "none" }}>
+                  {item.title}
+                </li>
+              );
             })}
           </div>
         );
@@ -94,6 +99,17 @@ const Products = () => {
         let inStock = 0;
         variants.forEach((item) => (inStock += item.inStock));
         return <div>{inStock}</div>;
+      },
+    },
+    {
+      field: "sold",
+      headerName: "Sold",
+      width: 70,
+      renderCell: (params) => {
+        const variants = params.row.variants;
+        let sold = 0;
+        variants.forEach((item) => (sold += item.sold));
+        return <div>{sold}</div>;
       },
     },
     {
@@ -135,7 +151,7 @@ const Products = () => {
     <div className="products">
       <div className="title">
         <span>Danh sách sản phẩm</span>
-        <Link to="new-post">Thêm mới</Link>
+        <Link to="new">Thêm mới</Link>
       </div>
       <div className="table">
         <DataGrid

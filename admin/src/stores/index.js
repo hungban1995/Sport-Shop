@@ -5,6 +5,8 @@ import usersReducer from "./usersReducer";
 import categoriesReducer from "./categoriesReducer";
 import categoriesPostReducer from "./categoriesPostReducer";
 import postsReducer from "./postsReducer";
+import productVariantsReducer from "./productVariants";
+import productsReducer from "./productsReducer";
 
 export default configureStore({
   reducer: {
@@ -14,5 +16,7 @@ export default configureStore({
     categories: categoriesReducer,
     categoriesPost: categoriesPostReducer,
     posts: postsReducer,
+    variant: productVariantsReducer,
+    products: productsReducer,
   },
 });

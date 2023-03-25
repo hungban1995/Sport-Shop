@@ -1,34 +1,50 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import CreateVariants from "../../../../components/variants";
-import "./newProduct.scss";
-import { getData, postData } from "../../../../libs/fetchData";
+import "./singleProduct.scss";
+import { getData, patchData, postData } from "../../../../libs/fetchData";
 import { BiArrowBack } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getNotify } from "../../../../stores/notifyReducer";
-const schema = yup.object({
-  title: yup.string().required(),
-});
-const CreateProduct = () => {
+const SingleProduct = () => {
+  const { register, handleSubmit, setValue, reset } = useForm({});
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
+  const { id } = useParams();
   const [categories, setCategories] = useState([]);
   const [variantId, setVariantId] = useState([]);
-  const handleBack = () => {
-    if (variantId?.length > 0) {
-      window.addEventListener("beforeunload", function (event) {
-        // Hủy bỏ sự kiện mặc định của trình duyệt
-        event.preventDefault();
-        // Hiển thị thông báo cho người dùng
-        alert("Bạn đang chuyển trang. Bạn có chắc chắn muốn rời khỏi trang?");
-      });
-    } else navigate(-1);
-  };
+  const [currentVariants, setCurrentVariants] = useState([]);
+  //fill data in form
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        if (id) {
+          const res = await getData("products/get-id/" + id);
+          setCurrentVariants(res.data.product.variants);
+          const { title, description, content, category, variants } =
+            res.data.product;
+          setValue("title", title);
+          setValue("description", description);
+          setValue("content", content);
+          setValue(
+            "category",
+            category.map((cat) => cat._id)
+          );
+          let varIdArr = [];
+          variants.forEach((item) => varIdArr.push(item._id));
+          setVariantId(varIdArr);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, [id, setValue]);
+  //get categories
   useEffect(() => {
     const getCat = async () => {
       try {
@@ -40,16 +56,7 @@ const CreateProduct = () => {
     };
     getCat();
   }, []);
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    mode: "all",
-  });
+  //submit update
   const onSubmit = async (data) => {
     const newData = { ...data, variants: variantId };
     console.log(newData);
@@ -63,23 +70,19 @@ const CreateProduct = () => {
         formData.append("images", item);
       });
     }
-    if (newData.category) {
-      const fileList = [...newData.category];
-      fileList.forEach((item) => {
-        formData.append("category", item);
-      });
-    }
     formData.append("variants", JSON.stringify(newData.variants));
+
+    if (newData.category) {
+      formData.append("category", JSON.stringify(newData.category));
+    }
     try {
-      const res = await postData("products/create", formData);
+      const res = await patchData("products/update/" + id, formData);
       dispatch(
         getNotify({
           status: "success",
           message: res.data.success,
         })
       );
-      reset();
-      setVariantId(null);
     } catch (error) {
       console.log(error);
       dispatch(
@@ -90,10 +93,16 @@ const CreateProduct = () => {
       );
     }
   };
+
   return (
     <div className="newProduct">
       <div className="top">
-        <div className="back" onClick={handleBack}>
+        <div
+          className="back"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
           <BiArrowBack className="icon" />
           <span>Back</span>
         </div>
@@ -105,7 +114,6 @@ const CreateProduct = () => {
             <div className="formInput">
               <label htmlFor="title">Tên sản phẩm</label>
               <input type="text" id="title" {...register("title")} />
-              {errors.title && <span>Field {errors.title.message}</span>}
             </div>
 
             <div className="formInput">
@@ -159,10 +167,14 @@ const CreateProduct = () => {
         </div>
         <div className="right">
           <h3>Cấu hình sản phẩm</h3>
-          <CreateVariants setVariantId={setVariantId} variantId={variantId} />
+          <CreateVariants
+            setVariantId={setVariantId}
+            variantId={variantId}
+            currentVariants={currentVariants}
+          />
         </div>
       </div>
     </div>
   );
 };
-export default CreateProduct;
+export default SingleProduct;

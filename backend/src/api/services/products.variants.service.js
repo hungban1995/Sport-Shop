@@ -3,7 +3,6 @@ import { verifyAccessToken } from "../middleware/auth";
 
 //create
 export const createProductVariant = async (req) => {
-  console.log(req.body);
   try {
     const decode = await verifyAccessToken(req);
     if (decode.error) return { error: { status: 401, error: decode.error } };
@@ -32,6 +31,11 @@ export const createProductVariant = async (req) => {
       req.body.image = image;
     }
 
+    let attributes = [];
+    if (req.body.attributes) {
+      attributes = JSON.parse(req.body.attributes);
+    }
+    req.body.attributes = attributes;
     return { productVariants: req.body };
   } catch (error) {
     return { error: error };
@@ -65,11 +69,11 @@ export const updateProductVariant = async (req) => {
       image = `uploads/${dateTime}/${files[0].filename}`;
       req.body.image = image;
     }
-    // let attributes = [];
-    // if (req.body.attributes) {
-    //   attributes = JSON.parse(req.body.attributes);
-    // }
-    // req.body.attributes = attributes;
+    let attributes = [];
+    if (req.body.attributes) {
+      attributes = JSON.parse(req.body.attributes);
+    }
+    req.body.attributes = attributes;
     return { variantUpdate: req.body };
   } catch (error) {
     return { error: error };

@@ -54,17 +54,17 @@ $small-screen: 768px;
             color: lightblue;
           }
         }
-      }
-      .deleteButton {
-        background-color: aliceblue;
-        padding: 2px 5px;
-        border-radius: 5px;
-        color: crimson;
-        border: 1px dotted rgba(214, 49, 80, 0.596);
-        cursor: pointer;
-        &:hover {
-          background-color: crimson;
-          color: lightblue;
+        .deleteButton {
+          background-color: aliceblue;
+          padding: 2px 5px;
+          border-radius: 5px;
+          color: crimson;
+          border: 1px dotted rgba(214, 49, 80, 0.596);
+          cursor: pointer;
+          &:hover {
+            background-color: crimson;
+            color: lightblue;
+          }
         }
       }
     }

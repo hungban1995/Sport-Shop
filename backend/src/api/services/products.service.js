@@ -16,7 +16,7 @@ export const createProduct = async (req) => {
     }
     let categories = [];
     if (req.body.category) {
-      categories = req.body.category;
+      categories = JSON.parse(req.body.category);
     }
     req.body.category = categories;
     if (req.fileValidationError) {
@@ -53,6 +53,7 @@ export const createProduct = async (req) => {
         },
       };
     }
+    req.body.variants = JSON.parse(req.body.variants);
     return { product: req.body };
   } catch (error) {
     return { error: error };
@@ -88,7 +89,17 @@ export const updateProduct = async (req, res, next) => {
       });
       req.body.images = images;
     }
-    return { productUpdate };
+    let categories = [];
+    if (req.body.category) {
+      categories = JSON.parse(req.body.category);
+    }
+    req.body.category = categories;
+    let variants = [];
+    if (req.body.variants) {
+      variants = JSON.parse(req.body.variants);
+    }
+    req.body.variants = variants;
+    return { productUpdate: req.body };
   } catch (error) {
     return { error: error };
   }

@@ -10,7 +10,12 @@ export const createProduct = async (req, res, next) => {
     if (error) {
       return next(error);
     }
-    await Products.create(product);
+    const newProduct = await Products.create(product);
+    for (let item of newProduct.variants) {
+      await ProductsVariants.findByIdAndUpdate(item, {
+        ofProduct: newProduct._id,
+      });
+    }
     res.status(200).json({ success: "Tạo mới thành công" });
   } catch (error) {
     next(error);
@@ -63,7 +68,12 @@ export const updateProduct = async (req, res, next) => {
         error: "Product not found",
       });
     }
-    await Products.findByIdAndUpdate(id, productUpdate);
+    const update = await Products.findByIdAndUpdate(id, productUpdate);
+    for (let item of update.variants) {
+      await ProductsVariants.findByIdAndUpdate(item, {
+        ofProduct: update._id,
+      });
+    }
     res.status(200).json({
       success: "Update product success",
     });
@@ -145,7 +155,7 @@ export const updateRating = async (req, res, next) => {
     }
 
     res.status(200).json({
-      success: "Rating added successfully",
+      success: "Rating update successfully",
       product: updatedProduct,
     });
   } catch (error) {

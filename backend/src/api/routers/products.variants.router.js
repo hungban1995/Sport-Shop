@@ -6,7 +6,7 @@ const productsVariantsRouter = async (app, express) => {
 
   router.post(
     "/create",
-    productsVariantValidate,
+    // productsVariantValidate,
     uploadSingle,
     controller.createProductVariant
   ); //create productvariants

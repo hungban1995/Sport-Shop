@@ -6,12 +6,15 @@
     font-weight: 500;
     color: gray;
     margin-bottom: 15px;
-    display: grid;
+    display: flex;
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
     padding: 20px;
-    grid-template-columns: auto auto;
+    justify-content: space-between;
     a {
+      display: flex;
+      align-items: center;
       width: fit-content;
+      height: 30px;
       text-decoration: none;
       background-color: rgba(151, 235, 95, 0.49);
       color: rgb(6, 68, 6);

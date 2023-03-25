@@ -1,0 +1,38 @@
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  font-size: 30px;
+  padding: 20px;
+  .left {
+    display: flex;
+    align-items: center;
+    button {
+      margin: 0 5px;
+      border: none;
+      cursor: pointer;
+      border-radius: 3px;
+      width: 30px;
+      height: 30px;
+      &.active {
+        background-color: rgb(94, 175, 241);
+      }
+    }
+    .icon {
+      color: #888;
+      cursor: pointer;
+
+      &.disable {
+        cursor: no-drop;
+      }
+    }
+  }
+  .right {
+    display: flex;
+    .pageSize {
+      border: 1px solid rgba(94, 93, 93, 0.3);
+      border-radius: 5px;
+      color: #888;
+      height: 30px;
+    }
+  }
+}
