@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { IoIosAdd, IoIosRemove } from "react-icons/io";
 import { useDispatch } from "react-redux";
@@ -33,6 +33,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
   const [idDel, setIdDel] = useState("");
   const [varUpdate, setVarUpdate] = useState(null);
   const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -136,7 +137,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
   }, [varUpdate, setValue]);
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="formVariants">
         <div className="formGroup">
           <div className="formInput">
             <label htmlFor="sku">Mã Sản Phẩm</label>
@@ -264,7 +265,10 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
                         dispatch(
                           getAlert({
                             open: true,
-                            delete: { id: variant._id, type: "variant" },
+                            delete: {
+                              id: variant._id,
+                              type: "products-variants",
+                            },
                           })
                         );
                       }}

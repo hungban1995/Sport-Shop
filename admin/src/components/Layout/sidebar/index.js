@@ -21,7 +21,7 @@ function SideBar() {
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/">
           <span className="logo">Logo</span>
         </Link>
       </div>
@@ -29,7 +29,7 @@ function SideBar() {
       <div className="center">
         <div className="action">
           <p className="title">Main</p>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/">
             <div
               className={"item " + (activeTab === 1 && "active")}
               onClick={() => {
@@ -41,7 +41,7 @@ function SideBar() {
             </div>
           </Link>
           <p className="title">List</p>
-          <Link to="users" style={{ textDecoration: "none" }}>
+          <Link to="users">
             <div
               className={"item " + (activeTab === 2 && "active")}
               onClick={() => {
@@ -65,7 +65,7 @@ function SideBar() {
               <span>Sản Phẩm</span>
             </button>
             <div className={"panel " + (isActiveProduct ? "active" : "")}>
-              <Link to="categories" style={{ textDecoration: "none" }}>
+              <Link to="categories">
                 <div
                   className={"panelItem " + (activeTab === 3 && "active")}
                   onClick={() => {
@@ -76,7 +76,7 @@ function SideBar() {
                   <span>Danh mục</span>
                 </div>
               </Link>
-              <Link to="products" style={{ textDecoration: "none" }}>
+              <Link to="products">
                 <div
                   className={"panelItem " + (activeTab === 4 && "active")}
                   onClick={() => {
@@ -102,7 +102,7 @@ function SideBar() {
               <span>Bài Đăng</span>
             </button>
             <div className={"panel " + (isActivePost ? "active" : "")}>
-              <Link to="categories-posts" style={{ textDecoration: "none" }}>
+              <Link to="categories-posts">
                 <div
                   className={"panelItem " + (activeTab === 5 && "active")}
                   onClick={() => {
@@ -113,7 +113,7 @@ function SideBar() {
                   <span>Danh mục</span>
                 </div>
               </Link>
-              <Link to="posts" style={{ textDecoration: "none" }}>
+              <Link to="posts">
                 <div
                   className={"panelItem " + (activeTab === 6 && "active")}
                   onClick={() => {
@@ -127,7 +127,7 @@ function SideBar() {
             </div>
           </div>
 
-          <Link to="orders" style={{ textDecoration: "none" }}>
+          <Link to="orders">
             <div
               className={"item " + (activeTab === 7 && "active")}
               onClick={() => {

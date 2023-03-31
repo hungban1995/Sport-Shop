@@ -3,11 +3,17 @@ $small-screen: 768px;
   flex: 1;
   min-height: 100vh;
   background-color: rgb(243, 244, 246);
+  a,
+  span {
+    text-decoration: none;
+    color: #888;
+  }
   .top {
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
+
     .logo {
       font-size: 20px;
       font-weight: bold;
@@ -50,7 +56,7 @@ $small-screen: 768px;
         span {
           font-size: 13px;
           font-weight: 600;
-          color: #888;
+
           margin-left: 10px;
         }
       }
@@ -71,7 +77,6 @@ $small-screen: 768px;
             right: 0;
             height: 20px;
             width: 20px;
-            color: #888;
           }
 
           &:hover {
@@ -95,7 +100,7 @@ $small-screen: 768px;
           span {
             font-size: 13px;
             font-weight: 600;
-            color: #888;
+
             margin-left: 10px;
           }
         }
@@ -123,7 +128,7 @@ $small-screen: 768px;
             span {
               font-size: 13px;
               font-weight: 600;
-              color: #888;
+
               margin-left: 10px;
             }
           }

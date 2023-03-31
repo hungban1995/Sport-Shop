@@ -76,19 +76,23 @@
             }
           }
         }
-        .submitBtn {
-          width: 150px;
-          padding: 10px;
-          border: none;
-          background-color: teal;
-          color: white;
-          font-weight: bold;
-          cursor: pointer;
-          margin-top: 10px;
-          border-radius: 5px;
-          &.disable {
-            opacity: 0.4;
-            cursor: no-drop;
+        .btnSubmit {
+          width: 100%;
+          text-align: center;
+          .submitBtn {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            &.disable {
+              opacity: 0.4;
+              cursor: no-drop;
+            }
           }
         }
       }

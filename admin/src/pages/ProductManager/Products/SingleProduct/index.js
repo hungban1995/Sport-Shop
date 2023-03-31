@@ -58,7 +58,11 @@ const SingleProduct = () => {
   }, []);
   //submit update
   const onSubmit = async (data) => {
-    const newData = { ...data, variants: variantId };
+    const newData = {
+      ...data,
+      variants: variantId,
+      category: data.category || [],
+    };
     console.log(newData);
     const formData = new FormData();
     formData.append("title", newData.title);
@@ -71,7 +75,6 @@ const SingleProduct = () => {
       });
     }
     formData.append("variants", JSON.stringify(newData.variants));
-
     if (newData.category) {
       formData.append("category", JSON.stringify(newData.category));
     }

@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const categoriesReducer = createSlice({
   name: "categories",
   initialState: {
-    createCat: false,
-    catEdit: false,
+    createCat: null,
+    catEdit: null,
     refreshCat: 0,
   },
   reducers: {

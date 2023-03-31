@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const categoriesPostReducer = createSlice({
   name: "categoriesPost",
   initialState: {
-    createCatPost: false,
-    catPostEdit: false,
+    createCatPost: null,
+    catPostEdit: null,
     refreshCatPost: 0,
   },
   reducers: {

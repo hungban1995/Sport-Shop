@@ -9,9 +9,21 @@ import httpErrorConfig from "./configs/httpErrors.config";
 import morgan from "morgan";
 import headerConfig from "./configs/header.config";
 import * as router from "../src/api/routers";
+import http from "http";
+import { Server } from "socket.io";
+
 dotenv.config(); //dotenv config
 connectDB(); //Connect db
 const app = express(); //Defined app
+//socket-io
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: true,
+    credentials: true,
+  },
+});
+
 helmetConfig(app); //Helmet configs
 corsConfig(app); //CORS configs
 parseConfig(app, express); //Parse config
@@ -26,11 +38,27 @@ router.postCommentRouter(app, express);
 router.productsVariantsRouter(app, express);
 
 router.productsRouter(app, express);
+router.ordersRouter(app, express);
 
 app.get("/", (req, res, next) => {
   res.send("hello");
 });
+//connect-io
+io.on("connection", (socket) => {
+  console.log("Connected socket.");
+  //listen client
+  socket.on("client-message", (data) => {
+    console.log("client Data.", data);
+    //sent client
+    io.emit("server-message", data);
+  });
+  socket.on("disconnect", (data) => {
+    //sent client
+    io.emit("user disconnect");
+  });
+});
+
 staticConfig(app); //Static configs
 httpErrorConfig(app); //Catch server error
 
-export default app;
+export default httpServer;

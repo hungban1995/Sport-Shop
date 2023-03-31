@@ -21,7 +21,7 @@ export const getAll = async (req, res, next) => {
     if (filter_by) {
       filter = JSON.parse(filter_by);
     }
-    console.log(sort_by);
+
     const posts = await Posts.find({ ...filter })
       .populate({ path: "category", select: "title" })
       .populate({ path: "author", select: "username avatar" })

@@ -64,7 +64,7 @@ function PostItem(props) {
               dispatch(
                 getAlert({
                   open: true,
-                  delete: { id: post?._id, type: "post" },
+                  delete: { id: post?._id, type: "posts" },
                   style: { top: "-85px", right: "unset" },
                 })
               );

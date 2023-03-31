@@ -24,15 +24,25 @@ export const createProduct = async (req, res, next) => {
 //get all
 export const getAll = async (req, res, next) => {
   try {
-    const products = await Products.find()
+    const { page, page_size, sort_by, filter_by } = req.query;
+    let filter = "";
+    if (filter_by) {
+      filter = JSON.parse(filter_by);
+    }
+    const products = await Products.find({ ...filter })
       .populate({ path: "category", select: "title" })
-      .populate({ path: "variants", select: "-createdAt -updatedAt -__v" });
+      .populate({ path: "variants", select: "-createdAt -updatedAt -__v" })
+      .skip((page - 1) * page_size)
+      .limit(page_size)
+      .sort(sort_by);
     if (products.length === 0) {
       return next({ status: 404, error: "No product found" });
     }
+    let count = await Products.find({ ...filter }).count();
     res.status(200).json({
       success: "Get product success",
-      products: products,
+      products,
+      count,
     });
   } catch (error) {
     next(error);

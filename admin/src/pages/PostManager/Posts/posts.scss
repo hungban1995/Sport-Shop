@@ -2,7 +2,10 @@
   box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
   padding: 20px;
   margin: 20px;
+  background-color: #f3f4f6;
+
   .title {
+    background-color: #fff;
     font-weight: 500;
     color: gray;
     margin-bottom: 15px;
@@ -13,7 +16,6 @@
     a {
       display: flex;
       align-items: center;
-      width: fit-content;
       height: 30px;
       text-decoration: none;
       background-color: rgba(151, 235, 95, 0.49);
@@ -21,11 +23,19 @@
       padding: 5px;
       border-radius: 10px;
       &:hover {
-        background-color: rgba(61, 119, 202, 0.429);
+        background-color: rgba(57, 136, 246, 0.429);
       }
+    }
+    .select {
+      display: flex;
+      align-items: center;
     }
   }
   .body {
+    background-color: #fff;
+
     color: gray;
+    height: 400px;
+    overflow: auto;
   }
 }

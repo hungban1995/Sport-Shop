@@ -7,6 +7,8 @@ import categoriesPostReducer from "./categoriesPostReducer";
 import postsReducer from "./postsReducer";
 import productVariantsReducer from "./productVariants";
 import productsReducer from "./productsReducer";
+import ordersReducer from "./ordersReducer";
+import deleteData from "./deleteDataReducer";
 
 export default configureStore({
   reducer: {
@@ -18,5 +20,7 @@ export default configureStore({
     posts: postsReducer,
     variant: productVariantsReducer,
     products: productsReducer,
+    orders: ordersReducer,
+    delete: deleteData,
   },
 });

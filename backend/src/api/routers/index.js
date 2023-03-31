@@ -5,7 +5,7 @@ import postsRouter from "./posts.router";
 import postCommentRouter from "./post.comment.router";
 import productsRouter from "./products.router";
 import productsVariantsRouter from "./products.variants.router";
-
+import ordersRouter from "./orders.router";
 export {
   usersRouter,
   categoriesRouter,
@@ -14,4 +14,5 @@ export {
   postCommentRouter,
   productsRouter,
   productsVariantsRouter,
+  ordersRouter,
 };

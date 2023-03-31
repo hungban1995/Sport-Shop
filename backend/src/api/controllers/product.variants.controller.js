@@ -84,10 +84,12 @@ export const deleteProductVariant = async (req, res, next) => {
       });
     }
     const updateProduct = await Products.findById(variantsDel.ofProduct);
-    updateProduct.variants = updateProduct.variants.filter(
-      (item) => item.toString() !== variantsDel._id.toString()
-    );
-    await updateProduct.save();
+    if (updateProduct) {
+      updateProduct.variants = updateProduct.variants.filter(
+        (item) => item.toString() !== variantsDel._id.toString()
+      );
+      await updateProduct.save();
+    }
     await ProductsVariants.findByIdAndDelete(id);
     res.status(200).json({
       success: "Delete variants success",

@@ -93,10 +93,12 @@ export const deleteCatPosts = async (req) => {
     const { id } = req.params;
     const category = await CategoriesPosts.findById(id);
     if (!category) {
-      return next({
-        status: 404,
-        error: "Category not found",
-      });
+      return {
+        error: {
+          status: 404,
+          error: "Category not found",
+        },
+      };
     }
     return { id };
   } catch (error) {

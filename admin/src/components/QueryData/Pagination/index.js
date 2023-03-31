@@ -11,7 +11,7 @@ function Pagination({ count, pageSize, pageNum }) {
     setCountItem(count);
   }, [count]);
   useEffect(() => {
-    let num = 0;
+    let num = 1;
     if (countItem > size) {
       num = Math.ceil(countItem / size);
     }
@@ -48,7 +48,7 @@ function Pagination({ count, pageSize, pageNum }) {
           className={"icon " + (currentPage === 1 ? "disable" : "")}
           onClick={handlePrev}
         />
-        {pageList?.map((item) => {
+        {pageList.map((item) => {
           return (
             <button
               className={currentPage === item ? "active" : ""}

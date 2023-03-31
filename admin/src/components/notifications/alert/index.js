@@ -7,38 +7,31 @@ import { refreshPosts } from "../../../stores/postsReducer";
 import { refreshVar } from "../../../stores/productVariants";
 import { refreshUser } from "../../../stores/usersReducer";
 import { refreshProducts } from "../../../stores/productsReducer";
-
+import { refreshOrders } from "../../../stores/ordersReducer";
 import "./alert.scss";
+const REFRESH_FUNCTIONS = {
+  users: refreshUser,
+  categories: refreshCat,
+  "categories-posts": refreshCatPost,
+  posts: refreshPosts,
+  "products-variants": refreshVar,
+  products: refreshProducts,
+  orders: refreshOrders,
+};
 function AlertDel({ idItem, idDel }) {
   const { alert } = useSelector((state) => state.notify);
   const dispatch = useDispatch();
+
   const handleAccept = async () => {
+    const { type } = alert?.delete || {};
     try {
-      let res;
-      if (alert?.delete?.type === "user") {
-        res = await deleteData("users/delete/" + idItem);
-        dispatch(refreshUser());
-      }
-      if (alert?.delete?.type === "category") {
-        res = await deleteData("categories/delete/" + idItem);
-        dispatch(refreshCat());
-      }
-      if (alert?.delete?.type === "category-post") {
-        res = await deleteData("categories-posts/delete/" + idItem);
-        dispatch(refreshCatPost());
-      }
-      if (alert?.delete?.type === "post") {
-        res = await deleteData("posts/delete/" + idItem);
-        dispatch(refreshPosts());
-      }
-      if (alert?.delete?.type === "variant") {
-        res = await deleteData("products-variants/delete/" + idItem);
-        dispatch(refreshVar());
+      const url = `${type}/delete/${idItem}`;
+      const res = await deleteData(url);
+      if (type === "products-variants") {
         idDel(idItem);
       }
-      if (alert?.delete?.type === "product") {
-        res = await deleteData("products/delete/" + idItem);
-        dispatch(refreshProducts());
+      if (REFRESH_FUNCTIONS[type]) {
+        dispatch(REFRESH_FUNCTIONS[type]());
       }
       dispatch(
         getNotify({
@@ -60,7 +53,6 @@ function AlertDel({ idItem, idDel }) {
 
   return (
     <div
-      style={alert?.style}
       className={`${
         alert?.open && alert?.delete?.id === idItem ? "alert" : "d-none"
       }`}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -11,6 +11,7 @@ import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getNotify } from "../../../../stores/notifyReducer";
+
 const schema = yup.object({
   title: yup.string().required(),
 });
@@ -19,16 +20,7 @@ const CreateProduct = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [variantId, setVariantId] = useState([]);
-  const handleBack = () => {
-    if (variantId?.length > 0) {
-      window.addEventListener("beforeunload", function (event) {
-        // Hủy bỏ sự kiện mặc định của trình duyệt
-        event.preventDefault();
-        // Hiển thị thông báo cho người dùng
-        alert("Bạn đang chuyển trang. Bạn có chắc chắn muốn rời khỏi trang?");
-      });
-    } else navigate(-1);
-  };
+
   useEffect(() => {
     const getCat = async () => {
       try {
@@ -51,7 +43,11 @@ const CreateProduct = () => {
     mode: "all",
   });
   const onSubmit = async (data) => {
-    const newData = { ...data, variants: variantId };
+    const newData = {
+      ...data,
+      variants: variantId,
+      category: data.category || [],
+    };
     console.log(newData);
     const formData = new FormData();
     formData.append("title", newData.title);
@@ -63,12 +59,7 @@ const CreateProduct = () => {
         formData.append("images", item);
       });
     }
-    if (newData.category) {
-      const fileList = [...newData.category];
-      fileList.forEach((item) => {
-        formData.append("category", item);
-      });
-    }
+    formData.append("category", JSON.stringify(newData.category));
     formData.append("variants", JSON.stringify(newData.variants));
     try {
       const res = await postData("products/create", formData);
@@ -90,10 +81,20 @@ const CreateProduct = () => {
       );
     }
   };
+  useEffect(() => {
+    if (variantId.length > 0) {
+      window.onbeforeunload = function () {
+        return true;
+      };
+    }
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, [variantId]);
   return (
     <div className="newProduct">
       <div className="top">
-        <div className="back" onClick={handleBack}>
+        <div className="back" onClick={() => navigate(-1)}>
           <BiArrowBack className="icon" />
           <span>Back</span>
         </div>
@@ -145,16 +146,17 @@ const CreateProduct = () => {
                 }}
               />
             </div>
-
-            <button
-              className={
-                "submitBtn " + (variantId?.length === 0 ? "disable" : "")
-              }
-              disabled={variantId?.length === 0}
-              type="submit"
-            >
-              Submit
-            </button>
+            <div className="btnSubmit">
+              <button
+                className={
+                  "submitBtn " + (variantId?.length === 0 ? "disable" : "")
+                }
+                disabled={variantId?.length === 0}
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
         <div className="right">

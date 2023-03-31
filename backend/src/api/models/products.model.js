@@ -16,7 +16,7 @@ const ProductsSchema = new Schema(
     },
     ratings: [
       {
-        user: { type: String, ref: "Users" },
+        user: { type: String, ref: "users" },
         rating: { type: Number },
         comment: { type: String },
       },
