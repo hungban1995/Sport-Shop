@@ -93,10 +93,12 @@ export const deleteCat = async (req) => {
     const { id } = req.params;
     const category = await Categories.findById(id);
     if (!category) {
-      return next({
-        status: 404,
-        error: "Category not found",
-      });
+      return {
+        error: {
+          status: 404,
+          error: "Category not found",
+        },
+      };
     }
     return { id };
   } catch (error) {

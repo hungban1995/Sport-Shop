@@ -39,30 +39,28 @@ const productsVariantsSchema = yup.object().shape({
     .number()
     .required("InStock is required")
     .min(0, "InStock must be greater than or equal to 0"),
-  sold: yup.number().min(0, "Sold must be greater than or equal to 0"),
   attributes: yup.array(),
 });
-
-export const productsVariantValidate = async (req, res, next) => {
+export const productsVariantValidate = async (req) => {
   try {
-    // let attributes = [];
-    // if (req.body.attributes) {
-    //   attributes = JSON.parse(req.body.attributes);
-    // }
-    const { price, onSale, inStock, sold } = req.body;
+    let attributes = [];
+    if (req.body.attributes) {
+      attributes = JSON.parse(req.body.attributes);
+    }
+    const { price, onSale, inStock } = req.body;
     await productsVariantsSchema.validate({
       price,
       onSale,
       inStock,
-      sold,
-      // attributes,
+      attributes,
     });
-    next();
+    return null;
   } catch (error) {
-    console.log(error);
-    next({
-      status: 400,
-      error: error.message,
-    });
+    return {
+      error: {
+        status: 400,
+        error: error.message,
+      },
+    };
   }
 };

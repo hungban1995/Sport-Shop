@@ -9,13 +9,16 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { postData } from "../../../../libs/fetchData";
 import { getNotify } from "../../../../stores/notifyReducer";
+
+import { socket } from "../../../../libs/socket";
+
 const schema = yup.object().shape({
   title: yup.string().required(),
 });
+
 function NewCategory() {
   const { createCat } = useSelector((state) => state.categories);
   const dispatch = useDispatch();
-
   const {
     register,
     handleSubmit,
@@ -46,8 +49,9 @@ function NewCategory() {
           message: res.data.success,
         })
       );
+      socket.emit("client-message", res.data.category);
       reset();
-      dispatch(setBackground(false));
+      dispatch(setBackground(null));
       dispatch(setCreateCat(false));
       dispatch(refreshCat());
     } catch (error) {
@@ -66,7 +70,7 @@ function NewCategory() {
         <AiOutlineClose
           className="icon"
           onClick={() => {
-            dispatch(setBackground(false));
+            dispatch(setBackground(null));
             dispatch(setCreateCat(false));
             reset();
           }}
@@ -87,7 +91,7 @@ function NewCategory() {
           <div
             className="cancel"
             onClick={() => {
-              dispatch(setBackground(false));
+              dispatch(setBackground(null));
               dispatch(setCreateCat(false));
               reset();
             }}

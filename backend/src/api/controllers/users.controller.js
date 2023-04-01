@@ -42,13 +42,14 @@ export const login = async (req, res, next) => {
 // get all user
 export const getUsers = async (req, res, next) => {
   try {
-    const { error, users } = await service.getUsers(req);
+    const { error, users, count } = await service.getUsers(req);
     if (error) {
       return next(error);
     }
     res.status(200).json({
       success: "Lấy danh sách user thành công",
-      users: users,
+      users,
+      count,
     });
   } catch (error) {
     next(error);

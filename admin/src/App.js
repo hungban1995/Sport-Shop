@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 import Layout from "./components/Layout";
 import Login from "./components/login";
 import NotifyPop from "./components/notifications/notify";
@@ -8,6 +8,7 @@ import Routers from "./routers";
 import { useSelector } from "react-redux";
 import "./styles/dark.scss";
 import Background from "./components/background";
+import ToastMessage from "./components/notifications/toastMessage";
 function App() {
   const { dark } = useSelector((state) => state.themeWeb);
   const { refreshLogin } = useSelector((state) => state.users);
@@ -20,6 +21,7 @@ function App() {
   return (
     <div className={dark ? "app dark" : "app"}>
       <BrowserRouter>
+        <ToastMessage />
         <Background />
         <NotifyPop />
         {refreshToken ? (

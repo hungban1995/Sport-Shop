@@ -86,17 +86,27 @@ export const getUsers = async (req, res) => {
         },
       };
     }
+    const { page, page_size, sort_by, filter_by } = req.query;
+    let filter;
+    if (filter_by) {
+      filter = JSON.parse(filter_by);
+    }
     const users = await Users.find(
-      {},
+      { ...filter },
       { createdAt: 0, updatedAt: 0, __v: 0, password: 0 }
-    );
+    )
+      .skip((page - 1) * page_size)
+      .limit(page_size)
+      .sort(sort_by);
     if (users.length === 0) {
       return next({
         status: 404,
         error: "Không có user",
       });
     }
-    return { users: users };
+    let count = await Users.find({ ...filter }).count();
+
+    return { users, count };
   } catch (error) {
     return { error: error };
   }

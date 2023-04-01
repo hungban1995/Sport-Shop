@@ -1,43 +1,51 @@
-.app.dark{
-    background-color: #222;
-    color: rgb(156,156,156);
-    .table{
-        background-color: #111;
-        .tableCell{
-            color:gray;
-            div{
-                color:gray;
-            }
-          
-        }
+.app.dark {
+  background-color: #222;
+  color: rgb(156, 156, 156);
+  table {
+    background-color: #111;
+    color: #999;
+  }
+  .categories,
+  .users,
+  .posts,
+  .products,
+  .orders {
+    background-color: #333;
+    color: #999;
+    .top,
+    .title,
+    .body {
+      background-color: #222;
+      color: #999;
     }
-    .navbar{
+  }
+  .navbar {
+    color: #999;
+    border-bottom: #333;
+    .search {
+      border-color: gray;
+    }
+  }
+  .sidebar {
+    background-color: #111;
+    border-color: #333;
+    .top {
+      .logo {
         color: #999;
-        border-bottom: #333;
-        .search{
-            border-color: gray;
-        }
+      }
     }
-    .sidebar{
-        background-color: #111;
-        border-color: #333;
-        .top{
-            .logo{
-                color: #999;
-            }
-        }
-        hr{
-            border-color: #333;
-        }
-        ul{
-            li{
-                &:hover{
-                    background-color: #333;
-                }
-                .icon{
-                    color: #999;
-                }
-            }
-        }
+    hr {
+      border-color: #333;
     }
+    ul {
+      li {
+        &:hover {
+          background-color: #333;
+        }
+        .icon {
+          color: #999;
+        }
+      }
+    }
+  }
 }

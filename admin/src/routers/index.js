@@ -8,8 +8,13 @@ import Categories from "../pages/ProductManager/Categories";
 import CategoriesPost from "../pages/PostManager/CategoriesPost";
 import Posts from "../pages/PostManager/Posts";
 import Products from "../pages/ProductManager/Products";
+import NewProduct from "../pages/ProductManager/Products/New";
+
 import NewPost from "../pages/PostManager/Posts/New";
 import SinglePost from "../pages/PostManager/Posts/SinglePost";
+import SingleProduct from "../pages/ProductManager/Products/SingleProduct";
+import OrderS from "../pages/OrderManager";
+import SingleOrder from "../pages/OrderManager/SingleOrder";
 
 function Routers() {
   return (
@@ -23,13 +28,21 @@ function Routers() {
             <Route path=":id" element={<Single />} />
           </Route>
           <Route path="categories/" element={<Categories />} />
-          <Route path="products/" element={<Products />} />
+          <Route path="products/">
+            <Route index element={<Products />} />
+            <Route path="new" element={<NewProduct />} />
+            <Route path=":id" element={<SingleProduct />} />
+          </Route>
 
           <Route path="categories-posts/" element={<CategoriesPost />} />
           <Route path="posts/">
             <Route index element={<Posts />} />
             <Route path="new-post" element={<NewPost />} />
             <Route path=":id" element={<SinglePost />} />
+          </Route>
+          <Route path="orders/">
+            <Route index element={<OrderS />} />
+            <Route path=":id" element={<SingleOrder />} />
           </Route>
           <Route
             path="*"

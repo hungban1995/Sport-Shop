@@ -1,0 +1,105 @@
+.newProduct {
+  width: 100%;
+  .top {
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 10px;
+    margin: 20px;
+    display: flex;
+    h1 {
+      color: rgb(192, 191, 191);
+      font-size: 20px;
+      margin: auto;
+    }
+    .back {
+      display: flex;
+      align-items: center;
+      margin-right: 50px;
+      background-color: #c07373;
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 5px;
+      box-shadow: 2px 4px 10px 1px rgba(97, 96, 96, 0.47);
+      &:hover {
+        background-color: #9d3e61;
+      }
+      span {
+        color: rgb(220, 218, 218);
+      }
+      .icon {
+        font-size: 25px;
+        color: rgba(115, 30, 42, 0.627);
+      }
+    }
+  }
+  .bottom {
+    display: grid;
+    grid-template-columns: 60% 38%;
+    gap: 2%;
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 10px;
+    margin: 20px;
+    .left {
+      form {
+        .formInput {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin: 10px 0;
+          label {
+            padding: 5px;
+          }
+          input {
+            padding: 5px;
+            border: none;
+            border-bottom: 1px solid gray;
+            outline: 0;
+          }
+          span {
+            color: red;
+            font-size: 13px;
+          }
+          .selectCat {
+            border: 1px solid darkgray;
+            width: 30%;
+            height: 100px;
+            overflow: auto;
+            label {
+              text-align: left;
+              display: block;
+
+              font-size: 14px;
+              font-weight: 200;
+              input[type="checkbox"] {
+                display: inline;
+                width: initial;
+              }
+            }
+          }
+        }
+        .btnSubmit {
+          width: 100%;
+          text-align: center;
+          .submitBtn {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            &.disable {
+              opacity: 0.4;
+              cursor: no-drop;
+            }
+          }
+        }
+      }
+    }
+    .right {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+}

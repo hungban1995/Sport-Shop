@@ -3,7 +3,7 @@ export const themeWeb = createSlice({
   name: "themeWeb",
   initialState: {
     dark: false,
-    background: false,
+    background: null,
   },
   reducers: {
     setDark: (state, action) => {

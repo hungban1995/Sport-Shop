@@ -10,7 +10,12 @@ export const createProduct = async (req, res, next) => {
     if (error) {
       return next(error);
     }
-    await Products.create(product);
+    const newProduct = await Products.create(product);
+    for (let item of newProduct.variants) {
+      await ProductsVariants.findByIdAndUpdate(item, {
+        ofProduct: newProduct._id,
+      });
+    }
     res.status(200).json({ success: "Tạo mới thành công" });
   } catch (error) {
     next(error);
@@ -19,15 +24,26 @@ export const createProduct = async (req, res, next) => {
 //get all
 export const getAll = async (req, res, next) => {
   try {
-    const products = await Products.find()
+    const { page, page_size, sort_by, filter_by } = req.query;
+    let filter = "";
+    if (filter_by) {
+      filter = JSON.parse(filter_by);
+    }
+    const products = await Products.find({ ...filter })
       .populate({ path: "category", select: "title" })
-      .populate({ path: "variants", select: "-createdAt -updatedAt -__v" });
+      .populate({ path: "variants", select: "-createdAt -updatedAt -__v" })
+      .skip((page - 1) * page_size)
+      .limit(page_size)
+      .sort(sort_by);
+
     if (products.length === 0) {
       return next({ status: 404, error: "No product found" });
     }
+    let count = await Products.find({ ...filter }).count();
     res.status(200).json({
       success: "Get product success",
-      products: products,
+      products,
+      count,
     });
   } catch (error) {
     next(error);
@@ -63,7 +79,12 @@ export const updateProduct = async (req, res, next) => {
         error: "Product not found",
       });
     }
-    await Products.findByIdAndUpdate(id, productUpdate);
+    const update = await Products.findByIdAndUpdate(id, productUpdate);
+    for (let item of update.variants) {
+      await ProductsVariants.findByIdAndUpdate(item, {
+        ofProduct: update._id,
+      });
+    }
     res.status(200).json({
       success: "Update product success",
     });
@@ -145,7 +166,7 @@ export const updateRating = async (req, res, next) => {
     }
 
     res.status(200).json({
-      success: "Rating added successfully",
+      success: "Rating update successfully",
       product: updatedProduct,
     });
   } catch (error) {

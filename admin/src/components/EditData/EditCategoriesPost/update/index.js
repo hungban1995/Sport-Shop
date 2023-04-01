@@ -20,8 +20,8 @@ function UpdateCategoryPost() {
   const dispatch = useDispatch();
   const [category, setCategory] = useState(null);
   useEffect(() => {
-    setCategory(catPostEdit.category);
-  }, [catPostEdit.category]);
+    setCategory(catPostEdit?.category);
+  }, [catPostEdit?.category]);
   const {
     register,
     handleSubmit,
@@ -55,7 +55,7 @@ function UpdateCategoryPost() {
           message: res.data.success,
         })
       );
-      dispatch(setBackground(false));
+      dispatch(setBackground(null));
       dispatch(setCatPostEdit(false));
       dispatch(refreshCatPost());
     } catch (error) {
@@ -74,7 +74,7 @@ function UpdateCategoryPost() {
         <AiOutlineClose
           className="icon"
           onClick={() => {
-            dispatch(setBackground(false));
+            dispatch(setBackground(null));
             dispatch(setCatPostEdit(false));
           }}
         />
@@ -94,7 +94,7 @@ function UpdateCategoryPost() {
           <div
             className="cancel"
             onClick={() => {
-              dispatch(setBackground(false));
+              dispatch(setBackground(null));
               dispatch(setCatPostEdit(false));
             }}
           >

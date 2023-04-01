@@ -1,0 +1,58 @@
+.toastContainer {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid gray;
+  background: #fff;
+  border-radius: 5px;
+  z-index: 9999;
+  .header {
+    font-size: 24px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 0.5px solid gray;
+    .icon {
+      padding: 5px;
+      color: red;
+      cursor: pointer;
+    }
+  }
+  .body {
+    padding: 5px;
+  }
+  .footer {
+    display: flex;
+    justify-content: center;
+    button {
+      border: none;
+      border-radius: 5px;
+      margin: 5px;
+      padding: 5px;
+      cursor: pointer;
+      color: white;
+
+      &:first-child {
+        background-color: #fff;
+        color: #333;
+        border: 1px solid rgb(220, 38, 38);
+        &:hover {
+          color: white;
+
+          background-color: rgb(220, 38, 38);
+        }
+      }
+      &:last-child {
+        background-color: rgb(12, 175, 12);
+
+        &:hover {
+          background-color: rgb(18, 246, 18);
+        }
+      }
+    }
+  }
+}
+.hidden {
+  display: none;
+}

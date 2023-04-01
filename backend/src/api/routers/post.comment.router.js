@@ -1,7 +1,8 @@
 import * as controller from "../controllers/posts.comment.controller";
+import express from "express";
 
-const postCommentRouter = async (app, express) => {
-  const router = express.Router();
+const router = express.Router();
+const postCommentRouter = async (app) => {
   router.post("/create", controller.createCmt); //create
   router.get("/", controller.getByPost); //get by post
   router.patch("/update/:id", controller.updateCmt); //update

@@ -7,7 +7,7 @@ import { getData, patchData } from "../../../libs/fetchData";
 import { useDispatch } from "react-redux";
 import { getNotify } from "../../../stores/notifyReducer";
 import { BiArrowBack } from "react-icons/bi";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form'
 import { IMG_URL } from "../../../constants";
 import moment from "moment";
@@ -17,7 +17,8 @@ const schema = yup.object({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords does not match"),
-  birthday: yup.date().max(new Date(), "Birthday can't be in the future")
+  birthday: yup.date()
+    .max(new Date(), "Birthday can't be in the future")
     .min(new Date("1900-01-01"), "Birthday must be after 1900-01-01"),
   phoneNumber: yup.string()
     .matches(/^\+84\d{9}$/, "Invalid phone number"),
@@ -48,9 +49,14 @@ function Single() {
           setAvatar(user.avatar)
           setImagePath(`${IMG_URL}/${user.avatar}`)
         }
-        if (user.birthday) {
-          const date = moment(user?.birthday).format("DD/MM/YYYY");
-          user.birthday = date
+        const inputDate = user?.birthday;
+        const momentDate = moment.utc(inputDate);
+
+        const isValidDate = momentDate.isValid();
+        if (isValidDate) {
+          user.birthday = momentDate.format("YYYY-MM-DD");
+        } else {
+          user.birthday = null
         }
         return user
       } catch (error) {
@@ -135,14 +141,8 @@ function Single() {
             </div>
             <div className="formInput">
               <label htmlFor="">Birth Day</label>
-              <input
-                type="date"
-                {...register("birthday")}
-                value={watch("birthday")}
-              />
-              {errors.birthday && (
-                <span>Field {errors.birthday.message}</span>
-              )}
+              <input type="date" {...register("birthday")} value={watch("birthday")} max="2005-01-01" />
+              {errors.birthday && <p>{errors.birthday.message}</p>}
             </div>
             <div className="formInput">
               <label htmlFor="">Phone</label>

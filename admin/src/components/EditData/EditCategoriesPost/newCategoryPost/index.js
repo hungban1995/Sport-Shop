@@ -49,7 +49,7 @@ function NewCategoryPost() {
         })
       );
       reset();
-      dispatch(setBackground(false));
+      dispatch(setBackground(null));
       dispatch(setCreateCatPost(false));
       dispatch(refreshCatPost());
     } catch (error) {
@@ -68,7 +68,7 @@ function NewCategoryPost() {
         <AiOutlineClose
           className="icon"
           onClick={() => {
-            dispatch(setBackground(false));
+            dispatch(setBackground(null));
             dispatch(setCreateCatPost(false));
             reset();
           }}
@@ -89,7 +89,7 @@ function NewCategoryPost() {
           <div
             className="cancel"
             onClick={() => {
-              dispatch(setBackground(false));
+              dispatch(setBackground(null));
               dispatch(setCreateCatPost(false));
               reset();
             }}

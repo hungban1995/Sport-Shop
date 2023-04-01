@@ -4,32 +4,34 @@ import { refreshCatPost } from "../../../stores/categoriesPostReducer";
 import { refreshCat } from "../../../stores/categoriesReducer";
 import { clearAlert, getNotify } from "../../../stores/notifyReducer";
 import { refreshPosts } from "../../../stores/postsReducer";
+import { refreshVar } from "../../../stores/productVariants";
 import { refreshUser } from "../../../stores/usersReducer";
+import { refreshProducts } from "../../../stores/productsReducer";
+import { refreshOrders } from "../../../stores/ordersReducer";
 import "./alert.scss";
-function Popover({ idItem }) {
+const REFRESH_FUNCTIONS = {
+  users: refreshUser,
+  categories: refreshCat,
+  "categories-posts": refreshCatPost,
+  posts: refreshPosts,
+  "products-variants": refreshVar,
+  products: refreshProducts,
+  orders: refreshOrders,
+};
+function AlertDel({ idItem, idDel }) {
   const { alert } = useSelector((state) => state.notify);
   const dispatch = useDispatch();
+
   const handleAccept = async () => {
+    const { type } = alert?.delete || {};
     try {
-      let res;
-      if (alert?.delete?.type === "user") {
-        res = await deleteData("users/delete/" + idItem);
-        dispatch(refreshUser());
+      const url = `${type}/delete/${idItem}`;
+      const res = await deleteData(url);
+      if (type === "products-variants") {
+        idDel(idItem);
       }
-      if (alert?.delete?.type === "category") {
-        res = await deleteData("categories/delete/" + idItem);
-        dispatch(refreshCat());
-      }
-      if (alert?.delete?.type === "category-post") {
-        res = await deleteData("categories-posts/delete/" + idItem);
-        dispatch(refreshCatPost());
-      }
-      if (alert?.delete?.type === "post") {
-        res = await deleteData("posts/delete/" + idItem);
-        dispatch(refreshPosts());
-      }
-      if (alert?.delete?.type === "product") {
-        res = await deleteData("products/delete/" + idItem);
+      if (REFRESH_FUNCTIONS[type]) {
+        dispatch(REFRESH_FUNCTIONS[type]());
       }
       dispatch(
         getNotify({
@@ -51,7 +53,6 @@ function Popover({ idItem }) {
 
   return (
     <div
-      style={alert?.style}
       className={`${
         alert?.open && alert?.delete?.id === idItem ? "alert" : "d-none"
       }`}
@@ -79,4 +80,4 @@ function Popover({ idItem }) {
   );
 }
 
-export default Popover;
+export default AlertDel;
