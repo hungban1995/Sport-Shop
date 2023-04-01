@@ -8,12 +8,13 @@
   height: 200px;
   .left {
     margin: 10px;
+    width: 100%;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     img {
-      width: 150px;
-      height: 150px;
+      width: 100%;
       object-fit: cover;
       border-radius: 5px;
     }

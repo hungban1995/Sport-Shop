@@ -46,7 +46,6 @@ function Navbar() {
   useEffect(() => {
     const tmp = severMessage;
     socket.on("server-message", (data) => {
-      console.log(data);
       tmp.push(data);
       setServerMessage([...tmp]);
     });

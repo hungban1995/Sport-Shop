@@ -4,8 +4,10 @@ import {
   usersLoginSchemaValidate,
   usersRegisterSchemaValidate,
 } from "../validation/users.validate";
-const usersRouter = async (app, express) => {
-  const router = express.Router();
+import express from "express";
+
+const router = express.Router();
+const usersRouter = async (app) => {
   router.post(
     "/register",
     uploadSingle,

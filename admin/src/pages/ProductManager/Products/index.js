@@ -1,16 +1,9 @@
-import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  BLANK_AVT,
-  BLANK_IMG,
-  IMG_URL,
-  valueSortProduct,
-} from "../../../constants";
+import { BLANK_IMG, IMG_URL, valueSortProduct } from "../../../constants";
 import { getData } from "../../../libs/fetchData";
 import { getAlert } from "../../../stores/notifyReducer";
-import moment from "moment";
 import "./products.scss";
 import AlertDel from "../../../components/notifications/alert";
 import { AiOutlineDelete } from "react-icons/ai";

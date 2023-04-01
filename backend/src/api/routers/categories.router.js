@@ -1,8 +1,11 @@
 import * as controller from "../controllers/categories.controller";
 import uploadSingle from "../middleware/upload.single";
 
-const categoriesRouter = async (app, express) => {
-  const router = express.Router();
+import express from "express";
+
+const router = express.Router();
+
+const categoriesRouter = async (app) => {
   router.post("/create", uploadSingle, controller.createCat); //create
   router.get("/get-all", controller.getAll); //get all
   router.get("/get-id/:id", controller.getById); //get by id

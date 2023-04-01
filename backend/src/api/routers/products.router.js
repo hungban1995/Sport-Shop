@@ -1,8 +1,9 @@
 import uploadMultiple from "../middleware/upload.multiple";
 import * as controller from "../controllers/products.controller";
-const productsRouter = async (app, express) => {
-  const router = express.Router();
+import express from "express";
 
+const router = express.Router();
+const productsRouter = async (app) => {
   router.post("/create", uploadMultiple, controller.createProduct); //create product
   router.get("/get-all", controller.getAll); //get all product
   router.get("/get-id/:id", controller.getById); //get all product

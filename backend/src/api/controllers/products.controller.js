@@ -35,6 +35,7 @@ export const getAll = async (req, res, next) => {
       .skip((page - 1) * page_size)
       .limit(page_size)
       .sort(sort_by);
+
     if (products.length === 0) {
       return next({ status: 404, error: "No product found" });
     }

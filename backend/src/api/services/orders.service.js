@@ -150,19 +150,15 @@ export const updateOrder = async (req) => {
         },
       };
     }
-    if (
-      decode._id.toString() === order.user &&
-      (order.status === "SHIPPING" ||
-        order.status === "SUCCESS" ||
-        order.status === "CANCEL")
-    ) {
+    if (decode.role !== "admin" && order.status !== "WAITING") {
       return {
         error: {
           status: 403,
-          error: "Order is confirmed and can't be updated",
+          error: `Order is ${order.status} and can't be updated`,
         },
       };
     }
+
     if (valueUpdate.user && valueUpdate.user !== order.user) {
       return {
         error: {
@@ -178,7 +174,6 @@ export const updateOrder = async (req) => {
           error: `Order has been ${order.status} and can't be updated`,
         },
       };
-
     if (valueUpdate.status) {
       const is_match = status.includes(valueUpdate.status);
       if (!is_match)
@@ -188,6 +183,49 @@ export const updateOrder = async (req) => {
             error: `Status type: ${valueUpdate.status} is invalid!`,
           },
         };
+    }
+
+    if (decode.role !== "admin" && valueUpdate.status !== "CANCEL") {
+      return {
+        error: {
+          status: 403,
+          error: `You do not have permission to update to ${valueUpdate.status}`,
+        },
+      };
+    }
+    /// Wating    shiping   success    cancel
+    //     1         -1     0          +1
+    //      1        0         0         0
+    if (order.status === "WAITING" && valueUpdate.status === "SHIPPING") {
+      let i;
+      let newInStock;
+      let newSold;
+      for (i of order.orderDetail) {
+        const updateVariant = await ProductsVariants.findById(i.productVariant);
+        newInStock = updateVariant.inStock - i.quantity;
+        newSold = updateVariant.sold + i.quantity;
+        await ProductsVariants.findByIdAndUpdate(i.productVariant, {
+          inStock: newInStock,
+          sold: newSold,
+        });
+      }
+    }
+    if (
+      (order.status === "SHIPPING" && valueUpdate.status === "CANCEL") ||
+      valueUpdate.status === "WAITING"
+    ) {
+      let i;
+      let newInStock;
+      let newSold;
+      for (i of order.orderDetail) {
+        const updateVariant = await ProductsVariants.findById(i.productVariant);
+        newInStock = updateVariant.inStock + i.quantity;
+        newSold = updateVariant.sold - i.quantity;
+        await ProductsVariants.findByIdAndUpdate(i.productVariant, {
+          inStock: newInStock,
+          sold: newSold,
+        });
+      }
     }
     return { id, valueUpdate };
   } catch (error) {
