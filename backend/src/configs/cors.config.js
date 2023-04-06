@@ -1,8 +1,8 @@
 import cors from "cors";
 const corsConfig = (app) => {
    const whitelist = [
-    "https://sport-shop-client-three.vercel.app/",
-    "https://sport-shop-admin.vercel.app/",
+    "https://sport-shop-client-three.vercel.app",
+    "https://sport-shop-admin.vercel.app",
   ];
   const corsOptionsDelegate = function (req, callback) {
     let corsOptions;
