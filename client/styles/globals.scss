@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Arimo&display=swap");
 @import "./reset.scss";
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 @import "./footer.scss";
 @import "./header.scss";
 @import "./home.scss";
@@ -11,6 +13,10 @@
 @import "./profile.scss";
 @import "./profile.scss";
 @import "./shopping_cart.scss";
+@import "./shop.scss";
+@import "./sidebar_cat.scss";
+@import "./product_item.scss";
+@import "./pagination.scss";
 
 body {
   font-family: "Arimo", sans-serif;

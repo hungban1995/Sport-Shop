@@ -46,6 +46,7 @@ productsVariantsRouter(app);
 productsRouter(app);
 ordersRouter(app);
 notifyRouter(app);
+imagesRouter(app);
 
 app.get("/", (req, res, next) => {
   res.send("hello");

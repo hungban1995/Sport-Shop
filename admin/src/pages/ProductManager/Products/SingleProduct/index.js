@@ -157,15 +157,17 @@ const SingleProduct = () => {
               />
             </div>
 
-            <button
-              className={
-                "submitBtn " + (variantId?.length === 0 ? "disable" : "")
-              }
-              disabled={variantId?.length === 0}
-              type="submit"
-            >
-              Submit
-            </button>
+            <div className="btnSubmit">
+              <button
+                className={
+                  "submitBtn " + (variantId?.length === 0 ? "disable" : "")
+                }
+                disabled={variantId?.length === 0}
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
         <div className="right">

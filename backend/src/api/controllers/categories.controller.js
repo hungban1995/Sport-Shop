@@ -17,18 +17,13 @@ export const createCat = async (req, res, next) => {
 export const getAll = async (req, res, next) => {
   try {
     const { page, page_size, sort_by, filter_by } = req.query;
-    let filter = "";
-    if (filter_by) {
-      filter = JSON.parse(filter_by);
-    }
-    const categories = await Categories.find(
-      { ...filter },
-      {
-        createdAt: 0,
-        updatedAt: 0,
-        __v: 0,
-      }
-    )
+    const filter = filter_by ? JSON.parse(filter_by) : {};
+
+    const categories = await Categories.find(filter, {
+      createdAt: 0,
+      updatedAt: 0,
+      __v: 0,
+    })
       .skip((page - 1) * page_size)
       .limit(page_size)
       .sort(sort_by);
@@ -38,7 +33,7 @@ export const getAll = async (req, res, next) => {
         error: "No category found",
       });
     }
-    let count = await Categories.find({ ...filter }).count();
+    let count = await Categories.countDocuments(filter);
     res.status(200).json({
       success: "Get categories success",
       categories,

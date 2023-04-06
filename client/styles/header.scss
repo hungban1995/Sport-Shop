@@ -1,5 +1,8 @@
-$small-screen: 767px;
+@use "base";
+
 .header {
+  position: sticky;
+  top: 0;
   height: 100px;
   background-color: rgb(22, 22, 22);
   display: flex;
@@ -8,6 +11,7 @@ $small-screen: 767px;
   color: lightgray;
   font-size: 26px;
   font-weight: bold;
+  z-index: 1;
   .logo {
     display: flex;
     align-items: center;
@@ -17,25 +21,33 @@ $small-screen: 767px;
       margin-right: 10px;
     }
   }
-  .menu {
-    display: flex;
-    list-style: none;
-    padding: 10px;
-    li {
-      cursor: pointer;
-      margin: 0 20px;
-      font-size: 18px;
-      transition: 0.5s;
-      a {
-        text-decoration: none;
-        color: unset;
+  .list {
+    .menuList {
+      display: flex;
+      list-style: none;
+      padding: 10px;
+      .menuListTitle {
+        display: none;
       }
-      &:hover {
-        color: red;
-        scale: 1.4;
+      li {
+        cursor: pointer;
+        margin: 0 20px;
+        font-size: 18px;
+        transition: 0.5s;
+        a {
+          text-decoration: none;
+          color: unset;
+        }
+        &:hover {
+          color: red;
+          scale: 1.4;
+        }
+      }
+      .icon {
+        display: none;
       }
     }
-    .icon {
+    .menuUser {
       display: none;
     }
   }
@@ -95,6 +107,7 @@ $small-screen: 767px;
           border-radius: 5px;
           box-shadow: 5px 5px 15px 1px #474646ba;
           display: none;
+          z-index: 1;
           .action {
             color: #555;
             a {
@@ -132,58 +145,98 @@ $small-screen: 767px;
     }
   }
 }
-@media (max-width: $small-screen) {
+@media (max-width: base.$small-screen) {
   .header {
     width: 100%;
-    position: fixed;
-    padding: 20px;
+    position: sticky;
+    top: 0;
     z-index: 6;
+    display: flex;
     .logo {
-      display: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      .logoIcon {
+        font-size: 26px;
+        margin-right: unset;
+        margin-left: unset;
+      }
     }
-    .menu {
+    .list {
       position: fixed;
       background-color: #ffffff4b;
       color: #333;
-      z-index: 9;
+      z-index: 9999;
       left: 0;
       top: 0;
       height: 100%;
       width: 80%;
       backdrop-filter: blur(10px);
-      display: block;
+      display: flex;
       transition: 0.5s;
       transform: translate(-100%);
       &.active {
         transform: translate(0);
       }
-      li {
+      .menuList {
+        display: flex;
         flex-direction: column;
-        padding: 20px;
-        width: 50%;
-        &:hover {
-          scale: unset;
+        width: 40%;
+        .menuListTitle {
+          display: flex;
+          align-items: center;
+        }
+
+        li {
+          font-size: 16px;
+          padding: 10px;
+          &:hover {
+            scale: unset;
+          }
+        }
+        .icon {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          width: 30px;
+          height: 30px;
+          display: block;
         }
       }
-      .icon {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 30px;
-        height: 30px;
-        display: block;
+      .menuUser {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        span {
+          display: flex;
+          align-items: center;
+        }
+        .action {
+          padding: 10px;
+          margin: 0 20px;
+          font-size: 16px;
+          a {
+            text-decoration: none;
+          }
+        }
       }
     }
     .menuToggle {
       cursor: pointer;
       position: absolute;
-      left: 50px;
+      left: 20px;
       width: 50px;
       display: block;
     }
     .items {
       position: absolute;
-      right: 50px;
+      right: 20px;
+      .item {
+        margin-right: unset;
+        &:nth-child(2) {
+          display: none;
+        }
+      }
     }
   }
 }

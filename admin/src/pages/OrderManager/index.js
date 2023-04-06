@@ -96,12 +96,13 @@ function OrderS() {
               <th>
                 <input type="checkbox" onChange={handleSelectAll} />
               </th>
+
               <th>OrderId</th>
-              <th>Date</th>
-              <th>Customer</th>
-              <th>Status</th>
-              <th>Payment Method</th>
-              <th>Total</th>
+              <th>Ngày Đặt hàng</th>
+              <th>Khách hàng</th>
+              <th>Trạng thái</th>
+              <th>Phương thức thanh toán</th>
+              <th>Tổng tiền</th>
               <th>Action</th>
             </tr>
           </thead>

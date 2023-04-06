@@ -4,21 +4,23 @@ import fs from "fs";
 import { format } from "date-fns";
 import { verifyAccessToken } from "./auth.js";
 const __dirname = path.resolve();
-
 //Set to save images to storage
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
     const decode = await verifyAccessToken(req);
     if (decode.error) {
-      cb(decode);
+      cb(error);
       return;
     }
     if (decode.role !== "admin") {
-      cb({ status: 401, error: "Do not permistion to upload images" });
+      cb({
+        status: 403,
+        error: "Bạn không có quyền để tải lên nhiều ảnh cùng lúc",
+      });
       return;
     }
     const dateTime = `${format(new Date(), `MM-yyyy`)}`;
-    const PATH = `${__dirname}/src/public/uploads/${dateTime}`;
+    const PATH = `${__dirname}/src/publics/uploads/${dateTime}`;
     if (!fs.existsSync(PATH)) {
       fs.mkdirSync(PATH, { recursive: true });
     }
@@ -29,7 +31,6 @@ const storage = multer.diskStorage({
     cb(null, uniqueSuffix + "-" + file.originalname);
   },
 });
-
 //Create upload function
 const uploadMultiple = multer({
   storage: storage,

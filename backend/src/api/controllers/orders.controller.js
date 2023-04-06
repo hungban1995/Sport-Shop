@@ -26,23 +26,17 @@ export const getAll = async (req, res, next) => {
       return next(error);
     }
     const { page, page_size, sort_by, filter_by } = req.query;
-    let filter = "";
-    if (filter_by) {
-      filter = JSON.parse(filter_by);
-    }
-    const orders = await Orders.find(
-      { ...filter },
-      {
-        user: 1,
-        status: 1,
-        paymentMethod: 1,
-        orderDetail: 1,
-        totalPrice: 1,
-        createdAt: 1,
-        firstName: 1,
-        lastName: 1,
-      }
-    )
+    const filter = filter_by ? JSON.parse(filter_by) : {};
+    const orders = await Orders.find(filter, {
+      user: 1,
+      status: 1,
+      paymentMethod: 1,
+      orderDetail: 1,
+      totalPrice: 1,
+      createdAt: 1,
+      firstName: 1,
+      lastName: 1,
+    })
       .populate({
         path: "orderDetail.productVariant",
         select: "-__v -updatedAt -createdAt -inStock -sold",
@@ -57,7 +51,7 @@ export const getAll = async (req, res, next) => {
     if (orders.length === 0) {
       return next({ status: 404, error: "No order found" });
     }
-    let count = await Orders.find({ ...filter }).count();
+    let count = await Orders.countDocuments(filter);
     res.status(200).json({
       success: "Get order success",
       orders,

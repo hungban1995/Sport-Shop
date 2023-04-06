@@ -4,17 +4,16 @@ import fs from "fs";
 import { format } from "date-fns";
 import { verifyAccessToken } from "./auth.js";
 const __dirname = path.resolve();
-
 //Set to save images to storage
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
-    const decode = await verifyAccessToken(req);
-    if (decode.error) {
-      cb(decode);
+    const { error } = await verifyAccessToken(req);
+    if (error) {
+      cb(error);
       return;
     }
     const dateTime = `${format(new Date(), `MM-yyyy`)}`;
-    const PATH = `${__dirname}/src/public/uploads/${dateTime}`;
+    const PATH = `${__dirname}/src/publics/uploads/${dateTime}`;
     if (!fs.existsSync(PATH)) {
       fs.mkdirSync(PATH, { recursive: true });
     }
@@ -25,7 +24,6 @@ const storage = multer.diskStorage({
     cb(null, uniqueSuffix + "-" + file.originalname);
   },
 });
-
 //Create upload function
 const uploadSingle = multer({
   storage: storage,

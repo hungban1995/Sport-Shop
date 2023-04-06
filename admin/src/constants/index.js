@@ -23,14 +23,14 @@ export const valueSortUser = [
   { name: "Username ⬇", value: "-username" },
 ];
 export const valueSortProduct = [
-  { name: "giá bán ⬆", value: "price" },
-  { name: "giá bán ⬇", value: "-price" },
-  { name: "giảm giá ⬆", value: "onSale" },
-  { name: "giảm giá ⬇", value: "-onSale" },
-  { name: "Tồn kho ⬆", value: "inStock" },
-  { name: "Tồn kho ⬇", value: "-inStock" },
-  { name: "Đã bán ⬆", value: "sold" },
-  { name: "Đã bán ⬇", value: "-sold" },
+  { name: "giá bán ⬆", value: { price: 1 } },
+  { name: "giá bán ⬇", value: { price: -1 } },
+  { name: "giảm giá ⬆", value: { onSale: 1 } },
+  { name: "giảm giá ⬇", value: { onSale: -1 } },
+  { name: "Tồn kho ⬆", value: { inStock: 1 } },
+  { name: "Tồn kho ⬇", value: { inStock: -1 } },
+  { name: "Đã bán ⬆", value: { sold: 1 } },
+  { name: "Đã bán ⬇", value: { sold: -1 } },
 ];
 export const valueSortCat = [
   { name: "Ngày tạo ⬆", value: "createdAt" },

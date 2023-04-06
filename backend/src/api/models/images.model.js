@@ -4,6 +4,7 @@ const imagesSchema = new mongoose.Schema(
     title: { type: String },
     alt: { type: String },
     url: { type: String },
+    uploadBy: { type: String, ref: "users" },
   },
   { timestamps: true }
 );

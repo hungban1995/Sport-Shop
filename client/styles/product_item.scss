@@ -1,0 +1,86 @@
+@use "base";
+
+.productItem {
+  margin: 20px;
+  overflow: hidden;
+  position: relative;
+  border: 0.1px solid #888;
+  box-sizing: border-box;
+  .image {
+    overflow: hidden;
+    width: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.25s ease;
+    }
+  }
+  .action {
+    position: absolute;
+    display: block;
+    top: 50%;
+    right: 0;
+    transform: translateX(100%);
+    transition: all 0.25s ease;
+    .wishList,
+    .addToCart,
+    .selectOption {
+      position: relative;
+      cursor: pointer;
+      font-size: 26px;
+      padding: 5px;
+      margin: 10px;
+      text-align: center;
+      border-radius: 50%;
+      .des {
+        display: none;
+        position: absolute;
+        margin: 10px;
+        padding: 5px;
+        font-size: 13px;
+        background: #000;
+        color: white;
+        left: 0;
+        top: 0;
+        width: 100px;
+        border-radius: 5px;
+      }
+      &:hover {
+        color: orange;
+        .des {
+          display: block;
+          transform: translateX(-110%);
+        }
+      }
+    }
+  }
+  &:hover {
+    .action {
+      transform: translateX(0);
+    }
+    img {
+      transform: scale(1.2);
+    }
+  }
+  .productItemContent {
+    margin: 10px;
+    .itemRating {
+      color: yellow;
+      padding: 5px;
+    }
+    .itemTitle {
+      color: #888;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 5px;
+      &:hover {
+        color: red;
+      }
+    }
+    .itemPrice {
+      color: orange;
+      padding: 5px;
+    }
+  }
+}

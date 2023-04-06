@@ -15,7 +15,6 @@ function Header(props) {
   const router = useRouter();
   const [isActive, setIsActive] = useState("");
   const dispatch = useDispatch();
-  // const { co } = useSelector((state) => state.user);
 
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -27,26 +26,64 @@ function Header(props) {
         <CgGym className="logoIcon" />
         <span>Shop Name</span>
       </div>
-      <ul className={`menu ${isActive}`}>
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href="/product">Products</Link>
-        </li>
-        <li>
-          <Link href="/blog">Blog</Link>
-        </li>
-        <li>
-          <Link href="/info">Info</Link>
-        </li>
-        <MdOutlineArrowBackIosNew
-          className="icon"
-          onClick={() => {
-            setIsActive("");
-          }}
-        />
-      </ul>
+      <div className={`list ${isActive}`}>
+        <ul className={`menuList`}>
+          <span className="menuListTitle">
+            <FiMenu /> Menu
+          </span>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
+            <Link href="/shop">Shop</Link>
+          </li>
+          <li>
+            <Link href="/blog">Blog</Link>
+          </li>
+          <li>
+            <Link href="/info">Info</Link>
+          </li>
+          <MdOutlineArrowBackIosNew
+            className="icon"
+            onClick={() => {
+              setIsActive("");
+            }}
+          />
+        </ul>
+        <div className="menuUser">
+          <span className="menuListTitle">
+            <CiUser className="icon" /> User
+          </span>
+          {user ? (
+            <div className="user">
+              <div className="action">
+                <Link href="/profile">Profile</Link>
+              </div>
+              <div
+                className="action"
+                onClick={() => {
+                  localStorage.removeItem("accessToken");
+                  localStorage.removeItem("refreshToken");
+                  localStorage.removeItem("userId");
+                  dispatch(getCount());
+                  router.push("/");
+                }}
+              >
+                Logout
+              </div>
+            </div>
+          ) : (
+            <div className="user">
+              <div className="action">
+                <Link href="/login">Login</Link>
+              </div>
+              <div className="action">
+                <Link href="/register">Register</Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
       <div
         className="menuToggle"
         onClick={() => {

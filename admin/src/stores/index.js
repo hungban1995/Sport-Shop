@@ -9,6 +9,7 @@ import productVariantsReducer from "./productVariants";
 import productsReducer from "./productsReducer";
 import ordersReducer from "./ordersReducer";
 import deleteData from "./deleteDataReducer";
+import imagesReducer from "./imagesReducer";
 
 export default configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export default configureStore({
     products: productsReducer,
     orders: ordersReducer,
     delete: deleteData,
+    images: imagesReducer,
   },
 });

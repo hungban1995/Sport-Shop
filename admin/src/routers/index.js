@@ -15,7 +15,7 @@ import SinglePost from "../pages/PostManager/Posts/SinglePost";
 import SingleProduct from "../pages/ProductManager/Products/SingleProduct";
 import OrderS from "../pages/OrderManager";
 import SingleOrder from "../pages/OrderManager/SingleOrder";
-
+import ImagesManager from "../pages/ImagesManager";
 function Routers() {
   return (
     <>
@@ -44,6 +44,7 @@ function Routers() {
             <Route index element={<OrderS />} />
             <Route path=":id" element={<SingleOrder />} />
           </Route>
+          <Route path="images" element={<ImagesManager />} />
           <Route
             path="*"
             element={<p style={{ fontSize: "2rem" }}> 404 Page not found </p>}

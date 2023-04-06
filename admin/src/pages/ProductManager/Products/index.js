@@ -32,7 +32,6 @@ function Products() {
           `products/get-all?page=${page_num}&page_size=${page_size}&sort_by=${sort_by}&filter_by=${filter_by}`
         );
         setProducts(res.data.products);
-
         setCount(res.data.count);
       } catch (error) {
         console.log(error);
@@ -102,6 +101,7 @@ function Products() {
 
   return (
     <div className="products">
+      {console.log(products)}
       <div className="top">
         <div className="title">
           <span>Danh sách sản phẩm:</span>
@@ -128,7 +128,11 @@ function Products() {
           >
             <AiOutlineDelete /> Delete Data
           </span>
-          <SortData valueSort={valueSortProduct} set_sort_by={set_sort_by} />
+          <SortData
+            valueSort={valueSortProduct}
+            set_sort_by={set_sort_by}
+            style={{ cursor: "no-drop" }}
+          />
           <FilterData
             valueFilter={valueFil}
             typeFilter={{ name: "Danh mục", value: "category" }}
