@@ -1,5 +1,4 @@
 @use "base";
-$small-screen: 767px;
 
 .login {
   display: flex;
@@ -75,9 +74,9 @@ $small-screen: 767px;
     }
   }
 }
-@media (max-width: $small-screen) {
-  .login {
-    position: absolute;
-    margin-top: 100px;
-  }
+@media (max-width: base.$small-screen) {
+  // .login {
+  //   position: absolute;
+  //   margin-top: 100px;
+  // }
 }

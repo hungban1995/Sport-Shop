@@ -25,21 +25,38 @@ export const createProduct = async (req, res, next) => {
 export const getAll = async (req, res, next) => {
   try {
     const { page, page_size, sort_by, filter_by } = req.query;
-    let filter = "";
-    if (filter_by) {
-      filter = JSON.parse(filter_by);
-    }
-    const products = await Products.find({ ...filter })
+    const filter = filter_by ? JSON.parse(filter_by) : {};
+    const valueSort = sort_by ? JSON.parse(sort_by) : {};
+    console.log(valueSort);
+    const products = await Products.find(filter)
       .populate({ path: "category", select: "title" })
       .populate({ path: "variants", select: "-createdAt -updatedAt -__v" })
       .skip((page - 1) * page_size)
-      .limit(page_size)
-      .sort(sort_by);
-
+      .limit(page_size);
     if (products.length === 0) {
       return next({ status: 404, error: "No product found" });
     }
-    let count = await Products.find({ ...filter }).count();
+    if (valueSort) {
+      for (let i = 0; i < products.length; i++) {
+        let variantSort = await ProductsVariants.find({
+          ofProduct: products[i]._id,
+        }).sort(valueSort);
+        products[i].variants = variantSort[0];
+        console.log(":::max", variantSort);
+      }
+      products.sort((a, b) => {
+        const key = Object.keys(valueSort)[0];
+        const aVal = a.variants[key];
+        const bVal = b.variants[key];
+        if (valueSort[key] === -1) {
+          return bVal - aVal;
+        } else {
+          return aVal - bVal;
+        }
+      });
+    }
+
+    let count = await Products.countDocuments(filter);
     res.status(200).json({
       success: "Get product success",
       products,

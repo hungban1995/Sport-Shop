@@ -17,12 +17,9 @@ export const createPost = async (req, res, next) => {
 export const getAll = async (req, res, next) => {
   try {
     const { page, page_size, sort_by, filter_by } = req.query;
-    let filter = "";
-    if (filter_by) {
-      filter = JSON.parse(filter_by);
-    }
+    const filter = filter_by ? JSON.parse(filter_by) : {};
 
-    const posts = await Posts.find({ ...filter })
+    const posts = await Posts.find(filter)
       .populate({ path: "category", select: "title" })
       .populate({ path: "author", select: "username avatar" })
       .skip((page - 1) * page_size)
@@ -32,7 +29,7 @@ export const getAll = async (req, res, next) => {
     if (posts.length === 0) {
       return next({ status: 404, error: "No post found" });
     }
-    let count = await Posts.find({ ...filter }).count();
+    let count = await Posts.countDocuments(filter);
     res.status(200).json({
       success: "Get post success",
       posts,

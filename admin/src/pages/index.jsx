@@ -70,32 +70,32 @@ function Home() {
   return <div className="home">
     <div className="top">
       <div className="title">
-        <span>Sales Overview</span>
+        <span>Tổng quan về bán hàng:</span>
       </div>
     </div>
     <div className="body">
-      <div className="item"><h5>Revenue</h5>
+      <div className="item"><h5>Doanh thu</h5>
         <span className="number">{ordersSuccess && PriceVnd(renderRevenue(ordersSuccess))}</span>
       </div>
-      <div className="item"><h5>Orders</h5></div>
-      <div className="item"><h5>Purchases</h5></div>
-      <div className="item">Chart
+      <div className="item"><h5>Tổng đơn</h5></div>
+      <div className="item"><h5>Mua hàng</h5></div>
+      <div className="item">Đồ thị
       </div>
-      <div className="item">Categories</div>
+      <div className="item">Danh mục</div>
       <div className="item">
         <div className="headerTable">
-          <span>Latest Orders</span>
-          <Link to='/orders' className="orderView">View Orders</Link>
+          <span>Đơn đặt hàng mới nhất</span>
+          <Link to='/orders' className="orderView">Xem đơn đặt hàng</Link>
         </div>
         <table cellSpacing={10} cellPadding={10}>
           <thead>
             <tr>
               <th>OrderId</th>
-              <th>Date</th>
-              <th>Customer</th>
-              <th>Status</th>
-              <th>Payment Method</th>
-              <th>Total</th>
+              <th>Ngày Đặt hàng</th>
+              <th>Khách hàng</th>
+              <th>Trạng thái</th>
+              <th>Phương thức thanh toán</th>
+              <th>Tổng tiền</th>
             </tr>
           </thead>
           <tbody>
@@ -120,7 +120,7 @@ function Home() {
           </tbody>
         </table>
       </div>
-      <div className="item">Top Selling
+      <div className="item">Top bán chạy
       </div>
     </div>
   </div>

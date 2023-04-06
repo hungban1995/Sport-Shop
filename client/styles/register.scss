@@ -1,5 +1,5 @@
 @use "base";
-$small-screen: 767px;
+$small-screen: 768px;
 .register {
   display: flex;
   width: 100%;
@@ -7,14 +7,14 @@ $small-screen: 767px;
   .title {
     background-color: base.$background-item;
     width: 100%;
-    height: 200px;
+    height: 150px;
     margin-bottom: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     span {
       color: base.$text-color;
-      font-size: 36px;
+      font-size: 32px;
       font-weight: bold;
     }
   }
@@ -85,13 +85,13 @@ $small-screen: 767px;
 }
 @media (max-width: $small-screen) {
   .register {
-    position: absolute;
-    margin-top: 100px;
+    // position: absolute;
+    // margin-top: 100px;
     width: 100%;
     form {
       grid-template-columns: 100%;
       display: unset;
-      width: 100%;
+      width: unset;
     }
   }
 }

@@ -89,6 +89,9 @@
             cursor: pointer;
             margin-top: 10px;
             border-radius: 5px;
+            &:hover {
+              background-color: rgb(16, 198, 198);
+            }
             &.disable {
               opacity: 0.4;
               cursor: no-drop;

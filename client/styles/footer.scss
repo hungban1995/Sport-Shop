@@ -1,0 +1,36 @@
+.footer {
+  margin-top: 10px;
+  background-color: rgb(22, 22, 22);
+  color: #fff;
+  padding: 20px 0;
+  line-height: 30px;
+  .top {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    .item {
+      padding: 20px;
+      h4 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #999;
+      }
+      .itemMenu {
+        display: flex;
+        flex-direction: column;
+        a {
+          text-decoration: none;
+          color: #fff;
+        }
+      }
+      .icon {
+        font-size: 28px;
+        margin-inline-end: 10px;
+        color: red;
+      }
+    }
+  }
+  .bottom {
+    margin-top: 20px;
+    border-top: 1px solid gray;
+  }
+}

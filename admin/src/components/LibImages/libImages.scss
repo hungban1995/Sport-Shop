@@ -1,0 +1,38 @@
+$small-screen: 768px;
+
+.libImages {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  padding: 5px;
+  .hideImg {
+    filter: blur(2px);
+  }
+  .imageItem {
+    padding: 10px;
+    transition: all 0.3s ease-in;
+    img {
+      border-radius: 5px;
+
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      box-sizing: border-box;
+      transition: all 0.3s ease-out;
+
+      &.hideImg {
+        filter: blur(3px);
+      }
+    }
+    &.active {
+      filter: brightness(110%);
+      filter: drop-shadow(3px 5px 5px #000);
+    }
+  }
+}
+@media (max-width: $small-screen) {
+  .libImages {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 5px;
+  }
+}

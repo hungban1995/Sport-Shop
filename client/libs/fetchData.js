@@ -2,8 +2,8 @@ import axios from "axios";
 import { BASE_URL } from "../constant";
 
 //get data
-export const getData = async (url) => {
-  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+export const getData = async (url, accessToken) => {
+  // const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   return await axios({
     method: "GET",
     url: `${BASE_URL}/${url}`,
@@ -14,7 +14,7 @@ export const getData = async (url) => {
 };
 //post data
 export const postData = async (url, post) => {
-  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  // const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   return await axios({
     method: "POST",
     url: `${BASE_URL}/${url}`,

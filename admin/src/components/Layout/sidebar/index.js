@@ -7,7 +7,7 @@ import {
   MdSettings,
 } from "react-icons/md";
 import { AiOutlineInfoCircle, AiOutlineUser } from "react-icons/ai";
-import { BsBoxSeam, BsFilePostFill } from "react-icons/bs";
+import { BsBoxSeam, BsFilePostFill, BsImages } from "react-icons/bs";
 import { BiCategory } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -140,16 +140,17 @@ function SideBar() {
           </Link>
 
           <p className="title">Service</p>
-
-          <div
-            className={"item " + (activeTab === 8 && "active")}
-            onClick={() => {
-              setActiveTab(8);
-            }}
-          >
-            <AiOutlineInfoCircle className="icon" />
-            <span>Hệ thống</span>
-          </div>
+          <Link to="images">
+            <div
+              className={"item " + (activeTab === 8 && "active")}
+              onClick={() => {
+                setActiveTab(8);
+              }}
+            >
+              <BsImages className="icon" />
+              <span>Hình ảnh</span>
+            </div>
+          </Link>
           <div
             className={"item " + (activeTab === 9 && "active")}
             onClick={() => {
@@ -158,6 +159,15 @@ function SideBar() {
           >
             <MdSettings className="icon" />
             <span>Cài đặt</span>
+          </div>
+          <div
+            className={"item " + (activeTab === 10 && "active")}
+            onClick={() => {
+              setActiveTab(10);
+            }}
+          >
+            <AiOutlineInfoCircle className="icon" />
+            <span>Hệ thống</span>
           </div>
         </div>
       </div>

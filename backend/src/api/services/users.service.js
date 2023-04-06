@@ -91,10 +91,12 @@ export const getUsers = async (req, res) => {
     if (filter_by) {
       filter = JSON.parse(filter_by);
     }
-    const users = await Users.find(
-      { ...filter },
-      { createdAt: 0, updatedAt: 0, __v: 0, password: 0 }
-    )
+    const users = await Users.find(filter, {
+      createdAt: 0,
+      updatedAt: 0,
+      __v: 0,
+      password: 0,
+    })
       .skip((page - 1) * page_size)
       .limit(page_size)
       .sort(sort_by);
@@ -104,7 +106,7 @@ export const getUsers = async (req, res) => {
         error: "Không có user",
       });
     }
-    let count = await Users.find({ ...filter }).count();
+    let count = await Users.countDocuments(filter);
 
     return { users, count };
   } catch (error) {
