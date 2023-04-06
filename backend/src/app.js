@@ -1,6 +1,6 @@
 import express from "express";
 import * as dotenv from "dotenv";
-import corsConfig from "./configs/cors.config";
+// import corsConfig from "./configs/cors.config";
 import helmetConfig from "./configs/helmet.config";
 import connectDB from "./configs/db.connect";
 import staticConfig from "./configs/static.config";
@@ -30,7 +30,7 @@ const app = express(); //Defined app
 const httpServer = http.createServer(app);
 
 helmetConfig(app); //Helmet configs
-corsConfig(app); //CORS configs
+// corsConfig(app); //CORS configs
 parseConfig(app, express); //Parse config
 headerConfig(app); //Configs to client read file
 app.use(morgan("common")); //Morgan configs
