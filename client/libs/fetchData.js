@@ -13,7 +13,7 @@ export const getData = async (url, accessToken) => {
   });
 };
 //post data
-export const postData = async (url, post) => {
+export const postData = async (url, post,accessToken) => {
   // const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   return await axios({
     method: "POST",
