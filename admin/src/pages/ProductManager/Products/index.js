@@ -12,6 +12,7 @@ import FilterData from "../../../components/QueryData/Filter";
 import { getManyDelete } from "../../../stores/deleteDataReducer";
 import { setBackground } from "../../../stores/themeWebReducer";
 import Pagination from "../../../components/QueryData/Pagination";
+import { renderNumber } from "../../../libs/dataRender";
 function Products() {
   const { refreshUser } = useSelector((state) => state.products);
   const navigate = useNavigate();
@@ -92,16 +93,9 @@ function Products() {
       </span>
     );
   };
-  //render number
-  const renderNumber = (value, key) => {
-    let number = 0;
-    value.forEach((item) => (number += item[key]));
-    return <span>{number}</span>;
-  };
 
   return (
     <div className="products">
-      {console.log(products)}
       <div className="top">
         <div className="title">
           <span>Danh sách sản phẩm:</span>
@@ -128,11 +122,7 @@ function Products() {
           >
             <AiOutlineDelete /> Delete Data
           </span>
-          <SortData
-            valueSort={valueSortProduct}
-            set_sort_by={set_sort_by}
-            style={{ cursor: "no-drop" }}
-          />
+          <SortData valueSort={valueSortProduct} set_sort_by={set_sort_by} />
           <FilterData
             valueFilter={valueFil}
             typeFilter={{ name: "Danh mục", value: "category" }}
@@ -171,17 +161,19 @@ function Products() {
                       />
                     </td>
                     <td>{product._id}</td>
-                    <td className="cellWithImg">
-                      <img
-                        alt="img"
-                        src={
-                          product.image
-                            ? `${IMG_URL}/${product.image}`
-                            : BLANK_IMG
-                        }
-                        className="cellImg"
-                      />
-                      {product.title}
+                    <td>
+                      <span className="cellWithImg">
+                        <img
+                          alt="img"
+                          src={
+                            product.image
+                              ? `${IMG_URL}/${product.image}`
+                              : BLANK_IMG
+                          }
+                          className="cellImg"
+                        />
+                        {product.title}
+                      </span>
                     </td>
                     <td>
                       {product?.category?.map((item, idx) => {
@@ -226,7 +218,7 @@ function Products() {
               })
             ) : (
               <tr>
-                <td>User not found!</td>
+                <td>Products not found!</td>
               </tr>
             )}
           </tbody>

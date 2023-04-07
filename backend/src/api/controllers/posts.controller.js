@@ -18,13 +18,13 @@ export const getAll = async (req, res, next) => {
   try {
     const { page, page_size, sort_by, filter_by } = req.query;
     const filter = filter_by ? JSON.parse(filter_by) : {};
-
+    const valueSort = sort_by ? JSON.parse(sort_by) : {};
     const posts = await Posts.find(filter)
       .populate({ path: "category", select: "title" })
       .populate({ path: "author", select: "username avatar" })
       .skip((page - 1) * page_size)
       .limit(page_size)
-      .sort(sort_by);
+      .sort(valueSort);
 
     if (posts.length === 0) {
       return next({ status: 404, error: "No post found" });

@@ -18,13 +18,14 @@ export const getAll = async (req, res, next) => {
   try {
     const { page, page_size, sort_by, filter_by } = req.query;
     const filter = filter_by ? JSON.parse(filter_by) : {};
+    const valueSort = sort_by ? JSON.parse(sort_by) : {};
     const categories = await CategoriesPosts.find(filter, {
       updatedAt: 0,
       __v: 0,
     })
       .skip((page - 1) * page_size)
       .limit(page_size)
-      .sort(sort_by);
+      .sort(valueSort);
     if (categories.length === 0) {
       return next({
         status: 404,

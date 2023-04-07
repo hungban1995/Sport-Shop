@@ -70,7 +70,7 @@ const CreateProduct = () => {
         })
       );
       reset();
-      setVariantId(null);
+      setVariantId([]);
     } catch (error) {
       console.log(error);
       dispatch(

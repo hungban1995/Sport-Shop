@@ -2,18 +2,20 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../components/loading";
-import { listStyle, PriceVnd } from "../libs/dataRender";
+import { listStyle, PriceVnd, renderNumber } from "../libs/dataRender";
 import { getData } from "../libs/fetchData";
 import './home.scss'
+import { BLANK_IMG, IMG_URL } from "../constants";
+import DoughnutChart from "../components/ChartData/doughnut";
 function Home() {
   const [ordersSuccess, setOrdersSuccess] = useState(null)
   const [ordersLatest, setOrderLatest] = useState(null);
   const [products, setProducts] = useState(null)
+  const [countOrder, setCountOrder] = useState(0)
   useEffect(() => {
     const getProducts = async () => {
       try {
-
-        const res = await getData('products/get-all')
+        const res = await getData('products/get-all?sort_by={%22sold%22:-1}&page=1&page_size=5')
         setProducts(res.data.products)
       } catch (error) {
         console.log(error);
@@ -23,10 +25,8 @@ function Home() {
     getProducts()
   }, [])
   useEffect(() => {
-    const getOrders = async () => {
+    const getOrdersSuccess = async () => {
       try {
-
-
         const res = await getData(
           `orders/get-all?filter_by={%22status%22:%22SUCCESS%22}`
         );
@@ -35,17 +35,29 @@ function Home() {
       } catch (error) {
         console.log(error);
         setOrdersSuccess(null);
-
       }
     };
-    getOrders();
+    getOrdersSuccess();
+  }, []);
+  useEffect(() => {
+    const getCountOrders = async () => {
+      try {
+        const res = await getData(
+          `orders/count`
+        );
+        setCountOrder(res.data.count)
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCountOrders();
   }, []);
   useEffect(() => {
     const getOrdersLatest = async () => {
-
       try {
         const res = await getData(
-          `orders/get-all?sort_by=-createdAt&page=1&page_size=5`
+          `orders/get-all?sort_by=%22-createdAt%22&page=1&page_size=5`
         );
         setOrderLatest(res.data.orders);
 
@@ -63,29 +75,32 @@ function Home() {
     value.forEach(item => total += item.totalPrice)
     return total
   }
-  // render Top sell
-  const renderTopSell = (value) => {
-    let topSell = 0
-  }
   return <div className="home">
     <div className="top">
       <div className="title">
-        <span>Tổng quan về bán hàng:</span>
+        <h3>Tổng quan về bán hàng:</h3>
       </div>
     </div>
     <div className="body">
       <div className="item"><h5>Doanh thu</h5>
         <span className="number">{ordersSuccess && PriceVnd(renderRevenue(ordersSuccess))}</span>
       </div>
-      <div className="item"><h5>Tổng đơn</h5></div>
-      <div className="item"><h5>Mua hàng</h5></div>
+      <div className="item"><h5>Đơn hàng thành công</h5>
+        <span className="number"> {ordersSuccess ? ordersSuccess.length : 0}</span>
+      </div>
+      <div className="item"><h5>Tổng đơn mua</h5>
+
+        <span className="number"> {countOrder}</span>
+      </div>
       <div className="item">Đồ thị
       </div>
-      <div className="item">Danh mục</div>
+      <div className="item"><h5>Danh mục hàng</h5>
+        {/* <DoughnutChart /> */}
+      </div>
       <div className="item">
-        <div className="headerTable">
+        <div className="headerItem">
           <span>Đơn đặt hàng mới nhất</span>
-          <Link to='/orders' className="orderView">Xem đơn đặt hàng</Link>
+          <Link to='/orders' className="actionView">Xem đơn đặt hàng</Link>
         </div>
         <table cellSpacing={10} cellPadding={10}>
           <thead>
@@ -120,7 +135,49 @@ function Home() {
           </tbody>
         </table>
       </div>
-      <div className="item">Top bán chạy
+      <div className="item">
+        <div className="headerItem">
+          <span>Top bán chạy:</span>
+          <Link to='/products' className="actionView">Xem các sản phẩm</Link>
+        </div>
+        <table cellSpacing={10} cellPadding={10}>
+          <thead>
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Đã bán</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products ? (
+              products.map((product, idx) => {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      <span className="cellWithImg">
+                        <img
+                          alt="img"
+                          src={
+                            product.images
+                              ? `${IMG_URL}/${product.images[0]}`
+                              : BLANK_IMG
+                          }
+                          className="cellImg"
+                        />
+                        {product.title}
+                      </span>
+                    </td>
+                    <td>{renderNumber(product.variants, "sold")}</td>
+
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td>Order not found!</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -1,16 +1,11 @@
 import React from "react";
 import "./sort.scss";
-function SortData({ valueSort, set_sort_by, style }) {
+function SortData({ valueSort, set_sort_by }) {
   const handleChange = (e) => {
     set_sort_by(e.target.value);
   };
   return (
-    <select
-      name="sortBy"
-      className="sortBy"
-      onChange={handleChange}
-      style={style}
-    >
+    <select name="sortBy" className="sortBy" onChange={handleChange}>
       <option value="">Sắp xếp:</option>
       {valueSort &&
         valueSort.map((value, idx) => {

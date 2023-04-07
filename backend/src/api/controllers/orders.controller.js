@@ -27,6 +27,7 @@ export const getAll = async (req, res, next) => {
     }
     const { page, page_size, sort_by, filter_by } = req.query;
     const filter = filter_by ? JSON.parse(filter_by) : {};
+    const valueSort = sort_by ? JSON.parse(sort_by) : {};
     const orders = await Orders.find(filter, {
       user: 1,
       status: 1,
@@ -47,7 +48,7 @@ export const getAll = async (req, res, next) => {
       })
       .skip((page - 1) * page_size)
       .limit(page_size)
-      .sort(sort_by);
+      .sort(valueSort);
     if (orders.length === 0) {
       return next({ status: 404, error: "No order found" });
     }
@@ -109,6 +110,23 @@ export const deleteOrder = async (req, res, next) => {
     await Orders.findByIdAndDelete(id);
     res.status(200).json({
       success: "Delete order success",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//getAll
+export const getCount = async (req, res, next) => {
+  try {
+    const { error } = await service.getAll(req);
+    if (error) {
+      return next(error);
+    }
+    let count = await Orders.countDocuments({});
+    res.status(200).json({
+      success: "Get order success",
+      count,
     });
   } catch (error) {
     next(error);

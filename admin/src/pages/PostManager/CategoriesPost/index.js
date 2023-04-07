@@ -134,15 +134,17 @@ function CategoriesPost() {
                       />
                     </td>
                     <td>{item._id}</td>
-                    <td className="cellWithImg">
-                      <img
-                        alt="img"
-                        src={
-                          item.image ? `${IMG_URL}/${item.image}` : BLANK_IMG
-                        }
-                        className="cellImg"
-                      />
-                      {item.title}
+                    <td>
+                      <span className="cellWithImg">
+                        <img
+                          alt="img"
+                          src={
+                            item.image ? `${IMG_URL}/${item.image}` : BLANK_IMG
+                          }
+                          className="cellImg"
+                        />
+                        {item.title}
+                      </span>
                     </td>
                     <td>{moment(item.createdAt).format("L")}</td>
                     <td>{item.description}</td>
