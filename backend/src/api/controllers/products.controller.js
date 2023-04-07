@@ -26,8 +26,7 @@ export const getAll = async (req, res, next) => {
   try {
     const { page, page_size, sort_by, filter_by } = req.query;
     const filter = filter_by ? JSON.parse(filter_by) : {};
-    const valueSort = sort_by ? JSON.parse(sort_by) : {};
-    console.log(valueSort);
+    const valueSort = sort_by ? JSON.parse(sort_by) : null;
     const products = await Products.find(filter)
       .populate({ path: "category", select: "title" })
       .populate({ path: "variants", select: "-createdAt -updatedAt -__v" })
@@ -36,18 +35,32 @@ export const getAll = async (req, res, next) => {
     if (products.length === 0) {
       return next({ status: 404, error: "No product found" });
     }
-    if (valueSort) {
+    if (valueSort !== null) {
       for (let i = 0; i < products.length; i++) {
         let variantSort = await ProductsVariants.find({
           ofProduct: products[i]._id,
         }).sort(valueSort);
         products[i].variants = variantSort[0];
-        console.log(":::max", variantSort);
       }
       products.sort((a, b) => {
         const key = Object.keys(valueSort)[0];
-        const aVal = a.variants[key];
-        const bVal = b.variants[key];
+        const [variantA] = a.variants;
+        const [variantB] = b.variants;
+
+        // Find the key to sort
+        let aVal, bVal;
+        if (key in variantA) {
+          aVal = variantA[key];
+        } else {
+          return next({ status: 404, error: "sort fail" });
+        }
+        if (key in variantB) {
+          bVal = variantB[key];
+        } else {
+          return next({ status: 404, error: "sort fail" });
+        }
+
+        // Sort based on value
         if (valueSort[key] === -1) {
           return bVal - aVal;
         } else {

@@ -56,12 +56,10 @@
     background: #fff;
     border-radius: 5px;
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-
     table {
+      border-collapse: collapse;
       width: 100%;
       max-width: 100%;
-      border-collapse: collapse;
-
       .cellWithImg {
         display: flex;
         align-items: center;

@@ -18,7 +18,7 @@ export const getAll = async (req, res, next) => {
   try {
     const { page, page_size, sort_by, filter_by } = req.query;
     const filter = filter_by ? JSON.parse(filter_by) : {};
-
+    const valueSort = sort_by ? JSON.parse(sort_by) : {};
     const categories = await Categories.find(filter, {
       createdAt: 0,
       updatedAt: 0,
@@ -26,7 +26,7 @@ export const getAll = async (req, res, next) => {
     })
       .skip((page - 1) * page_size)
       .limit(page_size)
-      .sort(sort_by);
+      .sort(valueSort);
     if (categories.length === 0) {
       return next({
         status: 404,

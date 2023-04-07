@@ -84,7 +84,7 @@ function Users() {
                     <SortData valueSort={valueSortUser} set_sort_by={set_sort_by} />
                     <FilterData
                         valueFilter={['admin', 'user']}
-                        typeFilter={"role"}
+                        typeFilter={{ name: 'Chức năng', value: "role" }}
                         set_filter_by={set_filter_by}
                     />
                 </div>
@@ -119,15 +119,17 @@ function Users() {
                                             />
                                         </td>
                                         <td>{user._id}</td>
-                                        <td className='cellWithImg'><img
-                                            alt="avatar"
-                                            src={
-                                                user.avatar
-                                                    ? `${IMG_URL}/${user.avatar}`
-                                                    : BLANK_AVT
-                                            }
-                                            className="cellImg"
-                                        /> {user.username} </td>
+                                        <td>
+                                            <span className='cellWithImg'><img
+                                                alt="avatar"
+                                                src={
+                                                    user.avatar
+                                                        ? `${IMG_URL}/${user.avatar}`
+                                                        : BLANK_AVT
+                                                }
+                                                className="cellImg"
+                                            /> {user.username} </span>
+                                        </td>
                                         <td>{moment(user.birthday).format("L") || null}</td>
                                         <td>{user.email}</td>
                                         <td>{user.fullName}</td>

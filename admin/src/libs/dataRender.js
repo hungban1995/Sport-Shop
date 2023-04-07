@@ -4,6 +4,8 @@ export const PriceVnd = (price) => {
     currency: "VND",
   }).format(price);
 };
+//render status
+
 export const listStyle = (value, bg) => {
   const styles = {
     WAITING: { color: "#FACC15", bgColor: "#FEFCE8" },
@@ -14,4 +16,11 @@ export const listStyle = (value, bg) => {
   const { color, bgColor } = styles[value] || {};
   const backgroundColor = bg ? bgColor : "#fff";
   return { color, fontWeight: "bold", backgroundColor };
+};
+//render number
+
+export const renderNumber = (value, key) => {
+  let number = 0;
+  value.forEach((item) => (number += item[key]));
+  return <span>{number}</span>;
 };

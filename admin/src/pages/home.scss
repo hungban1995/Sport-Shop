@@ -28,6 +28,25 @@
       padding: 20px;
       background: #fff;
       border-radius: 10px;
+      .headerItem {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .actionView {
+          text-decoration: none;
+          background-color: #fff;
+          border: 0.5px solid #888;
+          border-radius: 5px;
+          color: #888;
+          padding: 5px;
+          cursor: pointer;
+          &:hover {
+            background-color: #3b82f6;
+            color: #fff;
+          }
+        }
+      }
       .number {
         font-size: 26px;
         font-weight: bold;
@@ -40,30 +59,12 @@
         grid-column-start: 1;
         grid-column-end: 3;
         border-radius: 5px;
-        .headerTable {
-          padding: 10px 20px;
-          display: flex;
-          justify-content: space-between;
-          .orderView {
-            text-decoration: none;
-            background-color: #fff;
-            border: 0.5px solid #888;
-            border-radius: 5px;
-            color: #888;
-            padding: 5px;
-            cursor: pointer;
-            &:hover {
-              background-color: #3b82f6;
-              color: #fff;
-            }
-          }
-        }
+
         table {
           max-height: 400px;
           width: 100%;
           max-width: 100%;
           border-collapse: collapse;
-
           .cellWithImg {
             display: flex;
             align-items: center;
@@ -127,6 +128,37 @@
               &:hover {
                 background-color: crimson;
                 color: lightblue;
+              }
+            }
+          }
+        }
+      }
+      &:last-child {
+        table {
+          max-height: 400px;
+          width: 100%;
+          max-width: 100%;
+          border-collapse: collapse;
+          .cellWithImg {
+            display: flex;
+            align-items: center;
+            .cellImg {
+              width: 35px;
+              height: 35px;
+              border-radius: 5px;
+              object-fit: cover;
+              margin-right: 20px;
+            }
+          }
+          th,
+          td {
+            border-bottom: 0.5px solid #888;
+            text-align: center;
+          }
+          tr {
+            &:last-child {
+              td {
+                border: none;
               }
             }
           }

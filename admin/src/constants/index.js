@@ -19,8 +19,8 @@ export const valueSortPost = [
   { name: "Ngày đăng ⬇", value: "-createdAt" },
 ];
 export const valueSortUser = [
-  { name: "Username ⬆", value: "username" },
-  { name: "Username ⬇", value: "-username" },
+  { name: "Username a-z", value: "username" },
+  { name: "Username z-a", value: "-username" },
 ];
 export const valueSortProduct = [
   { name: "giá bán ⬆", value: { price: 1 } },
