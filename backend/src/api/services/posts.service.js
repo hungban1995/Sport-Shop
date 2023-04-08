@@ -20,14 +20,6 @@ export const createPost = async (req) => {
       categories = req.body.category;
     }
     req.body.category = categories;
-    if (req.fileValidationError) {
-      return {
-        error: {
-          status: 400,
-          error: "Upload file error",
-        },
-      };
-    }
     const { title } = req.body;
     if (!title) {
       return {
@@ -36,15 +28,6 @@ export const createPost = async (req) => {
           error: "Title can not empty",
         },
       };
-    }
-    const { files } = req;
-    if (files && files.length > 0) {
-      const images = [];
-      const dateTime = format(new Date(), "MM-yyyy");
-      files.forEach((item) => {
-        images.push(`uploads/${dateTime}/${item.filename}`);
-      });
-      req.body.images = images;
     }
     return { post: req.body };
   } catch (error) {
@@ -70,14 +53,6 @@ export const updatePost = async (req) => {
       categories = req.body.category;
     }
     req.body.category = categories;
-    if (req.fileValidationError) {
-      return {
-        error: {
-          status: 400,
-          error: "Upload file error",
-        },
-      };
-    }
     const { title } = req.body;
     if (!title) {
       return {
@@ -86,15 +61,6 @@ export const updatePost = async (req) => {
           error: "Title can not empty",
         },
       };
-    }
-    const { files } = req;
-    if (files && files.length > 0) {
-      const images = [];
-      const dateTime = format(new Date(), "MM-yyyy");
-      files.forEach((item) => {
-        images.push(`uploads/${dateTime}/${item.filename}`);
-      });
-      req.body.images = images;
     }
     return { postUpdate: req.body };
   } catch (error) {

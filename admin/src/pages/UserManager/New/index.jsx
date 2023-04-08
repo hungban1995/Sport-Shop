@@ -6,6 +6,9 @@ import { useDispatch } from "react-redux";
 import { getNotify } from "../../../stores/notifyReducer";
 import { BiArrowBack } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom';
+import LibImages from "../../../components/LibImages";
+import { IMG_URL } from "../../../constants";
+import { styleUpload } from "../../../libs/dataRender";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -16,21 +19,10 @@ const schema = yup.object().shape({
 function New() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [imagePath, setImagePath] = useState("");
-  const [avatar, setAvatar] = useState(null);
   const [errors, setErrors] = useState({});
   const [user, setUser] = useState({});
-  const handleChangeAvatar = (e) => {
-    const file = e.target?.files?.length > 0 ? e.target.files[0] : null;
-    if (file) {
-      setAvatar(file);
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePath(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const [chooseSingle, setChooseSingle] = useState(null);
+  const [active, setActive] = useState(false)
   const handleChange = async (e) => {
     const { name, value } = e.target;
     try {
@@ -43,11 +35,11 @@ function New() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('image', avatar);
-    Object.keys(user).forEach((key) => formData.append(key, user[key]));
+    if (chooseSingle) {
+      setUser({ ...user, avatar: chooseSingle })
+    }
     try {
-      const res = await postData("users/register", formData);
+      const res = await postData("users/register", user);
       dispatch(getNotify({
         status: "success",
         message: res.data.success
@@ -72,20 +64,16 @@ function New() {
       </div>
       <div className="bottom">
         <div className="left">
-          <input
-            type="file"
-            name="avatar"
-            placeholder="file"
-            className="imageUpload"
-            onChange={handleChangeAvatar}
-          />
-          <img
-            src={
-              imagePath
-                ? imagePath
-                : "https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
+          <div className="avatarUpload" onClick={() => setActive(true)}>
+            {chooseSingle ?
+              <img className="avatarImg" src={`${IMG_URL}/${chooseSingle}`} alt="" /> : <img src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg" alt="" />
             }
-            alt="upload"
+          </div>
+          <LibImages
+            setChooseSingle={setChooseSingle}
+            active={active}
+            style={styleUpload}
+            setActive={setActive}
           />
         </div>
         <div className="right">

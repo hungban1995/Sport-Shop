@@ -11,6 +11,8 @@ import { IMG_URL } from "../../../../constants";
 import { getData, patchData } from "../../../../libs/fetchData";
 import { useDispatch } from "react-redux";
 import { getNotify } from "../../../../stores/notifyReducer";
+import LibImages from "../../../../components/LibImages";
+import { styleUpload } from "../../../../libs/dataRender";
 const schema = yup.object({
   title: yup.string().required(),
 });
@@ -20,6 +22,8 @@ function SinglePost() {
   const navigate = useNavigate();
   const [textValue, setTextValue] = useState("");
   const [postsCat, setPostsCat] = useState([]);
+  const [active, setActive] = useState(false);
+  const [chooseMany, setChooseMany] = useState([]);
   useEffect(() => {
     const getPostsCat = async () => {
       try {
@@ -48,12 +52,14 @@ function SinglePost() {
         const { title, description, images, content, category } = res.data.post;
         setValue("title", title);
         setValue("description", description);
-        setValue("images", images);
         setTextValue(content);
         setValue(
           "category",
           category.map((cat) => cat._id)
         );
+        let imgArr = [];
+        images?.map((item) => imgArr.push({ url: item }));
+        setChooseMany(imgArr);
       } catch (error) {
         console.log(error);
       }
@@ -63,25 +69,10 @@ function SinglePost() {
 
   //update
   const onSubmit = async (data) => {
-    const newData = { ...data, content: textValue };
-    const formData = new FormData();
-    if (newData.images) {
-      const fileList = [...newData.images];
-      fileList.forEach((item) => {
-        formData.append("images", item);
-      });
-    }
-    if (newData.category) {
-      const fileList = [...newData.category];
-      fileList.forEach((item) => {
-        formData.append("category", item);
-      });
-    }
-    formData.append("description", newData.description);
-    formData.append("content", newData.content);
-    formData.append("title", newData.title);
+    const images = chooseMany?.map((item) => item.url);
+    const newData = { ...data, content: textValue, images };
     try {
-      const res = await patchData("posts/update/" + id, formData);
+      const res = await patchData("posts/update/" + id, newData);
       dispatch(
         getNotify({
           status: "success",
@@ -112,6 +103,36 @@ function SinglePost() {
         <h1>Edit Post:</h1>
       </div>
       <div className="bottom">
+        <div className="imageUpload">
+          <label>Image</label>
+          <div className="actionUpload" onClick={() => setActive(true)}>
+            {chooseMany.length > 0 ? (
+              chooseMany.map((item, idx) => {
+                return (
+                  <div key={idx} style={{ display: "inline-flex" }}>
+                    <img
+                      className="viewImg"
+                      src={`${IMG_URL}/${item?.url}`}
+                      alt=""
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <img
+                className="viewImg"
+                src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
+                alt=""
+              />
+            )}
+          </div>
+          <LibImages
+            setChooseMany={setChooseMany}
+            active={active}
+            style={styleUpload}
+            setActive={setActive}
+          />
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="formInput">
             <label htmlFor="">Title</label>
@@ -121,10 +142,6 @@ function SinglePost() {
           <div className="formInput">
             <label htmlFor="">Description</label>
             <input {...register("description")} />
-          </div>
-          <div className="formInput">
-            <label htmlFor="">Images</label>
-            <input type="file" {...register("images")} multiple />
           </div>
           <div className="formInput">
             <label htmlFor="">Category</label>

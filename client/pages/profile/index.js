@@ -162,7 +162,7 @@ function Profile() {
             <div className="formGroup">
               <div className="formInput">
                 <label htmlFor="">UserName</label>
-                <input {...register("username")} type="username" />
+                <input {...register("username")} type="text" />
               </div>
               <div className="formInput">
                 <label htmlFor="">Email</label>

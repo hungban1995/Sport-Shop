@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -11,6 +11,9 @@ import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getNotify } from "../../../../stores/notifyReducer";
+import LibImages from "../../../../components/LibImages";
+import { IMG_URL } from "../../../../constants";
+import { styleUpload } from "../../../../libs/dataRender";
 
 const schema = yup.object({
   title: yup.string().required(),
@@ -20,7 +23,8 @@ const CreateProduct = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [variantId, setVariantId] = useState([]);
-
+  const [active, setActive] = useState(false);
+  const [chooseMany, setChooseMany] = useState([]);
   useEffect(() => {
     const getCat = async () => {
       try {
@@ -43,26 +47,16 @@ const CreateProduct = () => {
     mode: "all",
   });
   const onSubmit = async (data) => {
+    const images = chooseMany?.map((item) => images.url);
     const newData = {
       ...data,
       variants: variantId,
-      category: data.category || [],
+      images,
     };
     console.log(newData);
-    const formData = new FormData();
-    formData.append("title", newData.title);
-    formData.append("description", newData.description);
-    formData.append("content", newData.content);
-    if (newData.images) {
-      const fileList = [...newData.images];
-      fileList.forEach((item) => {
-        formData.append("images", item);
-      });
-    }
-    formData.append("category", JSON.stringify(newData.category));
-    formData.append("variants", JSON.stringify(newData.variants));
+
     try {
-      const res = await postData("products/create", formData);
+      const res = await postData("products/create", newData);
       dispatch(
         getNotify({
           status: "success",
@@ -71,6 +65,7 @@ const CreateProduct = () => {
       );
       reset();
       setVariantId([]);
+      setChooseMany([]);
     } catch (error) {
       console.log(error);
       dispatch(
@@ -102,7 +97,7 @@ const CreateProduct = () => {
       </div>
       <div className="bottom">
         <div className="left">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form className="formCreateProduct" onSubmit={handleSubmit(onSubmit)}>
             <div className="formInput">
               <label htmlFor="title">Tên sản phẩm</label>
               <input type="text" id="title" {...register("title")} />
@@ -131,9 +126,35 @@ const CreateProduct = () => {
                   })}
               </div>
             </div>
-            <div className="formInput">
-              <label htmlFor="images">Images</label>
-              <input type="file" id="images" multiple {...register("images")} />
+            <div className="imageUpload">
+              <label>Image</label>
+              <div className="actionUpload" onClick={() => setActive(true)}>
+                {chooseMany.length > 0 ? (
+                  chooseMany.map((item, idx) => {
+                    return (
+                      <div key={idx} style={{ display: "inline-flex" }}>
+                        <img
+                          className="viewImg"
+                          src={`${IMG_URL}/${item.url}`}
+                          alt=""
+                        />
+                      </div>
+                    );
+                  })
+                ) : (
+                  <img
+                    className="viewImg"
+                    src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
+                    alt=""
+                  />
+                )}
+              </div>
+              <LibImages
+                setChooseMany={setChooseMany}
+                active={active}
+                style={styleUpload}
+                setActive={setActive}
+              />
             </div>
             <div className="formInput">
               <label htmlFor="content">Content</label>

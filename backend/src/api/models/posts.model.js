@@ -4,7 +4,7 @@ const PostsSchema = new mongoose.Schema(
     title: { type: String, required: true },
     description: { type: String },
     content: { type: String },
-    category: { type: Array, ref: "categoriesPost" },
+    category: { type: Array, default: [], ref: "categoriesPost" },
     images: { type: Array, default: [] },
     author: { type: String, ref: "users" },
     comment: { type: Array, default: [], ref: "postComment" },

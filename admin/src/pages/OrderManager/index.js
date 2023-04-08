@@ -90,75 +90,77 @@ function OrderS() {
         </div>
       </div>
       <div className="body">
-        <table cellSpacing={10} cellPadding={10}>
-          <thead>
-            <tr>
-              <th>
-                <input type="checkbox" onChange={handleSelectAll} />
-              </th>
-              <th>OrderId</th>
-              <th>Ngày Đặt hàng</th>
-              <th>Khách hàng</th>
-              <th>Trạng thái</th>
-              <th>Phương thức thanh toán</th>
-              <th>Tổng tiền</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders ? (
-              orders.map((order, idx) => {
-                return (
-                  <tr key={idx}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        id={order._id}
-                        onChange={handleChange}
-                        checked={isCheck.includes(order._id)}
-                      />
-                    </td>
-                    <td>{order._id}</td>
-                    <td>{moment(order.createdAt).format("L")}</td>
-                    <td>{order.firstName + " " + order.lastName}</td>
-                    <td style={listStyle(order.status)}>{order.status}</td>
-                    <td>{order.paymentMethod}</td>
-                    <td>{PriceVnd(order.totalPrice)}</td>
-                    <td className="action">
-                      <AlertDel idItem={order._id} />
-                      <span
-                        className="editBtn"
-                        onClick={() => {
-                          navigate(order._id);
-                        }}
-                      >
-                        Chi Tiết
-                      </span>
-                      {"  "}
-                      <span
-                        className="deleteBtn"
-                        onClick={() => {
-                          dispatch(
-                            getAlert({
-                              open: true,
-                              delete: { id: order._id, type: "orders" },
-                            })
-                          );
-                        }}
-                      >
-                        Xóa
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
+        <div className="tableData">
+          <table cellSpacing={10} cellPadding={10}>
+            <thead>
               <tr>
-                <td>Order not found!</td>
+                <th>
+                  <input type="checkbox" onChange={handleSelectAll} />
+                </th>
+                <th>OrderId</th>
+                <th>Ngày Đặt hàng</th>
+                <th>Khách hàng</th>
+                <th>Trạng thái</th>
+                <th>Phương thức thanh toán</th>
+                <th>Tổng tiền</th>
+                <th>Action</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {orders ? (
+                orders.map((order, idx) => {
+                  return (
+                    <tr key={idx}>
+                      <td>
+                        <input
+                          type="checkbox"
+                          id={order._id}
+                          onChange={handleChange}
+                          checked={isCheck.includes(order._id)}
+                        />
+                      </td>
+                      <td>{order._id}</td>
+                      <td>{moment(order.createdAt).format("L")}</td>
+                      <td>{order.firstName + " " + order.lastName}</td>
+                      <td style={listStyle(order.status)}>{order.status}</td>
+                      <td>{order.paymentMethod}</td>
+                      <td>{PriceVnd(order.totalPrice)}</td>
+                      <td className="action">
+                        <AlertDel idItem={order._id} />
+                        <span
+                          className="editBtn"
+                          onClick={() => {
+                            navigate(order._id);
+                          }}
+                        >
+                          Chi Tiết
+                        </span>
+                        {"  "}
+                        <span
+                          className="deleteBtn"
+                          onClick={() => {
+                            dispatch(
+                              getAlert({
+                                open: true,
+                                delete: { id: order._id, type: "orders" },
+                              })
+                            );
+                          }}
+                        >
+                          Xóa
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td>Order not found!</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
         <Pagination
           count={count}
           pageSize={set_page_size}

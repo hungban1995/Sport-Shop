@@ -1,24 +1,5 @@
 import * as yup from "yup";
 
-//----------Product validate----------//
-// const productSchema = yup.object().shape({
-//   title: yup.string().required("Product title is required"),
-// });
-// export const validateProduct = async (req, res, next) => {
-//   try {
-//     console.log("Product validate: ", req.body);
-//     const { title, price, onSale, inStock, sold } = req.body;
-//     await productSchema.validate({ title, price, onSale, inStock, sold });
-//     next();
-//   } catch (error) {
-//     console.log(error.message);
-//     next({
-//       status: 400,
-//       error: error.message,
-//     });
-//   }
-// };
-
 //----------Product variants validate----------//
 const productsVariantsSchema = yup.object().shape({
   price: yup
@@ -43,11 +24,7 @@ const productsVariantsSchema = yup.object().shape({
 });
 export const productsVariantValidate = async (req) => {
   try {
-    let attributes = [];
-    if (req.body.attributes) {
-      attributes = JSON.parse(req.body.attributes);
-    }
-    const { price, onSale, inStock } = req.body;
+    const { price, onSale, inStock, attributes } = req.body;
     await productsVariantsSchema.validate({
       price,
       onSale,

@@ -3,7 +3,6 @@ import { BASE_URL } from "../constant";
 
 //get data
 export const getData = async (url, accessToken) => {
-  // const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   return await axios({
     method: "GET",
     url: `${BASE_URL}/${url}`,
@@ -13,7 +12,7 @@ export const getData = async (url, accessToken) => {
   });
 };
 //post data
-export const postData = async (url, post) => {
+export const postData = async (url, post, accessToken) => {
   // const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   return await axios({
     method: "POST",

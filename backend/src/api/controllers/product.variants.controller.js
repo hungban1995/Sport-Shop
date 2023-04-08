@@ -11,11 +11,11 @@ export const createProductVariant = async (req, res, next) => {
     if (validateErr) {
       return next(validateErr);
     }
-    const { error, productVariants } = await service.createProductVariant(req);
+    const { error } = await service.createProductVariant(req);
     if (error) {
       return next(error);
     }
-    const newRecord = await ProductsVariants.create(productVariants);
+    const newRecord = await ProductsVariants.create(req.body);
     res.status(200).json({
       success: "Tạo mới thành công",
       variants: newRecord,

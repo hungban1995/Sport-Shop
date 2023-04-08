@@ -4,13 +4,16 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import CreateVariants from "../../../../components/variants";
 import "./singleProduct.scss";
-import { getData, patchData, postData } from "../../../../libs/fetchData";
+import { getData, patchData } from "../../../../libs/fetchData";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getNotify } from "../../../../stores/notifyReducer";
+import LibImages from "../../../../components/LibImages";
+import { styleUpload } from "../../../../libs/dataRender";
+import { IMG_URL } from "../../../../constants";
 const SingleProduct = () => {
-  const { register, handleSubmit, setValue, reset } = useForm({});
+  const { register, handleSubmit, setValue } = useForm({});
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -18,6 +21,8 @@ const SingleProduct = () => {
   const [categories, setCategories] = useState([]);
   const [variantId, setVariantId] = useState([]);
   const [currentVariants, setCurrentVariants] = useState([]);
+  const [active, setActive] = useState(false);
+  const [chooseMany, setChooseMany] = useState([]);
   //fill data in form
   useEffect(() => {
     const getProduct = async () => {
@@ -25,7 +30,7 @@ const SingleProduct = () => {
         if (id) {
           const res = await getData("products/get-id/" + id);
           setCurrentVariants(res.data.product.variants);
-          const { title, description, content, category, variants } =
+          const { title, description, content, category, variants, images } =
             res.data.product;
           setValue("title", title);
           setValue("description", description);
@@ -37,6 +42,9 @@ const SingleProduct = () => {
           let varIdArr = [];
           variants.forEach((item) => varIdArr.push(item._id));
           setVariantId(varIdArr);
+          let imgArr = [];
+          images?.map((item) => imgArr.push({ url: item }));
+          setChooseMany(imgArr);
         }
       } catch (error) {
         console.log(error);
@@ -58,28 +66,15 @@ const SingleProduct = () => {
   }, []);
   //submit update
   const onSubmit = async (data) => {
+    const images = chooseMany.map((item) => item.url);
     const newData = {
       ...data,
       variants: variantId,
-      category: data.category || [],
+      images,
     };
-    console.log(newData);
-    const formData = new FormData();
-    formData.append("title", newData.title);
-    formData.append("description", newData.description);
-    formData.append("content", newData.content);
-    if (newData.images) {
-      const fileList = [...newData.images];
-      fileList.forEach((item) => {
-        formData.append("images", item);
-      });
-    }
-    formData.append("variants", JSON.stringify(newData.variants));
-    if (newData.category) {
-      formData.append("category", JSON.stringify(newData.category));
-    }
+
     try {
-      const res = await patchData("products/update/" + id, formData);
+      const res = await patchData("products/update/" + id, newData);
       dispatch(
         getNotify({
           status: "success",
@@ -98,7 +93,7 @@ const SingleProduct = () => {
   };
 
   return (
-    <div className="newProduct">
+    <div className="singleProduct">
       <div className="top">
         <div
           className="back"
@@ -109,11 +104,11 @@ const SingleProduct = () => {
           <BiArrowBack className="icon" />
           <span>Back</span>
         </div>
-        <h1>Add new Product:</h1>
+        <h1>Update Product:</h1>
       </div>
       <div className="bottom">
         <div className="left">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form className="formUpdateProduct" onSubmit={handleSubmit(onSubmit)}>
             <div className="formInput">
               <label htmlFor="title">Tên sản phẩm</label>
               <input type="text" id="title" {...register("title")} />
@@ -141,9 +136,35 @@ const SingleProduct = () => {
                   })}
               </div>
             </div>
-            <div className="formInput">
-              <label htmlFor="images">Images</label>
-              <input type="file" id="images" multiple {...register("images")} />
+            <div className="imageUpload">
+              <label>Image</label>
+              <div className="actionUpload" onClick={() => setActive(true)}>
+                {chooseMany.length > 0 ? (
+                  chooseMany.map((item, idx) => {
+                    return (
+                      <div key={idx} style={{ display: "inline-flex" }}>
+                        <img
+                          className="viewImg"
+                          src={`${IMG_URL}/${item.url}`}
+                          alt=""
+                        />
+                      </div>
+                    );
+                  })
+                ) : (
+                  <img
+                    className="viewImg"
+                    src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
+                    alt=""
+                  />
+                )}
+              </div>
+              <LibImages
+                setChooseMany={setChooseMany}
+                active={active}
+                style={styleUpload}
+                setActive={setActive}
+              />
             </div>
             <div className="formInput">
               <label htmlFor="content">Content</label>

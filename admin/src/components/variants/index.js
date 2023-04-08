@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { IoIosAdd, IoIosRemove } from "react-icons/io";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,9 @@ import AlertDel from "../notifications/alert";
 import "./variants.scss";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import LibImages from "../LibImages";
+import { styleUpload } from "../../libs/dataRender";
+import { IMG_URL } from "../../constants";
 const variantsSchema = yup.object().shape({
   price: yup
     .number()
@@ -32,6 +35,8 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
   const [variants, setVariants] = useState([]);
   const [idDel, setIdDel] = useState("");
   const [varUpdate, setVarUpdate] = useState(null);
+  const [chooseSingle, setChooseSingle] = useState(null);
+  const [active, setActive] = useState(false);
   const dispatch = useDispatch();
 
   const {
@@ -61,25 +66,13 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
 
   //submit data
   const onSubmit = async (data) => {
-    console.log(data);
-    const formData = new FormData();
-    if (data.image) {
-      const fileList = [...data.image];
-      fileList.forEach((item) => {
-        formData.append("image", item);
-      });
-    }
-    formData.append("sku", data.sku);
-    formData.append("inStock", data.inStock);
-    formData.append("price", data.price);
-    formData.append("onSale", data.onSale);
-    formData.append("attributes", JSON.stringify(data.attributes));
+    const newData = { ...data, image: chooseSingle };
     try {
       let res;
       if (varUpdate?.edit) {
         res = await patchData(
           `products-variants/update/${varUpdate.variant._id}`,
-          formData
+          newData
         );
         variants[varUpdate?.index] = res.data.dataUpdate;
         dispatch(
@@ -90,8 +83,9 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
         );
         reset();
         setVarUpdate(null);
+        setChooseSingle(null);
       } else {
-        res = await postData("products-variants/create", formData);
+        res = await postData("products-variants/create", newData);
         dispatch(
           getNotify({
             status: "success",
@@ -101,6 +95,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
         setVariants([...variants, res.data.variants]);
         setVariantId([...variantId, res.data.variants._id]);
         reset();
+        setChooseSingle(null);
       }
     } catch (error) {
       console.log(error);
@@ -133,6 +128,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
       setValue("onSale", varUpdate?.variant?.onSale);
       setValue("inStock", varUpdate?.variant?.inStock);
       setValue("attributes", varUpdate?.variant?.attributes);
+      setChooseSingle(varUpdate?.variant?.image);
     }
   }, [varUpdate, setValue]);
   return (
@@ -161,9 +157,29 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
             {errors.onSale && <span>Field {errors.onSale.message}</span>}
           </div>
         </div>
-        <div className="formInput">
+        <div className="imageUpload">
           <label>Image</label>
-          <input {...register("image")} type="file" />
+          <div className="actionUpload" onClick={() => setActive(true)}>
+            {chooseSingle ? (
+              <img
+                className="viewImg"
+                src={`${IMG_URL}/${chooseSingle}`}
+                alt=""
+              />
+            ) : (
+              <img
+                className="viewImg"
+                src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
+                alt=""
+              />
+            )}
+          </div>
+          <LibImages
+            setChooseSingle={setChooseSingle}
+            active={active}
+            style={styleUpload}
+            setActive={setActive}
+          />
         </div>
         {fields.map((field, index) => (
           <div key={field.id} className="formSelect">

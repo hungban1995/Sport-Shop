@@ -17,21 +17,7 @@ export const createCat = async (req) => {
         },
       };
     }
-    if (req.fileValidationError) {
-      return {
-        error: {
-          status: 400,
-          error: "Upload file error",
-        },
-      };
-    }
-    const { files } = req;
-    let image = "";
-    if (files?.length > 0) {
-      const dateTime = format(new Date(), `MM-yyyy`);
-      image = `uploads/${dateTime}/${files[0].filename}`;
-      req.body.image = image;
-    }
+
     return { category: req.body };
   } catch (error) {
     return { error: error };
@@ -52,21 +38,6 @@ export const updateCat = async (req) => {
           error: "Bạn không có quyền thực hiện",
         },
       };
-    }
-    if (req.fileValidationError) {
-      return {
-        error: {
-          status: 400,
-          error: "Upload file error",
-        },
-      };
-    }
-    const { files } = req;
-    let image = "";
-    if (files?.length > 0) {
-      const dateTime = format(new Date(), `MM-yyyy`);
-      image = `uploads/${dateTime}/${files[0].filename}`;
-      req.body.image = image;
     }
 
     return { categoryUpdate: req.body };

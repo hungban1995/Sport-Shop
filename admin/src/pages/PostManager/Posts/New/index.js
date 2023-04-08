@@ -11,10 +11,15 @@ import { IMG_URL } from "../../../../constants";
 import { getData, postData } from "../../../../libs/fetchData";
 import { useDispatch } from "react-redux";
 import { getNotify } from "../../../../stores/notifyReducer";
+import LibImages from "../../../../components/LibImages";
+import { styleUpload } from "../../../../libs/dataRender";
 const schema = yup.object({
   title: yup.string().required(),
 });
 function NewPost() {
+  const [active, setActive] = useState(false);
+  const [chooseMany, setChooseMany] = useState([]);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [textValue, setTextValue] = useState("");
@@ -40,25 +45,11 @@ function NewPost() {
     mode: "all",
   });
   const onSubmit = async (data) => {
-    const newData = { ...data, content: textValue };
-    const formData = new FormData();
-    if (newData.images) {
-      const fileList = [...newData.images];
-      fileList.forEach((item) => {
-        formData.append("images", item);
-      });
-    }
-    if (newData.category) {
-      const fileList = [...newData.category];
-      fileList.forEach((item) => {
-        formData.append("category", item);
-      });
-    }
-    formData.append("description", newData.description);
-    formData.append("content", newData.content);
-    formData.append("title", newData.title);
+    const images = chooseMany?.map((item) => item.url);
+    const newData = { ...data, content: textValue, images };
+
     try {
-      const res = await postData("posts/create", formData);
+      const res = await postData("posts/create", newData);
       dispatch(
         getNotify({
           status: "success",
@@ -90,6 +81,36 @@ function NewPost() {
         <h1>Add new Post</h1>
       </div>
       <div className="bottom">
+        <div className="imageUpload">
+          <label>Image</label>
+          <div className="actionUpload" onClick={() => setActive(true)}>
+            {chooseMany.length > 0 ? (
+              chooseMany.map((item, idx) => {
+                return (
+                  <div key={idx} style={{ display: "inline-flex" }}>
+                    <img
+                      className="viewImg"
+                      src={`${IMG_URL}/${item.url}`}
+                      alt=""
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <img
+                className="viewImg"
+                src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
+                alt=""
+              />
+            )}
+          </div>
+          <LibImages
+            setChooseMany={setChooseMany}
+            active={active}
+            style={styleUpload}
+            setActive={setActive}
+          />
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="formInput">
             <label htmlFor="">Title</label>
@@ -100,10 +121,7 @@ function NewPost() {
             <label htmlFor="">Description</label>
             <input {...register("description")} />
           </div>
-          <div className="formInput">
-            <label htmlFor="">Images</label>
-            <input type="file" {...register("images")} multiple />
-          </div>
+
           <div className="formInput">
             <label htmlFor="">Category</label>
             <div className="selectCat">

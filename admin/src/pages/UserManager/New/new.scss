@@ -35,28 +35,22 @@
     .left {
       flex: 1;
       text-align: center;
+      width: 100%;
       position: relative;
-
-      .imageUpload {
-        width: 200px;
-        height: 200px;
-        top: 0;
-        left: 157px;
-        position: absolute;
-        opacity: 0;
-        z-index: 99;
+      .avatarUpload {
+        padding: 5px;
+        background-color: white;
         cursor: pointer;
-        border-radius: 50%;
-      }
-      img {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        object-fit: cover;
+        .avatarImg {
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
       }
     }
     .right {
-      flex: 2;
+      flex: 1;
       form {
         justify-content: space-around;
         display: flex;

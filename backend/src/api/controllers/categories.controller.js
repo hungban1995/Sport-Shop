@@ -1,4 +1,6 @@
 import Categories from "../models/categories.model";
+import Products from "../models/products.model";
+
 import * as service from "../services/categories.service";
 //create
 export const createCat = async (req, res, next) => {
@@ -32,6 +34,13 @@ export const getAll = async (req, res, next) => {
         status: 404,
         error: "No category found",
       });
+    }
+    let item;
+    for (item of categories) {
+      let numProducts = await Products.find({
+        category: [item._id.toString()],
+      }).count();
+      item.numProducts = numProducts;
     }
     let count = await Categories.countDocuments(filter);
     res.status(200).json({

@@ -14,19 +14,7 @@ export const createProduct = async (req) => {
         },
       };
     }
-    let categories = [];
-    if (req.body.category) {
-      categories = JSON.parse(req.body.category);
-    }
-    req.body.category = categories;
-    if (req.fileValidationError) {
-      return {
-        error: {
-          status: 400,
-          error: "Upload file error",
-        },
-      };
-    }
+
     const { title } = req.body;
     if (!title) {
       return {
@@ -36,15 +24,6 @@ export const createProduct = async (req) => {
         },
       };
     }
-    const { files } = req;
-    if (files && files.length > 0) {
-      const images = [];
-      const dateTime = format(new Date(), "MM-yyyy");
-      files.forEach((item) => {
-        images.push(`uploads/${dateTime}/${item.filename}`);
-      });
-      req.body.images = images;
-    }
     if (!req.body.variants || req.body.variants.length === 0) {
       return {
         error: {
@@ -53,7 +32,6 @@ export const createProduct = async (req) => {
         },
       };
     }
-    req.body.variants = JSON.parse(req.body.variants);
     return { product: req.body };
   } catch (error) {
     return { error: error };
@@ -70,35 +48,6 @@ export const updateProduct = async (req, res, next) => {
         error: "You do not permission to update product",
       });
     }
-    if (req.fileValidationError) {
-      return {
-        error: {
-          status: 400,
-          error: "Upload file error",
-        },
-      };
-    }
-    const { files } = req;
-    const images = [];
-    if (files && files.length > 0) {
-      const dateTime = format(new Date(), `MM-yyyy`);
-      let image = "";
-      files.forEach((item) => {
-        image = `uploads/${dateTime}/${item.filename}`;
-        images.push(image);
-      });
-      req.body.images = images;
-    }
-    let categories = [];
-    if (req.body.category) {
-      categories = JSON.parse(req.body.category);
-    }
-    req.body.category = categories;
-    let variants = [];
-    if (req.body.variants) {
-      variants = JSON.parse(req.body.variants);
-    }
-    req.body.variants = variants;
     return { productUpdate: req.body };
   } catch (error) {
     return { error: error };

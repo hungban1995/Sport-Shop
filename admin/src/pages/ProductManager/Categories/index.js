@@ -101,95 +101,101 @@ function Categories() {
       </div>
 
       <div className="body">
-        <table cellSpacing={10} cellPadding={10}>
-          <thead>
-            <tr>
-              <th>
-                <input type="checkbox" onChange={handleSelectAll} />
-              </th>
-              <th>Category Id</th>
-              <th>Tên</th>
-              <th>Ngày tạo</th>
-              <th>Mô tả</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categories ? (
-              categories.map((item, idx) => {
-                return (
-                  <tr key={idx}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        id={item._id}
-                        onChange={handleChange}
-                        checked={isCheck.includes(item._id)}
-                      />
-                    </td>
-                    <td>{item._id}</td>
-                    <td>
-                      <span className="cellWithImg">
-                        <img
-                          alt="img"
-                          src={
-                            item.image ? `${IMG_URL}/${item.image}` : BLANK_IMG
-                          }
-                          className="cellImg"
-                        />
-                        {item.title}
-                      </span>
-                    </td>
-                    <td>{moment(item.createdAt).format("L")}</td>
-                    <td
-                      style={{
-                        width: "300px",
-                      }}
-                    >
-                      {item.description}
-                    </td>
-
-                    <td className="action">
-                      <AlertDel idItem={item._id} />
-                      <span
-                        className="editBtn"
-                        onClick={() => {
-                          dispatch(
-                            setBackground({ active: true, type: "editCat" })
-                          );
-                          dispatch(setCatEdit({ edit: true, category: item }));
-                        }}
-                      >
-                        Edit
-                      </span>
-                      {"  "}
-                      <span
-                        className="deleteBtn"
-                        onClick={() => {
-                          dispatch(
-                            getAlert({
-                              open: true,
-                              delete: {
-                                id: item._id,
-                                type: "categories",
-                              },
-                            })
-                          );
-                        }}
-                      >
-                        Xóa
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
+        <div className="tableData">
+          <table cellSpacing={10} cellPadding={10}>
+            <thead>
               <tr>
-                <td>Category not found!</td>
+                <th>
+                  <input type="checkbox" onChange={handleSelectAll} />
+                </th>
+                <th>Category Id</th>
+                <th>Tên</th>
+                <th>Ngày tạo</th>
+                <th>Mô tả</th>
+                <th>Action</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {categories ? (
+                categories.map((item, idx) => {
+                  return (
+                    <tr key={idx}>
+                      <td>
+                        <input
+                          type="checkbox"
+                          id={item._id}
+                          onChange={handleChange}
+                          checked={isCheck.includes(item._id)}
+                        />
+                      </td>
+                      <td>{item._id}</td>
+                      <td>
+                        <span className="cellWithImg">
+                          <img
+                            alt="img"
+                            src={
+                              item.image
+                                ? `${IMG_URL}/${item.image}`
+                                : BLANK_IMG
+                            }
+                            className="cellImg"
+                          />
+                          {item.title}
+                        </span>
+                      </td>
+                      <td>{moment(item.createdAt).format("L")}</td>
+                      <td
+                        style={{
+                          width: "300px",
+                        }}
+                      >
+                        {item.description}
+                      </td>
+
+                      <td className="action">
+                        <AlertDel idItem={item._id} />
+                        <span
+                          className="editBtn"
+                          onClick={() => {
+                            dispatch(
+                              setBackground({ active: true, type: "editCat" })
+                            );
+                            dispatch(
+                              setCatEdit({ edit: true, category: item })
+                            );
+                          }}
+                        >
+                          Edit
+                        </span>
+                        {"  "}
+                        <span
+                          className="deleteBtn"
+                          onClick={() => {
+                            dispatch(
+                              getAlert({
+                                open: true,
+                                delete: {
+                                  id: item._id,
+                                  type: "categories",
+                                },
+                              })
+                            );
+                          }}
+                        >
+                          Xóa
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td>Category not found!</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
         <Pagination
           count={count}
           pageSize={set_page_size}

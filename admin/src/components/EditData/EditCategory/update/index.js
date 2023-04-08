@@ -9,10 +9,15 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { patchData } from "../../../../libs/fetchData";
 import { getNotify } from "../../../../stores/notifyReducer";
+import { IMG_URL } from "../../../../constants";
+import LibImages from "../../../LibImages";
+import { styleUpload } from "../../../../libs/dataRender";
 const schema = yup.object().shape({
   title: yup.string().required(),
 });
 function UpdateCategory() {
+  const [chooseSingle, setChooseSingle] = useState(null);
+  const [active, setActive] = useState(false);
   const { catEdit } = useSelector((state) => state.categories);
   const dispatch = useDispatch();
   const [category, setCategory] = useState(null);
@@ -31,22 +36,15 @@ function UpdateCategory() {
   useEffect(() => {
     setValue("title", category?.title);
     setValue("description", category?.description);
+    setChooseSingle(category?.image);
   }, [category, setValue]);
   //update
   const onSubmit = async (data) => {
-    const formData = new FormData();
-    if (data.image) {
-      const fileList = [...data.image];
-      fileList.forEach((item) => {
-        formData.append("image", item);
-      });
-    } else formData.append("image", category.image);
-    formData.append("title", data.title);
-    formData.append("description", data.description);
+    const newData = { ...data, image: chooseSingle };
     const id = category?._id;
 
     try {
-      const res = await patchData("categories/update/" + id, formData);
+      const res = await patchData("categories/update/" + id, newData);
       dispatch(
         getNotify({
           status: "success",
@@ -56,6 +54,7 @@ function UpdateCategory() {
       dispatch(setBackground(null));
       dispatch(setCatEdit(false));
       dispatch(refreshCat());
+      setChooseSingle(null);
     } catch (error) {
       dispatch(
         getNotify({
@@ -74,15 +73,38 @@ function UpdateCategory() {
           onClick={() => {
             dispatch(setBackground(null));
             dispatch(setCatEdit(false));
+            setChooseSingle(null);
           }}
+        />
+      </div>
+      <div className="imageUpload">
+        <label>Image</label>
+        <div className="actionUpload" onClick={() => setActive(true)}>
+          {chooseSingle ? (
+            <img
+              className="viewImg"
+              src={`${IMG_URL}/${chooseSingle}`}
+              alt=""
+            />
+          ) : (
+            <img
+              className="viewImg"
+              src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
+              alt=""
+            />
+          )}
+        </div>
+        <LibImages
+          setChooseSingle={setChooseSingle}
+          active={active}
+          style={styleUpload}
+          setActive={setActive}
         />
       </div>
       <form className="formUpdate" onSubmit={handleSubmit(onSubmit)}>
         <label>Title</label>
         <input {...register("title")} />
         {errors.title && <span>Field {errors.title.message}</span>}
-        <label>Image</label>
-        <input type="file" {...register("image")} />
         <label>Description</label>
         <input {...register("description")} />
         <div className="action">
@@ -94,6 +116,7 @@ function UpdateCategory() {
             onClick={() => {
               dispatch(setBackground(null));
               dispatch(setCatEdit(false));
+              setChooseSingle(null);
             }}
           >
             Hủy
