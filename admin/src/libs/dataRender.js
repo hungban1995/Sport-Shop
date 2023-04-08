@@ -24,3 +24,10 @@ export const renderNumber = (value, key) => {
   value.forEach((item) => (number += item[key]));
   return <span>{number}</span>;
 };
+//render upload
+export const styleUpload = {
+  position: "absolute",
+  top: "30%",
+  boxShadow: "2px 4px 10px 1px rgba(97, 96, 96, 0.47)",
+  backgroundColor: "#fff",
+};

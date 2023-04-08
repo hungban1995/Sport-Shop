@@ -5,7 +5,13 @@ import { IMG_URL } from "../../constants";
 import { useSelector } from "react-redux";
 import UploadImages from "./uploadImages";
 import Pagination from "../QueryData/Pagination";
-function LibImages({ setChooseImg }) {
+function LibImages({
+  setChooseMany,
+  active,
+  style,
+  setActive,
+  setChooseSingle,
+}) {
   const [images, setImages] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
   const { refreshImage } = useSelector((state) => state.images);
@@ -29,19 +35,51 @@ function LibImages({ setChooseImg }) {
   }, [refreshImage, pageNum, pageSize]);
   //choseImg
   const handleChooseImg = (idx) => {
-    const isSelected = selectedImages.includes(images[idx]);
-    if (isSelected) {
-      setSelectedImages(selectedImages.filter((img) => img !== images[idx]));
+    const selectedImage = images[idx];
+    if (setChooseSingle) {
+      setChooseSingle(selectedImage.url);
+      setActive(false);
     } else {
-      setSelectedImages([...selectedImages, images[idx]]);
+      const isSelected = selectedImages.includes(selectedImage);
+      if (isSelected) {
+        setSelectedImages(
+          selectedImages.filter((img) => img !== selectedImage)
+        );
+      } else {
+        setSelectedImages([...selectedImages, selectedImage]);
+      }
     }
   };
 
   useEffect(() => {
-    setChooseImg(selectedImages);
-  }, [selectedImages, setChooseImg]);
+    if (setChooseMany) {
+      setChooseMany(selectedImages);
+    }
+  }, [selectedImages, setChooseMany]);
   return (
-    <>
+    <div className={"containerImg " + (active ? "active" : "")} style={style}>
+      {style ? (
+        <div className="actionUpload">
+          <span
+            className="actionUpload__accept"
+            onClick={() => setActive(false)}
+          >
+            Chọn ảnh
+          </span>
+          <span
+            className="actionUpload__cancel"
+            onClick={() => {
+              setActive(false);
+              setSelectedImages([]);
+              if (setChooseSingle) {
+                setChooseSingle(null);
+              }
+            }}
+          >
+            Hủy
+          </span>
+        </div>
+      ) : null}
       <div className="libImages">
         <div className={selectedImages.length > 0 ? "hideImg" : ""}>
           <UploadImages multiple={true} />
@@ -80,7 +118,7 @@ function LibImages({ setChooseImg }) {
         pageNum={setPageNum}
         lengthItem={images?.length}
       />
-    </>
+    </div>
   );
 }
 

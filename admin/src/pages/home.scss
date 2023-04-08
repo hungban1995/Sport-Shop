@@ -1,3 +1,5 @@
+$small-screen: 768px;
+
 .home {
   box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
   padding: 20px;
@@ -18,12 +20,12 @@
       align-items: center;
     }
   }
-  .body {
-    margin: 10px 0;
+  .bodyHome {
     display: grid;
     grid-template-columns: 32% 32% 32%;
-    gap: 2%;
-    .item {
+    column-gap: 2%;
+    .itemHome {
+      margin-bottom: 10px;
       box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
       padding: 20px;
       background: #fff;
@@ -161,6 +163,27 @@
                 border: none;
               }
             }
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: $small-screen) {
+  .bodyHome {
+    display: flex !important;
+    flex-direction: column !important ;
+    .itemHome {
+      &:nth-child(6) {
+        .tableOrder {
+          width: 100%;
+          position: relative;
+          height: 300px;
+          overflow: auto;
+          table {
+            position: absolute;
+            width: 100%;
+            max-height: 100%;
           }
         }
       }

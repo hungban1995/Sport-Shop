@@ -131,98 +131,100 @@ function Products() {
         </div>
       </div>
       <div className="body">
-        <table cellSpacing={10} cellPadding={10}>
-          <thead>
-            <tr>
-              <th>
-                <input type="checkbox" onChange={handleSelectAll} />
-              </th>
-              <th>Product Id</th>
-              <th>Tên sản phẩm</th>
-              <th>Danh Mục</th>
-              <th>Giá bán </th>
-              <th>Giảm giá</th>
-              <th>Tồn Kho</th>
-              <th>Đã bán</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products ? (
-              products.map((product, idx) => {
-                return (
-                  <tr key={idx}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        id={product._id}
-                        onChange={handleChange}
-                        checked={isCheck.includes(product._id)}
-                      />
-                    </td>
-                    <td>{product._id}</td>
-                    <td>
-                      <span className="cellWithImg">
-                        <img
-                          alt="img"
-                          src={
-                            product.image
-                              ? `${IMG_URL}/${product.image}`
-                              : BLANK_IMG
-                          }
-                          className="cellImg"
-                        />
-                        {product.title}
-                      </span>
-                    </td>
-                    <td>
-                      {product?.category?.map((item, idx) => {
-                        return (
-                          <li key={idx} style={{ listStyle: "none" }}>
-                            {item.title}
-                          </li>
-                        );
-                      })}
-                    </td>
-                    <td>{renderPrice(product.variants, "price")}</td>
-                    <td>{renderNumber(product.variants, "onSale")}</td>
-                    <td>{renderNumber(product.variants, "inStock")}</td>
-                    <td>{renderNumber(product.variants, "sold")}</td>
-                    <td className="action">
-                      <AlertDel idItem={product._id} />
-                      <span
-                        className="editBtn"
-                        onClick={() => {
-                          navigate(product._id);
-                        }}
-                      >
-                        Chi Tiết
-                      </span>
-                      {"  "}
-                      <span
-                        className="deleteBtn"
-                        onClick={() => {
-                          dispatch(
-                            getAlert({
-                              open: true,
-                              delete: { id: product._id, type: "products" },
-                            })
-                          );
-                        }}
-                      >
-                        Xóa
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
+        <div className="tableData">
+          <table cellSpacing={10} cellPadding={10}>
+            <thead>
               <tr>
-                <td>Products not found!</td>
+                <th>
+                  <input type="checkbox" onChange={handleSelectAll} />
+                </th>
+                <th>Product Id</th>
+                <th>Tên sản phẩm</th>
+                <th>Danh Mục</th>
+                <th>Giá bán </th>
+                <th>Giảm giá</th>
+                <th>Tồn Kho</th>
+                <th>Đã bán</th>
+                <th>Action</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {products ? (
+                products.map((product, idx) => {
+                  return (
+                    <tr key={idx}>
+                      <td>
+                        <input
+                          type="checkbox"
+                          id={product._id}
+                          onChange={handleChange}
+                          checked={isCheck.includes(product._id)}
+                        />
+                      </td>
+                      <td>{product._id}</td>
+                      <td>
+                        <span className="cellWithImg">
+                          <img
+                            alt="img"
+                            src={
+                              product.images.length > 0
+                                ? `${IMG_URL}/${product.images[0]}`
+                                : BLANK_IMG
+                            }
+                            className="cellImg"
+                          />
+                          {product.title}
+                        </span>
+                      </td>
+                      <td>
+                        {product?.category?.map((item, idx) => {
+                          return (
+                            <li key={idx} style={{ listStyle: "none" }}>
+                              {item.title}
+                            </li>
+                          );
+                        })}
+                      </td>
+                      <td>{renderPrice(product.variants, "price")}</td>
+                      <td>{renderNumber(product.variants, "onSale")}</td>
+                      <td>{renderNumber(product.variants, "inStock")}</td>
+                      <td>{renderNumber(product.variants, "sold")}</td>
+                      <td className="action">
+                        <AlertDel idItem={product._id} />
+                        <span
+                          className="editBtn"
+                          onClick={() => {
+                            navigate(product._id);
+                          }}
+                        >
+                          Chi Tiết
+                        </span>
+                        {"  "}
+                        <span
+                          className="deleteBtn"
+                          onClick={() => {
+                            dispatch(
+                              getAlert({
+                                open: true,
+                                delete: { id: product._id, type: "products" },
+                              })
+                            );
+                          }}
+                        >
+                          Xóa
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td>Products not found!</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
         <Pagination
           count={count}
           pageSize={set_page_size}

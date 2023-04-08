@@ -90,86 +90,88 @@ function Users() {
                 </div>
             </div>
             <div className="body">
-                <table cellSpacing={10} cellPadding={10}>
-                    <thead>
-                        <tr>
-                            <th>
-                                <input type="checkbox" onChange={handleSelectAll} />
-                            </th>
-                            <th>UserId</th>
-                            <th>Username</th>
-                            <th>Birth Day</th>
-                            <th>Email</th>
-                            <th>Full name</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users ? (
-                            users.map((user, idx) => {
-                                return (
-                                    <tr key={idx}>
-                                        <td>
-                                            <input
-                                                type="checkbox"
-                                                id={user._id}
-                                                onChange={handleChange}
-                                                checked={isCheck.includes(user._id)}
-                                            />
-                                        </td>
-                                        <td>{user._id}</td>
-                                        <td>
-                                            <span className='cellWithImg'><img
-                                                alt="avatar"
-                                                src={
-                                                    user.avatar
-                                                        ? `${IMG_URL}/${user.avatar}`
-                                                        : BLANK_AVT
-                                                }
-                                                className="cellImg"
-                                            /> {user.username} </span>
-                                        </td>
-                                        <td>{moment(user.birthday).format("L") || null}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.fullName}</td>
-                                        <td className='cellWithRole'><span className={`${user.role}`}>{user.role}</span></td>
-                                        <td className="action">
-                                            <AlertDel idItem={user._id} />
-                                            <span
-                                                className="editBtn"
-                                                onClick={() => {
-                                                    navigate(user._id);
-                                                }}
-                                            >
-                                                Chi Tiết
-                                            </span>
-                                            {"  "}
-                                            <span
-                                                className="deleteBtn"
-                                                onClick={() => {
-                                                    dispatch(
-                                                        getAlert({
-                                                            open: true,
-                                                            delete: { id: user._id, type: "users" },
-
-                                                        })
-                                                    );
-                                                }}
-                                            >
-                                                Xóa
-                                            </span>
-                                        </td>
-                                    </tr>
-                                );
-                            })
-                        ) : (
+                <div className="tableData">
+                    <table cellSpacing={10} cellPadding={10}>
+                        <thead>
                             <tr>
-                                <td>User not found!</td>
+                                <th>
+                                    <input type="checkbox" onChange={handleSelectAll} />
+                                </th>
+                                <th>UserId</th>
+                                <th>Username</th>
+                                <th>Birth Day</th>
+                                <th>Email</th>
+                                <th>Full name</th>
+                                <th>Role</th>
+                                <th>Action</th>
                             </tr>
-                        )}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {users ? (
+                                users.map((user, idx) => {
+                                    return (
+                                        <tr key={idx}>
+                                            <td>
+                                                <input
+                                                    type="checkbox"
+                                                    id={user._id}
+                                                    onChange={handleChange}
+                                                    checked={isCheck.includes(user._id)}
+                                                />
+                                            </td>
+                                            <td>{user._id}</td>
+                                            <td>
+                                                <span className='cellWithImg'><img
+                                                    alt="avatar"
+                                                    src={
+                                                        user.avatar
+                                                            ? `${IMG_URL}/${user.avatar}`
+                                                            : BLANK_AVT
+                                                    }
+                                                    className="cellImg"
+                                                /> {user.username} </span>
+                                            </td>
+                                            <td>{moment(user.birthday).format("L") || null}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.fullName}</td>
+                                            <td className='cellWithRole'><span className={`${user.role}`}>{user.role}</span></td>
+                                            <td className="action">
+                                                <AlertDel idItem={user._id} />
+                                                <span
+                                                    className="editBtn"
+                                                    onClick={() => {
+                                                        navigate(user._id);
+                                                    }}
+                                                >
+                                                    Chi Tiết
+                                                </span>
+                                                {"  "}
+                                                <span
+                                                    className="deleteBtn"
+                                                    onClick={() => {
+                                                        dispatch(
+                                                            getAlert({
+                                                                open: true,
+                                                                delete: { id: user._id, type: "users" },
+
+                                                            })
+                                                        );
+                                                    }}
+                                                >
+                                                    Xóa
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            ) : (
+                                <tr>
+                                    <td>User not found!</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
                 <Pagination
                     count={count}
                     pageSize={set_page_size}

@@ -14,29 +14,7 @@ export const createProductVariant = async (req) => {
         },
       };
     }
-
-    if (req.fileValidationError) {
-      return {
-        error: {
-          status: 400,
-          error: "Upload file error",
-        },
-      };
-    }
-    const { files } = req;
-    let image = "";
-    if (files?.length > 0) {
-      const dateTime = format(new Date(), `MM-yyyy`);
-      image = `uploads/${dateTime}/${files[0].filename}`;
-      req.body.image = image;
-    }
-
-    let attributes = [];
-    if (req.body.attributes) {
-      attributes = JSON.parse(req.body.attributes);
-    }
-    req.body.attributes = attributes;
-    return { productVariants: req.body };
+    return {};
   } catch (error) {
     return { error: error };
   }
@@ -54,26 +32,7 @@ export const updateProductVariant = async (req) => {
         },
       };
     }
-    if (req.fileValidationError) {
-      return {
-        error: {
-          status: 400,
-          error: "Upload file error",
-        },
-      };
-    }
-    const { files } = req;
-    let image = "";
-    if (files?.length > 0) {
-      const dateTime = format(new Date(), `MM-yyyy`);
-      image = `uploads/${dateTime}/${files[0].filename}`;
-      req.body.image = image;
-    }
-    let attributes = [];
-    if (req.body.attributes) {
-      attributes = JSON.parse(req.body.attributes);
-    }
-    req.body.attributes = attributes;
+
     return { variantUpdate: req.body };
   } catch (error) {
     return { error: error };

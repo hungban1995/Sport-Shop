@@ -33,7 +33,6 @@ function Routers() {
             <Route path="new" element={<NewProduct />} />
             <Route path=":id" element={<SingleProduct />} />
           </Route>
-
           <Route path="categories-posts/" element={<CategoriesPost />} />
           <Route path="posts/">
             <Route index element={<Posts />} />

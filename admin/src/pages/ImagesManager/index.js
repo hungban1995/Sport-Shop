@@ -7,7 +7,7 @@ import { setBackground } from "../../stores/themeWebReducer";
 
 function ImagesManager() {
   const dispatch = useDispatch();
-  const [chooseImg, setChooseImg] = useState([]);
+  const [chooseMany, setChooseMany] = useState([]);
   const handleDelImg = async () => {
     dispatch(setBackground({ active: true, type: "manyDel" }));
     dispatch(
@@ -17,7 +17,7 @@ function ImagesManager() {
         accept: "Xóa",
         cancel: "Hủy",
         value: {
-          data: chooseImg,
+          data: chooseMany,
           header: "Xóa nhiều danh mục.",
           body: "Bạn đang xóa nhiều dữ liệu trong một lần! Bạn chắc chắn muốn xóa không?",
         },
@@ -32,7 +32,7 @@ function ImagesManager() {
         </div>
         <div className={"select"}>
           <span
-            className={"selectDel " + (chooseImg.length > 0 ? "active" : "")}
+            className={"selectDel " + (chooseMany.length > 0 ? "active" : "")}
             onClick={() => {
               handleDelImg();
             }}
@@ -43,7 +43,7 @@ function ImagesManager() {
       </div>
       <div className="body">
         <div className="gridLib">
-          <LibImages setChooseImg={setChooseImg} chooseImg={chooseImg} />
+          <LibImages setChooseMany={setChooseMany} active={true} />
         </div>
       </div>
     </div>

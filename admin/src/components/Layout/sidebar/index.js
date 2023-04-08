@@ -140,7 +140,7 @@ function SideBar() {
           </Link>
 
           <p className="title">Service</p>
-          {/* <Link to="images">
+          <Link to="images">
             <div
               className={"item " + (activeTab === 8 && "active")}
               onClick={() => {
@@ -150,7 +150,7 @@ function SideBar() {
               <BsImages className="icon" />
               <span>Hình ảnh</span>
             </div>
-          </Link> */}
+          </Link>
           <div
             className={"item " + (activeTab === 9 && "active")}
             onClick={() => {

@@ -9,8 +9,9 @@ import { getNotify } from "../../../stores/notifyReducer";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form'
-import { IMG_URL } from "../../../constants";
+import { BLANK_AVT, IMG_URL } from "../../../constants";
 import moment from "moment";
+import LibImages from "../../../components/LibImages";
 const schema = yup.object({
   username: yup.string().required(),
   password: yup.string(),
@@ -23,31 +24,20 @@ const schema = yup.object({
   phoneNumber: yup.string()
     .matches(/^\+84\d{9}$/, "Invalid phone number"),
 })
+const style = { position: 'absolute', top: '30%', boxShadow: '2px 4px 10px 1px rgba(97, 96, 96, 0.47)', backgroundColor: '#fff' }
 function Single() {
   const dispatch = useDispatch()
   const { id } = useParams()
   const navigate = useNavigate()
-  const [imagePath, setImagePath] = useState('');
-  const [avatar, setAvatar] = useState(null);
-  const handleChangeAvatar = (e) => {
-    const file = e.target?.files?.length > 0 ? e.target.files[0] : null;
-    if (file) {
-      setAvatar(file);
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePath(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const [chooseSingle, setChooseSingle] = useState(null);
+  const [active, setActive] = useState(false)
   const { register, watch, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema), defaultValues: async () => {
       try {
         const res = await getData('users/get-id/' + id)
         const user = res.data.user
         if (user.avatar) {
-          setAvatar(user.avatar)
-          setImagePath(`${IMG_URL}/${user.avatar}`)
+          setChooseSingle(user.avatar)
         }
         const inputDate = user?.birthday;
         const momentDate = moment.utc(inputDate);
@@ -68,11 +58,9 @@ function Single() {
   });
   const password = watch("password");
   const onSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append('image', avatar);
-    Object.keys(data).forEach((key) => formData.append(key, data[key]));
+    const newData = { ...data, avatar: chooseSingle }
     try {
-      const res = await patchData("users/update/" + id, formData);
+      const res = await patchData("users/update/" + id, newData);
       dispatch(getNotify({
         status: "success",
         message: res.data.success
@@ -96,20 +84,16 @@ function Single() {
       </div>
       <div className="bottom">
         <div className="left">
-          <input
-            type="file"
-            name="avatar"
-            placeholder="file"
-            className="imageUpload"
-            onChange={handleChangeAvatar}
-          />
-          <img
-            src={
-              imagePath
-                ? imagePath
-                : "https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
+          <div className="avatarUpload" onClick={() => setActive(true)}>
+            {chooseSingle ?
+              <img className="avatarImg" src={`${IMG_URL}/${chooseSingle}`} alt="" /> : <img src={BLANK_AVT} alt="" />
             }
-            alt="upload"
+          </div>
+          <LibImages
+            setChooseSingle={setChooseSingle}
+            active={active}
+            style={style}
+            setActive={setActive}
           />
         </div>
         <div className="right">

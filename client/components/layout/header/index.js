@@ -129,7 +129,7 @@ function Header(props) {
                   router.push("/");
                 }}
               >
-                Logout
+                <span>Logout</span>
               </div>
             </div>
           ) : (

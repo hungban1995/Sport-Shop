@@ -35,6 +35,22 @@
   &.active {
     display: block;
   }
+  .imageUpload {
+    text-align: center;
+    width: 100%;
+    position: relative;
+    .actionUpload {
+      padding: 5px;
+      background-color: white;
+      cursor: pointer;
+      .viewImg {
+        width: 100px;
+        height: 100px;
+        border-radius: 5px;
+        object-fit: cover;
+      }
+    }
+  }
   .formCreate {
     display: flex;
     flex-direction: column;

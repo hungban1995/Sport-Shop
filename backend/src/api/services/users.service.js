@@ -5,14 +5,8 @@ import { format } from "date-fns";
 const salt = bcrypt.genSaltSync(10);
 //register
 export const register = async (req, res) => {
-  const { files } = req;
-  if (files && files.length > 0) {
-    const dateTime = format(new Date(), `MM-yyyy`);
-    req.body.avatar = `uploads/${dateTime}/${files[0].filename}`;
-  }
   try {
-    const { username, email, firstName, lastName, password, confirmPassword } =
-      req.body;
+    const { username, email, password, confirmPassword } = req.body;
     const alreadyUsername = await Users.findOne({ username: username });
     if (alreadyUsername) {
       return {
@@ -105,7 +99,6 @@ export const getUsers = async (req, res) => {
       });
     }
     let count = await Users.countDocuments(filter);
-
     return { users, count };
   } catch (error) {
     return { error: error };
@@ -138,11 +131,6 @@ export const getUserById = async (req) => {
 };
 //update user
 export const updateUser = async (req) => {
-  const { files } = req;
-  if (files && files.length > 0) {
-    const dateTime = format(new Date(), `MM-yyyy`);
-    req.body.avatar = `uploads/${dateTime}/${files[0].filename}`;
-  }
   try {
     const { id } = req.params;
     const { username, email, password, confirmPassword, role } = req.body;

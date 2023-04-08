@@ -26,6 +26,7 @@
         color: rgb(6, 68, 6);
         padding: 5px;
         border-radius: 10px;
+        cursor: pointer;
         &:hover {
           background-color: rgba(61, 119, 202, 0.429);
         }
@@ -56,75 +57,81 @@
     background: #fff;
     border-radius: 5px;
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-
-    table {
+    .tableData {
+      position: relative;
+      overflow-x: auto;
       width: 100%;
-      max-width: 100%;
-      border-collapse: collapse;
+      height: 300px;
+      table {
+        position: absolute;
+        width: 100%;
+        max-height: 100%;
+        border-collapse: collapse;
 
-      .cellWithImg {
-        display: flex;
-        align-items: center;
-        .cellImg {
-          width: 35px;
-          height: 35px;
-          border-radius: 5px;
-          object-fit: cover;
-          margin-right: 10px;
-        }
-      }
-      .cellWithRole {
-        text-align: center;
-        .admin {
-          border-radius: 5px;
-          padding: 5px;
-          background-color: rgb(0, 128, 0, 0.05);
-          color: green;
-        }
-        .user {
-          padding: 5px;
-          border-radius: 5px;
-          background-color: rgb(0, 128, 0, 0.05);
-          color: blue;
-        }
-      }
-      th,
-      td {
-        border-bottom: 0.5px solid #888;
-        text-align: center;
-      }
-      tr {
-        &:last-child {
-          td {
-            border: none;
+        .cellWithImg {
+          display: flex;
+          align-items: center;
+          .cellImg {
+            width: 35px;
+            height: 35px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-right: 10px;
           }
         }
-      }
-
-      .action {
-        position: relative;
-        .editBtn {
-          padding: 3px;
-          border-radius: 5px;
-          color: darkblue;
-          border: 0.5px dotted rgb(0, 0, 139, 0.596);
-          cursor: pointer;
-          &:hover {
-            background-color: rgb(10, 195, 121);
-            color: lightblue;
+        .cellWithRole {
+          text-align: center;
+          .admin {
+            border-radius: 5px;
+            padding: 5px;
+            background-color: rgb(0, 128, 0, 0.05);
+            color: green;
+          }
+          .user {
+            padding: 5px;
+            border-radius: 5px;
+            background-color: rgb(0, 128, 0, 0.05);
+            color: blue;
           }
         }
-        .deleteBtn {
-          padding: 3px;
+        th,
+        td {
+          border-bottom: 0.5px solid #888;
+          text-align: center;
+        }
+        tr {
+          &:last-child {
+            td {
+              border: none;
+            }
+          }
+        }
 
-          background-color: aliceblue;
-          border-radius: 5px;
-          color: crimson;
-          border: 0.5px dotted rgba(214, 49, 80, 0.596);
-          cursor: pointer;
-          &:hover {
-            background-color: crimson;
-            color: lightblue;
+        .action {
+          position: relative;
+          .editBtn {
+            padding: 3px;
+            border-radius: 5px;
+            color: darkblue;
+            border: 0.5px dotted rgb(0, 0, 139, 0.596);
+            cursor: pointer;
+            &:hover {
+              background-color: rgb(10, 195, 121);
+              color: lightblue;
+            }
+          }
+          .deleteBtn {
+            padding: 3px;
+
+            background-color: aliceblue;
+            border-radius: 5px;
+            color: crimson;
+            border: 0.5px dotted rgba(214, 49, 80, 0.596);
+            cursor: pointer;
+            &:hover {
+              background-color: crimson;
+              color: lightblue;
+            }
           }
         }
       }

@@ -109,12 +109,13 @@
           display: none;
           z-index: 1;
           .action {
+            font-size: 16px;
+            padding: 10px 5px;
+
             color: #555;
             a {
-              font-size: 16px;
               text-decoration: none;
               display: block;
-              padding: 10px 5px;
             }
           }
         }

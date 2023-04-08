@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { getData } from "../../libs/fetchData";
 
-const DonutChart = () => {
+const LineChart = () => {
   const [categories, setCategories] = useState([]);
   const [labels, setLabels] = useState([]);
   const [series, setSeries] = useState([]);
@@ -33,39 +33,61 @@ const DonutChart = () => {
   }, [categories]);
 
   const data = {
-    series: series,
-    labels: labels,
-  };
-  const options = {
-    chart: {
-      type: "donut",
-    },
-    labels: data.labels,
-    responsive: [
+    series: [
       {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 200,
-          },
-          legend: {
-            position: "bottom",
-          },
-        },
+        name: "orders",
+        data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
       },
     ],
+    options: {
+      chart: {
+        height: 350,
+        type: "line",
+        zoom: {
+          enabled: false,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "straight",
+      },
+      title: {
+        text: "Order Trends by Month",
+        align: "left",
+      },
+      grid: {
+        row: {
+          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+          opacity: 0.5,
+        },
+      },
+      xaxis: {
+        categories: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+        ],
+      },
+    },
   };
-
   return (
     <>
       <ReactApexChart
-        options={options}
+        options={data.options}
         series={data.series}
-        type="donut"
-        width="100%"
+        type="line"
+        height={350}
       />
     </>
   );
 };
 
-export default DonutChart;
+export default LineChart;
