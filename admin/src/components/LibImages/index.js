@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./libImages.scss";
 import { getData } from "../../libs/fetchData";
 import { IMG_URL } from "../../constants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UploadImages from "./uploadImages";
 import Pagination from "../QueryData/Pagination";
+import { getLoading } from "../../stores/notifyReducer";
 function LibImages({
   setChooseMany,
   active,
@@ -12,22 +13,26 @@ function LibImages({
   setActive,
   setChooseSingle,
 }) {
-  const [images, setImages] = useState(null);
+  const dispatch = useDispatch();
+  const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const { refreshImage } = useSelector((state) => state.images);
   const [pageNum, setPageNum] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [count, setCount] = useState(null);
   useEffect(() => {
     const getImages = async () => {
       try {
+        dispatch(getLoading(true));
         const res = await getData(
           `images/?page=${pageNum}&page_size=${pageSize}`
         );
         setImages(res.data.images);
         setCount(res.data.count);
+        dispatch(getLoading(false));
       } catch (error) {
         console.log(error);
+        dispatch(getLoading(false));
       }
     };
     getImages();
@@ -84,7 +89,7 @@ function LibImages({
         <div className={selectedImages.length > 0 ? "hideImg" : ""}>
           <UploadImages multiple={true} />
         </div>
-        {images ? (
+        {images.length > 0 ? (
           images.map((item, idx) => {
             return (
               <div
@@ -117,6 +122,7 @@ function LibImages({
         pageSize={setPageSize}
         pageNum={setPageNum}
         lengthItem={images?.length}
+        values={[10, 20, 30]}
       />
     </div>
   );

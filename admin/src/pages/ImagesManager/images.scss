@@ -130,3 +130,10 @@
     }
   }
 }
+$small-screen: 768px;
+@media (max-width: $small-screen) {
+  .images {
+    margin: 0;
+    padding: 0;
+  }
+}

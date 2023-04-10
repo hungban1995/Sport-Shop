@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { BLANK_IMG, IMG_URL, valueSortProduct } from "../../../constants";
 import { getData } from "../../../libs/fetchData";
-import { getAlert } from "../../../stores/notifyReducer";
+import { getAlert, getLoading } from "../../../stores/notifyReducer";
 import "./products.scss";
 import AlertDel from "../../../components/notifications/alert";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -12,7 +12,7 @@ import FilterData from "../../../components/QueryData/Filter";
 import { getManyDelete } from "../../../stores/deleteDataReducer";
 import { setBackground } from "../../../stores/themeWebReducer";
 import Pagination from "../../../components/QueryData/Pagination";
-import { renderNumber } from "../../../libs/dataRender";
+import { PriceVnd, renderNumber } from "../../../libs/dataRender";
 function Products() {
   const { refreshUser } = useSelector((state) => state.products);
   const navigate = useNavigate();
@@ -29,14 +29,17 @@ function Products() {
   useEffect(() => {
     const getProduct = async () => {
       try {
+        dispatch(getLoading(true));
         const res = await getData(
           `products/get-all?page=${page_num}&page_size=${page_size}&sort_by=${sort_by}&filter_by=${filter_by}`
         );
         setProducts(res.data.products);
         setCount(res.data.count);
+        dispatch(getLoading(false));
       } catch (error) {
         console.log(error);
         setProducts(null);
+        dispatch(getLoading(false));
       }
     };
     getProduct();
@@ -77,8 +80,8 @@ function Products() {
   };
   //render price
   const renderPrice = (value, key) => {
-    let minInNumbers = 0;
-    let maxInNumbers = 0;
+    let minInNumbers;
+    let maxInNumbers;
     let priceArr = [];
     value.forEach((item) => priceArr.push(item[key]));
     maxInNumbers = Math.max.apply(Math, priceArr);
@@ -86,9 +89,9 @@ function Products() {
     return (
       <span>
         {minInNumbers < maxInNumbers ? (
-          `${minInNumbers} - ${maxInNumbers}`
+          `${PriceVnd(minInNumbers)} - ${PriceVnd(maxInNumbers)}`
         ) : (
-          <>{maxInNumbers !== -Infinity ? maxInNumbers : 0}</>
+          <>{maxInNumbers !== -Infinity ? PriceVnd(maxInNumbers) : 0}</>
         )}
       </span>
     );
@@ -132,7 +135,7 @@ function Products() {
       </div>
       <div className="body">
         <div className="tableData">
-          <table cellSpacing={10} cellPadding={10}>
+          <table cellSpacing={5} cellPadding={5}>
             <thead>
               <tr>
                 <th>
@@ -186,7 +189,7 @@ function Products() {
                         })}
                       </td>
                       <td>{renderPrice(product.variants, "price")}</td>
-                      <td>{renderNumber(product.variants, "onSale")}</td>
+                      <td>{renderPrice(product.variants, "onSale")}</td>
                       <td>{renderNumber(product.variants, "inStock")}</td>
                       <td>{renderNumber(product.variants, "sold")}</td>
                       <td className="action">
@@ -230,6 +233,7 @@ function Products() {
           pageSize={set_page_size}
           pageNum={set_page_num}
           lengthItem={products?.length}
+          values={[5, 10, 15]}
         />
       </div>
     </div>

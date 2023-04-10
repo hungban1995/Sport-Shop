@@ -137,3 +137,18 @@
     }
   }
 }
+$small-screen: 768px;
+@media (max-width: $small-screen) {
+  .products {
+    margin: 0;
+    padding: 0;
+    .top {
+      .title {
+        width: unset;
+        span {
+          display: none !important;
+        }
+      }
+    }
+  }
+}

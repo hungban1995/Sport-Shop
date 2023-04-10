@@ -19,7 +19,6 @@ const ProductVariantSchema = new Schema(
         },
         message: "On-sale price cannot be greater than the regular price",
       },
-      default: 0,
     },
   },
   { timestamps: true }

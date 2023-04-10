@@ -26,3 +26,9 @@ export const generateRandomString = (length) => {
 
   return result;
 };
+export const PriceVnd = (price) => {
+  return new Intl.NumberFormat("vi-VI", {
+    style: "currency",
+    currency: "VND",
+  }).format(price);
+};

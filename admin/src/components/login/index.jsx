@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./login.scss";
 import { postData } from "../../libs/fetchData";
 import { useDispatch } from 'react-redux'
-import { getNotify } from "../../stores/notifyReducer";
+import { getLoading, getNotify } from "../../stores/notifyReducer";
 import { getRefresh } from "../../stores/usersReducer";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,7 +18,10 @@ function Login() {
   });
   const onSubmit = async (data) => {
     try {
+      dispatch(getLoading(true))
       const res = await postData("users/login", data);
+      dispatch(getLoading(true))
+
       if (res.data.user.role !== 'admin') {
         dispatch(getNotify({
           status: 'error',
@@ -38,6 +41,8 @@ function Login() {
       localStorage.setItem('userId', JSON.stringify(res.data.user._id))
       dispatch(getRefresh())
     } catch (error) {
+      dispatch(getLoading(true))
+
       dispatch(getNotify({
         status: 'error',
         message: error.response.data.error
@@ -54,7 +59,6 @@ function Login() {
           <span className="error">Field {errors.password.message}</span>
         )}
         <button type="submit">Login</button>
-
       </form>
     </div>
   );

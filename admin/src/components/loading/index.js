@@ -1,6 +1,8 @@
 import React from "react";
 import "./loading.scss";
-function Loading({ loading }) {
+import { useSelector } from "react-redux";
+function Loading() {
+  const { loading } = useSelector((state) => state.notify);
   return (
     <div className={loading ? "loading" : "hide"}>
       <div className="item"></div>

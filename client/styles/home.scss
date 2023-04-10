@@ -1,3 +1,4 @@
+@use "base";
 .home {
   .slide {
     width: 95%;
@@ -73,6 +74,20 @@
       }
     }
   }
-  .newProducts {
+  .new-products {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+  }
+}
+@media (max-width: base.$small-screen) {
+  .home {
+    .shortContent {
+      display: grid;
+      grid-template-columns: auto;
+    }
+    .new-products {
+      display: grid;
+      grid-template-columns: auto;
+    }
   }
 }

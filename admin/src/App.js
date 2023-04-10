@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import "./styles/dark.scss";
 import Background from "./components/background";
 import ToastMessage from "./components/notifications/toastMessage";
+import Loading from "./components/loading";
 function App() {
   const { dark } = useSelector((state) => state.themeWeb);
   const { refreshLogin } = useSelector((state) => state.users);
@@ -24,6 +25,7 @@ function App() {
         <ToastMessage />
         <Background />
         <NotifyPop />
+        <Loading />
         {refreshToken ? (
           <Layout>
             <Routers />

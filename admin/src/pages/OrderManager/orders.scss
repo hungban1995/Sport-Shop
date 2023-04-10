@@ -91,3 +91,19 @@
     }
   }
 }
+$small-screen: 768px;
+@media (max-width: $small-screen) {
+  .orders {
+    margin: 0;
+    padding: 0;
+    .top {
+      span {
+        display: none !important;
+      }
+    }
+    .bottom {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

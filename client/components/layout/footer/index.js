@@ -66,7 +66,7 @@ function Footer() {
       </div>
       <div className="bottom">
         <span style={{ color: "white" }}>© 2023 Copyright: </span>
-        <strong style={{ color: "#bab6b6" }}>nab</strong>
+        <strong style={{ color: "#bab6b6" }}>name</strong>
       </div>
     </div>
   );

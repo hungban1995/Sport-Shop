@@ -1,46 +1,95 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { IMG_URL } from "@/constant";
+import { PriceVnd } from "@/libs/helperData";
+import { addProductToCart, getShowCart } from "@/stores/cartReducer";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+
 import { BsBagPlus, BsThreeDots } from "react-icons/bs";
 import { CiHeart } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
 
-function ProductItem(props) {
-  const [product, setProduct] = useState({});
-  useEffect(() => {
-    setProduct(props.product);
-  }, [props.product]);
-  const renderPrice = (value) => {
-    let maxPrice = 0;
-    let minPrice = 0;
-    let arrPrice;
-    value.variant.map((item) => {});
+function ProductItem({ product }) {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  //render star
+  const RenderStart = (rate) => {
+    let ratingArr = [];
+    rate?.map((item) => ratingArr.push(item.rating));
+    let average = 0;
+    if (ratingArr.length > 0) {
+      average = ratingArr.reduce((a, b) => a + b, 0) / ratingArr.length;
+    }
+    const star = [1, 2, 3, 4, 5];
+    return star.map((idx) => {
+      return (
+        <div key={idx}>
+          {idx <= average ? <AiFillStar /> : <AiOutlineStar />}
+        </div>
+      );
+    });
   };
+
+  //render price
+  const renderPrice = (value) => {
+    let arrPrice = [];
+    let arrOnSale = [];
+    value?.map((item) => {
+      arrPrice.push(item.price);
+      arrOnSale.push(item.onSale);
+    });
+    let maxPrice = Math.max(...arrPrice);
+    let minOnSale = Math.min(...arrOnSale);
+    return (
+      <p>
+        <span className="price_on_sale">{PriceVnd(minOnSale)}</span> -{" "}
+        <span className="price_max">{PriceVnd(maxPrice)}</span>
+      </p>
+    );
+  };
+  //add to cart
+  const handleAddToCart = (product) => {
+    const itemCart = {
+      nameProduct: product.title,
+      productVariant: product.variants[0],
+      quantity: 1,
+    };
+    dispatch(addProductToCart(itemCart));
+    dispatch(getShowCart(true));
+  };
+
   return (
     <div className="productItem">
-      <div className="image">
-        <img
-          src="https://cdn.shopify.com/s/files/1/0570/0947/1558/products/5.1.jpg?v=1656899332"
-          alt={product.title}
-        />
+      <div
+        className="image"
+        onClick={() => router.push(`/shop/${product._id}`)}
+      >
+        <img src={`${IMG_URL}/${product.images[0]}`} alt={product.title} />
       </div>
       <div className="action">
         <div className="wishList">
           <span className="des">Add to WithList</span>
           <CiHeart />
         </div>
-        <div className="addToCart">
-          <span className="des">Add to Cart</span>
-          <BsBagPlus />
-        </div>
-        <div className="selectOption">
-          <span className="des">Select Option</span>
-          <BsThreeDots />
-        </div>
+        {product?.variants?.length > 1 ? (
+          <div
+            className="selectOption"
+            onClick={() => router.push(`/shop/${product._id}`)}
+          >
+            <span className="des">Select Option</span>
+            <BsThreeDots />
+          </div>
+        ) : (
+          <div className="addToCart" onClick={() => handleAddToCart(product)}>
+            <span className="des">Add to Cart</span>
+            <BsBagPlus />
+          </div>
+        )}
       </div>
-      <div className="productItemContent">
-        <div className="itemRating">rating</div>
-        <div className="itemTitle">{product.title}</div>
-        <div className="itemPrice">price</div>
+      <div className="product_item_content">
+        <div className="itemRating">{RenderStart(product.ratings)}</div>
+        <div className="itemTitle">{product?.title}</div>
+        <div className="itemPrice">{renderPrice(product?.variants)}</div>
       </div>
     </div>
   );

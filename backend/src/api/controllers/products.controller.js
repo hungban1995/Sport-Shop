@@ -35,6 +35,7 @@ export const getAll = async (req, res, next) => {
     if (products.length === 0) {
       return next({ status: 404, error: "No product found" });
     }
+
     if (valueSort !== null) {
       for (let i = 0; i < products.length; i++) {
         let variantSort = await ProductsVariants.find({

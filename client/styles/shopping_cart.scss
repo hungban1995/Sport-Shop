@@ -6,6 +6,7 @@
   width: 0;
   z-index: 999;
   transition: all 0.25s ease;
+  color: #333;
   &.active {
     width: 100%;
     &::before {
@@ -15,12 +16,11 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: black;
-      opacity: 0.4;
+      background-color: rgba(0, 0, 0, 0.323);
       z-index: -1;
     }
   }
-  .cartContent {
+  .cart-content {
     background-color: #fff;
     max-width: 430px;
     top: 0;
@@ -28,20 +28,140 @@
     right: 0;
     position: absolute;
     width: 100%;
-    .top {
+    .cart-content__top {
+      box-sizing: border-box;
       font-weight: bold;
       font-size: 26px;
       display: flex;
       padding: 0 20px;
       justify-content: space-between;
       align-items: center;
-      background-color: #fff;
       height: 100px;
       border-bottom: 1px solid #a5a5a559;
-      .closeIcon {
+      .cart-content__top-close {
         cursor: pointer;
         &:hover {
           color: red;
+        }
+      }
+    }
+    .cart-content__body {
+      height: calc(100% - 200px);
+      position: relative;
+      .cart-items {
+        top: 0;
+        right: 0;
+        position: absolute;
+        width: 100%;
+        height: calc(100% - 50px);
+        overflow-y: auto;
+        .cart-item__product {
+          margin: 10px 20px;
+          padding: 10px;
+          border-bottom: 1px solid #a5a5a559;
+          display: flex;
+          justify-content: space-between;
+          .cart-item__product-content {
+            align-items: center;
+            display: flex;
+            .item-img {
+              width: 40px;
+              height: 40px;
+              object-fit: cover;
+              margin-right: 10px;
+              border-radius: 5px;
+            }
+            .item-content {
+              display: flex;
+              flex-direction: column;
+              .item-name {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 5px;
+              }
+              .item-price {
+                font-size: 13px;
+              }
+            }
+          }
+          .cart-item__action {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            .action-quantity {
+              display: flex;
+              align-items: center;
+              margin-right: 10px;
+              .cart-item_button {
+                padding: 5px;
+                margin: 0 10px;
+                cursor: pointer;
+                &.disable {
+                  cursor: no-drop;
+                  opacity: 0.8;
+                }
+              }
+            }
+            .action-item {
+              font-size: 22px;
+              .action-item_remove {
+                padding: 5px;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        .cart-item__empty {
+          text-align: center;
+          font-weight: bold;
+          margin: 10px 20px;
+          padding: 10px;
+        }
+      }
+      .cart-total {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 50px;
+        .cart-total__content {
+          display: flex;
+          padding: 20px;
+          justify-content: space-between;
+          .cart-total__content-title {
+            color: #333;
+            font-weight: bold;
+          }
+          .cart-total__content-price {
+            color: orange;
+          }
+        }
+      }
+    }
+    .cart-content__bottom {
+      box-sizing: border-box;
+      display: flex;
+      padding: 20px;
+      justify-content: space-between;
+      align-items: center;
+      height: 100px;
+      border-top: 1px solid #a5a5a559;
+      .button-view-cart,
+      .button-checkout {
+        width: 50%;
+        padding: 10px;
+        margin: 10px;
+        text-decoration: none;
+        border: 0.5px solid gray;
+        background-color: #999;
+        box-sizing: border-box;
+        text-align: center;
+        cursor: pointer;
+        span {
+          color: #333;
+        }
+        &:hover {
+          background-color: #f46b4c;
         }
       }
     }

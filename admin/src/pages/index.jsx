@@ -8,75 +8,40 @@ import './home.scss'
 import { BLANK_IMG, IMG_URL } from "../constants";
 import DoughnutChart from "../components/ChartData/doughnut";
 import LineChart from "../components/ChartData/lineChart";
+import { useDispatch } from "react-redux";
+import { getLoading } from "../stores/notifyReducer";
 function Home() {
-  const [ordersSuccess, setOrdersSuccess] = useState(null)
-  const [ordersLatest, setOrderLatest] = useState(null);
-  const [products, setProducts] = useState(null)
-  const [countOrder, setCountOrder] = useState(null)
+  const dispatch = useDispatch()
+  const [data, setData] = useState({ ordersSuccess: null, ordersLatest: null, products: null, countOrder: null })
   useEffect(() => {
-    const getProducts = async () => {
+    const fetchData = async () => {
       try {
-        const res = await getData('products/get-all?sort_by={%22sold%22:-1}&page=1&page_size=5')
-        setProducts(res.data.products)
+        dispatch(getLoading(true))
+        const res = await Promise.all([
+          getData('products/get-all?sort_by={%22sold%22:-1}&page=1&page_size=5'),
+          getData(
+            `orders/get-all?filter_by={%22status%22:%22SUCCESS%22}`
+          ), getData(
+            `orders/count`
+          ),
+          getData(
+            `orders/get-all?sort_by=%22-createdAt%22&page=1&page_size=5`
+          )
+        ])
+        setData({ ordersSuccess: res[1].data.orders, ordersLatest: res[3].data.orders, products: res[0].data.products, countOrder: res[2].data.count })
+        dispatch(getLoading(false))
       } catch (error) {
         console.log(error);
-        setProducts([])
+        dispatch(getLoading(false))
       }
     }
-    getProducts()
+    fetchData()
   }, [])
-  useEffect(() => {
-    const getOrdersSuccess = async () => {
-      try {
-        const res = await getData(
-          `orders/get-all?filter_by={%22status%22:%22SUCCESS%22}`
-        );
-        setOrdersSuccess(res.data.orders);
-      } catch (error) {
-        console.log(error);
-        setOrdersSuccess([]);
-      }
-    };
-    getOrdersSuccess();
-  }, []);
-  useEffect(() => {
-    const getCountOrders = async () => {
-      try {
-        const res = await getData(
-          `orders/count`
-        );
-        setCountOrder(res.data.count)
-
-      } catch (error) {
-        console.log(error);
-        setCountOrder([])
-      }
-    };
-    getCountOrders();
-  }, []);
-  useEffect(() => {
-    const getOrdersLatest = async () => {
-      try {
-        const res = await getData(
-          `orders/get-all?sort_by=%22-createdAt%22&page=1&page_size=5`
-        );
-        setOrderLatest(res.data.orders);
-      } catch (error) {
-        console.log(error);
-        setOrderLatest(0);
-
-      }
-    };
-    getOrdersLatest();
-  }, []);
   //render Revenue
   const renderRevenue = (value) => {
     let total = 0
     value.forEach(item => total += item.totalPrice)
     return total
-  }
-  if (!ordersLatest && !countOrder && !ordersSuccess && !products) {
-    return <Loading loading={true} />
   }
   return <div className="home">
     <div className="top">
@@ -86,14 +51,14 @@ function Home() {
     </div>
     <div className="bodyHome">
       <div className="itemHome"><h5>Doanh thu</h5>
-        <span className="number">{ordersSuccess && PriceVnd(renderRevenue(ordersSuccess))}</span>
+        <span className="number">{data.ordersSuccess && PriceVnd(renderRevenue(data.ordersSuccess))}</span>
       </div>
       <div className="itemHome"><h5>Đơn hàng thành công</h5>
-        <span className="number"> {ordersSuccess ? ordersSuccess.length : 0}</span>
+        <span className="number"> {data.ordersSuccess ? data.ordersSuccess.length : 0}</span>
       </div>
       <div className="itemHome"><h5>Tổng đơn mua</h5>
 
-        <span className="number"> {countOrder}</span>
+        <span className="number"> {data.countOrder}</span>
       </div>
       <div className="itemHome"><h5>Báo cáo</h5>
         <LineChart />
@@ -119,8 +84,8 @@ function Home() {
               </tr>
             </thead>
             <tbody>
-              {ordersLatest ? (
-                ordersLatest.map((order, idx) => {
+              {data.ordersLatest ? (
+                data.ordersLatest.map((order, idx) => {
                   return (
                     <tr key={idx}>
                       <td>{order._id}</td>
@@ -154,8 +119,8 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {products ? (
-              products.map((product, idx) => {
+            {data.products ? (
+              data.products.map((product, idx) => {
                 return (
                   <tr key={idx}>
                     <td>

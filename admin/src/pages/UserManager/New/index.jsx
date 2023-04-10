@@ -66,7 +66,7 @@ function New() {
         <div className="left">
           <div className="avatarUpload" onClick={() => setActive(true)}>
             {chooseSingle ?
-              <img className="avatarImg" src={`${IMG_URL}/${chooseSingle}`} alt="" /> : <img src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg" alt="" />
+              <img className="avatarImg" src={`${IMG_URL}/${chooseSingle}`} alt="" /> : <img className="avatarImg" src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg" alt="" />
             }
           </div>
           <LibImages

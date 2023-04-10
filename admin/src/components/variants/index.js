@@ -20,10 +20,10 @@ const variantsSchema = yup.object().shape({
     .number()
     .test(
       "lessThanPrice",
-      "On sale price must be less than regular price",
+      "On sale price must be less than equal to price",
       function (value) {
         const price = this.parent.price;
-        return value < price;
+        return value <= price;
       }
     ),
   inStock: yup

@@ -1,4 +1,5 @@
 import ItemContent from "@/components/ItemHome/itemContent";
+import NewProducts from "@/components/ItemHome/newProducts";
 import SlideImg from "@/components/ItemHome/slide";
 import Head from "next/head";
 export default function Home() {
@@ -21,13 +22,8 @@ export default function Home() {
             <ItemContent />
           </div>
         </div>
-        <div className="newProducts">
-          <ul>
-            <li className="item">1</li>
-            <li className="item">2</li>
-            <li className="item">3</li>
-            <li className="item">4</li>
-          </ul>
+        <div className="new-products">
+          <NewProducts />
         </div>
       </div>
     </>
