@@ -85,8 +85,8 @@ const SingleProduct = () => {
       console.log(error);
       dispatch(
         getNotify({
-          status: "success",
-          message: error.data.success,
+          status: "error",
+          message: error.response.data.error,
         })
       );
     }

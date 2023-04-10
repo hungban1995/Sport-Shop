@@ -15,8 +15,18 @@ function Header(props) {
   const router = useRouter();
   const [isActive, setIsActive] = useState("");
   const dispatch = useDispatch();
-
+  const { cartOrder } = useSelector((state) => state.cart);
   const [user, setUser] = useState(null);
+  const [numItem, setNumItem] = useState(0);
+  useEffect(() => {
+    if (cartOrder.length > 0) {
+      let a = 0;
+      cartOrder.forEach((item) => {
+        a += item.quantity;
+      });
+      setNumItem(a);
+    } else setNumItem(0);
+  }, [cartOrder]);
   useEffect(() => {
     setUser(props.user);
   }, [props.user]);
@@ -150,7 +160,7 @@ function Header(props) {
           }}
         >
           <FaOpencart className="icon" />
-          <div className="counter">0</div>
+          <div className="counter">{numItem}</div>
         </div>
       </div>
     </div>

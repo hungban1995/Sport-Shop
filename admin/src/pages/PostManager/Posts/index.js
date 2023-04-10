@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Pagination from "../../../components/QueryData/Pagination";
 import PostItem from "../../../components/PostItem";
@@ -8,8 +8,10 @@ import "./posts.scss";
 import SortData from "../../../components/QueryData/Sort";
 import FilterData from "../../../components/QueryData/Filter";
 import { valueSortPost } from "../../../constants";
+import { getLoading } from "../../../stores/notifyReducer";
 function Posts() {
   const { refreshPosts } = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
   const [posts, setPosts] = useState(null);
   const [user, setUser] = useState([]);
   const [pageNum, setPageNum] = useState(1);
@@ -40,13 +42,17 @@ function Posts() {
   useEffect(() => {
     const getPosts = async () => {
       try {
+        dispatch(getLoading(true));
+
         const res = await getData(
           `posts/get-all?page=${pageNum}&page_size=${pageSize}&sort_by=${sort_by}&filter_by=${filter_by}`
         );
         setPosts(res.data.posts);
         setCount(res.data.count);
+        dispatch(getLoading(false));
       } catch (error) {
         console.log(error);
+        dispatch(getLoading(false));
       }
     };
     getPosts();
@@ -80,6 +86,7 @@ function Posts() {
         pageSize={setPageSize}
         pageNum={setPageNum}
         lengthItem={posts?.length}
+        values={[10, 20, 30]}
       />
     </div>
   );

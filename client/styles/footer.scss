@@ -1,3 +1,4 @@
+@use "base";
 .footer {
   margin-top: 10px;
   background-color: rgb(22, 22, 22);
@@ -32,5 +33,13 @@
   .bottom {
     margin-top: 20px;
     border-top: 1px solid gray;
+  }
+}
+@media (max-width: base.$small-screen) {
+  .footer {
+    .top {
+      display: grid;
+      grid-template-columns: auto;
+    }
   }
 }

@@ -47,14 +47,12 @@ const CreateProduct = () => {
     mode: "all",
   });
   const onSubmit = async (data) => {
-    const images = chooseMany?.map((item) => images.url);
+    const images = chooseMany?.map((item) => item.url);
     const newData = {
       ...data,
       variants: variantId,
       images,
     };
-    console.log(newData);
-
     try {
       const res = await postData("products/create", newData);
       dispatch(
@@ -70,8 +68,8 @@ const CreateProduct = () => {
       console.log(error);
       dispatch(
         getNotify({
-          status: "success",
-          message: error.data.success,
+          status: "error",
+          message: error.response.data.error,
         })
       );
     }

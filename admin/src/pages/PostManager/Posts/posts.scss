@@ -39,3 +39,17 @@
     overflow: auto;
   }
 }
+$small-screen: 768px;
+@media (max-width: $small-screen) {
+  .posts {
+    margin: 0;
+    padding: 0;
+
+    .title {
+      width: unset;
+      span {
+        display: none !important;
+      }
+    }
+  }
+}

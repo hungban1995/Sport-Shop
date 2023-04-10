@@ -35,7 +35,7 @@
         justify-content: flex-end;
         padding: 10px;
       }
-      .item {
+      .items {
         display: grid;
         grid-template-columns: auto auto auto;
       }
@@ -52,7 +52,7 @@
       justify-content: center;
       flex-direction: column;
       width: 100% !important;
-      .item {
+      .items {
         display: grid;
         grid-template-columns: auto auto !important;
       }
@@ -70,7 +70,7 @@
       justify-content: center;
       flex-direction: column;
       width: 100% !important;
-      .item {
+      .items {
         display: flex !important;
         justify-content: center;
         flex-direction: column;

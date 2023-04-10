@@ -4,8 +4,15 @@ import ProductItem from "@/components/productItem";
 import { getData } from "@/libs/fetchData";
 import Head from "next/head";
 import Link from "next/link";
-
-function Product({ categories, products }) {
+import { useEffect } from "react";
+import { useState } from "react";
+function Product(props) {
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    setCategories(props.categories);
+    setProducts(props.products);
+  }, [props]);
   return (
     <>
       <Head>
@@ -31,11 +38,14 @@ function Product({ categories, products }) {
             <div className="sort">
               <div className="cmp">Sort</div>
             </div>
-            <div className="item">
-              {products &&
+            <div className="items">
+              {products.length > 0 ? (
                 products.map((product, idx) => {
-                  return <ProductItem product={product} key={idx} />;
-                })}
+                  return <ProductItem key={idx} product={product} />;
+                })
+              ) : (
+                <div>No product</div>
+              )}
             </div>
             <div>
               <Pagination />
@@ -46,10 +56,10 @@ function Product({ categories, products }) {
     </>
   );
 }
-export async function getServerSideProps() {
+export async function getServerSideProps({ query }) {
   let categories = [];
   let products = [];
-
+  const filter = query.filter ? query.filter : "";
   try {
     const categoriesRes = await getData("categories/get-all");
     categories = categoriesRes.data.categories;
@@ -58,10 +68,10 @@ export async function getServerSideProps() {
   }
 
   try {
-    const productsRes = await getData("products/get-all");
+    const productsRes = await getData(`products/get-all?filter_by=${filter}`);
     products = productsRes.data.products;
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data.error);
   }
 
   return { props: { categories, products } };

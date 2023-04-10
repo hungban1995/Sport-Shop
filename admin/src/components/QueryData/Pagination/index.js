@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineArrowLeft, MdOutlineArrowRight } from "react-icons/md";
 import "./pagination.scss";
-function Pagination({ count, pageSize, pageNum }) {
-  const [size, setSize] = useState(5);
+function Pagination({ count, pageSize, pageNum, values }) {
+  const [size, setSize] = useState(0);
   const [numPage, setNumPage] = useState(1);
   const [countItem, setCountItem] = useState(0);
   const [pageList, setPageList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     setCountItem(count);
-  }, [count]);
+    if (values && values.length > 0) {
+      setSize(values[0]);
+    }
+  }, [count, values]);
   useEffect(() => {
     let num = 1;
     if (countItem > size) {
@@ -71,9 +74,14 @@ function Pagination({ count, pageSize, pageNum }) {
       </div>
       <div className="right">
         <select name="pageSize" className="pageSize" onChange={handleChange}>
-          <option value="5">5 / Page</option>
-          <option value="10">10 / Page</option>
-          <option value="15">15 / Page</option>
+          {values &&
+            values.map((item, idx) => {
+              return (
+                <option value={item} key={idx}>
+                  {item} / Page
+                </option>
+              );
+            })}
         </select>
       </div>
     </div>

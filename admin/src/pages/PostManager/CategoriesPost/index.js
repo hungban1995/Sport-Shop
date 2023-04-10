@@ -117,7 +117,6 @@ function CategoriesPost() {
                 <th>Category Id</th>
                 <th>Tên</th>
                 <th>Ngày tạo</th>
-                <th>Mô tả</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -150,7 +149,6 @@ function CategoriesPost() {
                         </span>
                       </td>
                       <td>{moment(item.createdAt).format("L")}</td>
-                      <td>{item.description}</td>
 
                       <td className="action">
                         <AlertDel idItem={item._id} />
@@ -205,6 +203,7 @@ function CategoriesPost() {
           pageSize={set_page_size}
           pageNum={set_page_num}
           lengthItem={categoriesPost?.length}
+          values={[5, 10, 15]}
         />
       </div>
       <NewCategoryPost />

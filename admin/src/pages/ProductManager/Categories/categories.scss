@@ -138,3 +138,18 @@
     }
   }
 }
+$small-screen: 768px;
+@media (max-width: $small-screen) {
+  .categories {
+    margin: 0;
+    padding: 0;
+    .top {
+      .title {
+        width: unset;
+        p {
+          display: none !important;
+        }
+      }
+    }
+  }
+}

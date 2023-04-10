@@ -110,7 +110,6 @@ export const getAll = async (req, res, next) => {
       return next(decode.error);
     }
     const { page, page_size } = req.query;
-
     let images = [];
     let count = 0;
     if (decode.role === "admin") {

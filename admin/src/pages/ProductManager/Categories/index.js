@@ -92,14 +92,8 @@ function Categories() {
             <AiOutlineDelete /> Delete Data
           </span>
           <SortData valueSort={valueSortCat} set_sort_by={set_sort_by} />
-          {/* <FilterData
-            valueFilter={valueFil}
-            typeFilter={{ name: "Danh mục", value: "category" }}
-            set_filter_by={set_filter_by}
-          /> */}
         </div>
       </div>
-
       <div className="body">
         <div className="tableData">
           <table cellSpacing={10} cellPadding={10}>
@@ -111,7 +105,6 @@ function Categories() {
                 <th>Category Id</th>
                 <th>Tên</th>
                 <th>Ngày tạo</th>
-                <th>Mô tả</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -144,13 +137,6 @@ function Categories() {
                         </span>
                       </td>
                       <td>{moment(item.createdAt).format("L")}</td>
-                      <td
-                        style={{
-                          width: "300px",
-                        }}
-                      >
-                        {item.description}
-                      </td>
 
                       <td className="action">
                         <AlertDel idItem={item._id} />
@@ -201,6 +187,7 @@ function Categories() {
           pageSize={set_page_size}
           pageNum={set_page_num}
           lengthItem={categories?.length}
+          values={[5, 10, 15]}
         />
       </div>
       <NewCategory />

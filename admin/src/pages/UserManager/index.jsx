@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { BLANK_AVT, IMG_URL, valueSortUser } from '../../constants'
 import { getData } from '../../libs/fetchData'
-import { getAlert } from '../../stores/notifyReducer'
+import { getAlert, getLoading } from '../../stores/notifyReducer'
 import moment from 'moment'
 import './users.scss'
 import AlertDel from '../../components/notifications/alert'
@@ -28,12 +28,17 @@ function Users() {
     useEffect(() => {
         const getUser = async () => {
             try {
+                dispatch(getLoading(true))
                 const res = await getData(`users/get-all?page=${page_num}&page_size=${page_size}&sort_by=${sort_by}&filter_by=${filter_by}`);
                 setUsers(res.data.users);
                 setCount(res.data.count)
+                dispatch(getLoading(false))
+
             } catch (error) {
                 console.log(error);
                 setUsers(null)
+                dispatch(getLoading(false))
+
             }
         };
         getUser();
@@ -84,7 +89,7 @@ function Users() {
                     <SortData valueSort={valueSortUser} set_sort_by={set_sort_by} />
                     <FilterData
                         valueFilter={['admin', 'user']}
-                        typeFilter={{ name: 'Chức năng', value: "role" }}
+                        typeFilter={{ name: 'Quyền', value: "role" }}
                         set_filter_by={set_filter_by}
                     />
                 </div>
@@ -177,6 +182,7 @@ function Users() {
                     pageSize={set_page_size}
                     pageNum={set_page_num}
                     lengthItem={users?.length}
+                    values={[5, 10, 15]}
                 />
             </div>
         </div>

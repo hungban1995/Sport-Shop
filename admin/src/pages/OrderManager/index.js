@@ -7,7 +7,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import moment from "moment";
 import { listStyle, PriceVnd } from "../../libs/dataRender";
 import { useDispatch, useSelector } from "react-redux";
-import { getAlert } from "../../stores/notifyReducer";
+import { getAlert, getLoading } from "../../stores/notifyReducer";
 import { useNavigate } from "react-router-dom";
 import SortData from "../../components/QueryData/Sort";
 import { setBackground } from "../../stores/themeWebReducer";
@@ -29,14 +29,17 @@ function OrderS() {
   useEffect(() => {
     const getOrders = async () => {
       try {
+        dispatch(getLoading(true));
         const res = await getData(
           `orders/get-all?page=${page_num}&page_size=${page_size}&sort_by=${sort_by}&filter_by=${filter_by}`
         );
         setOrder(res.data.orders);
         setCount(res.data.count);
+        dispatch(getLoading(false));
       } catch (error) {
         console.log(error);
         setOrder(null);
+        dispatch(getLoading(false));
       }
     };
     getOrders();
@@ -166,6 +169,7 @@ function OrderS() {
           pageSize={set_page_size}
           pageNum={set_page_num}
           lengthItem={orders?.length}
+          values={[5, 10, 15]}
         />
       </div>
     </div>

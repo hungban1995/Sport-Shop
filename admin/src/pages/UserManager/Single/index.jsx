@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form'
 import { BLANK_AVT, IMG_URL } from "../../../constants";
 import moment from "moment";
 import LibImages from "../../../components/LibImages";
+import { styleUpload } from "../../../libs/dataRender";
 const schema = yup.object({
   username: yup.string().required(),
   password: yup.string(),
@@ -24,7 +25,6 @@ const schema = yup.object({
   phoneNumber: yup.string()
     .matches(/^\+84\d{9}$/, "Invalid phone number"),
 })
-const style = { position: 'absolute', top: '30%', boxShadow: '2px 4px 10px 1px rgba(97, 96, 96, 0.47)', backgroundColor: '#fff' }
 function Single() {
   const dispatch = useDispatch()
   const { id } = useParams()
@@ -86,13 +86,13 @@ function Single() {
         <div className="left">
           <div className="avatarUpload" onClick={() => setActive(true)}>
             {chooseSingle ?
-              <img className="avatarImg" src={`${IMG_URL}/${chooseSingle}`} alt="" /> : <img src={BLANK_AVT} alt="" />
+              <img className="avatarImg" src={`${IMG_URL}/${chooseSingle}`} alt="" /> : <img className="avatarImg" src={BLANK_AVT} alt="" />
             }
           </div>
           <LibImages
             setChooseSingle={setChooseSingle}
             active={active}
-            style={style}
+            style={styleUpload}
             setActive={setActive}
           />
         </div>
