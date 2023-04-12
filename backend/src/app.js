@@ -30,9 +30,8 @@ const app = express(); //Defined app
 //socket-io
 const httpServer = http.createServer(app);
 // Use cookie-parser middleware
-app.use(cookieParser('https://api.render.com/deploy/srv-cgn914jh4hsvot4apetg?key=axfUF_Wb4B0', {
-  secure: true
-}));
+app.use(cookieParser());
+
 
 helmetConfig(app); //Helmet configs
 corsConfig(app); //CORS configs
