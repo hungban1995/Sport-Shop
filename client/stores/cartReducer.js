@@ -10,6 +10,10 @@ export const cartReducer = createSlice({
     getShowCart: (state, action) => {
       state.showCart = action.payload;
     },
+    //reset cart
+    getResetCart: (state) => {
+      state.cartOrder = [];
+    },
     //get cart from local
     getCartOrder: (state, action) => {
       state.cartOrder = action.payload;
@@ -23,7 +27,7 @@ export const cartReducer = createSlice({
         if (
           cartCurrentArr[i].productVariant._id === itemCart.productVariant._id
         ) {
-          cartCurrentArr[i].quantity++;
+          cartCurrentArr[i].quantity += itemCart.quantity;
           found = true;
           break;
         }
@@ -75,5 +79,6 @@ export const {
   getCartOrder,
   getDecrease,
   getIncrease,
+  getResetCart,
 } = cartReducer.actions;
 export default cartReducer.reducer;

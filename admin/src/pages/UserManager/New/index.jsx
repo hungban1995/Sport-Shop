@@ -78,7 +78,7 @@ function New() {
         </div>
         <div className="right">
           <form onSubmit={handleSubmit}>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Username</label>
               <input
                 type="text"
@@ -90,7 +90,7 @@ function New() {
                 <span className="error">Field {errors.username}</span>
               )}
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">email</label>
               <input
                 type="email"
@@ -102,7 +102,7 @@ function New() {
                 <span className="error">Field {errors.email}</span>
               )}
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Password</label>
               <input
                 type="password"
@@ -114,7 +114,7 @@ function New() {
                 <span className="error">Field {errors.password}</span>
               )}
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">confirmPassword</label>
               <input
                 type="password"

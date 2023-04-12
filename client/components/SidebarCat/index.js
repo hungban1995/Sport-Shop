@@ -10,7 +10,7 @@ function SidebarCat(props) {
   }, [props.categories]);
   const handleQuery = (id) => {
     const searchQuery = { category: id };
-    router.push(`/shop?filter=${JSON.stringify(searchQuery)}`);
+    router.push(`?filter=${JSON.stringify(searchQuery)}`);
   };
 
   return (
@@ -32,7 +32,7 @@ function SidebarCat(props) {
             })}
         </ul>
       </div>
-      <div className="itemCat">
+      {/* <div className="itemCat">
         <div className="itemTitle">
           <h2 className="item-header" onClick={() => router.push("/shop")}>
             Price
@@ -43,7 +43,7 @@ function SidebarCat(props) {
           <li>cat2</li>
           <li>cat3</li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -1,11 +1,10 @@
 .postItem {
   display: grid;
   grid-template-columns: 29% 69%;
-  gap: 2%;
+  column-gap: 2%;
   box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
   padding: 10px;
   margin: 10px;
-  height: 200px;
   .left {
     margin: 10px;
     width: 100%;
@@ -14,6 +13,7 @@
     align-items: center;
     justify-content: center;
     img {
+      height: 100%;
       width: 100%;
       object-fit: cover;
       border-radius: 5px;

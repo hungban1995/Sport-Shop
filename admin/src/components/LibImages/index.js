@@ -55,20 +55,19 @@ function LibImages({
       }
     }
   };
-
-  useEffect(() => {
+  //select accept
+  const handleAccept = () => {
     if (setChooseMany) {
       setChooseMany(selectedImages);
     }
-  }, [selectedImages, setChooseMany]);
+    setActive(false);
+  };
+
   return (
     <div className={"containerImg " + (active ? "active" : "")} style={style}>
       {style ? (
         <div className="actionUpload">
-          <span
-            className="actionUpload__accept"
-            onClick={() => setActive(false)}
-          >
+          <span className="actionUpload__accept" onClick={() => handleAccept()}>
             Chọn ảnh
           </span>
           <span
@@ -76,9 +75,6 @@ function LibImages({
             onClick={() => {
               setActive(false);
               setSelectedImages([]);
-              if (setChooseSingle) {
-                setChooseSingle(null);
-              }
             }}
           >
             Hủy

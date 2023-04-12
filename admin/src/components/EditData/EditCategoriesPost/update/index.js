@@ -43,8 +43,8 @@ function UpdateCategoryPost() {
   }, [category, setValue]);
   //update
   const onSubmit = async (data) => {
-    const newData = { ...data, image: chooseSingle };
-
+    const image = chooseSingle;
+    const newData = { ...data, image };
     const id = category?._id;
     try {
       const res = await patchData("categories-posts/update/" + id, newData);

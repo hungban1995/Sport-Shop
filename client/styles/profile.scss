@@ -22,23 +22,21 @@ $small-screen: 767px;
     width: 100%;
     display: grid;
     grid-template-columns: 49% 49%;
-    gap: 2%;
+    column-gap: 2%;
     .left {
       padding: 15px;
+      h2 {
+        padding-bottom: 10px;
+        border-bottom: 1px solid gray;
+        font-weight: bold;
+        text-align: center;
+      }
       form {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        .titleForm {
-          padding-bottom: 10px;
-          border-bottom: 1px solid gray;
-          font-weight: bold;
-          text-align: center;
-          span {
-            color: base.$text-color;
-          }
-        }
+
         .upload {
           position: relative;
           margin-top: 10px;
@@ -63,7 +61,7 @@ $small-screen: 767px;
         .formGroup {
           display: flex;
           width: 80%;
-          .formInput {
+          .form-input {
             margin: 10px;
             input {
               background-color: base.$background-item;
@@ -83,7 +81,7 @@ $small-screen: 767px;
           }
         }
 
-        .formInput {
+        .form-input {
           width: 100%;
           display: flex;
           flex-direction: column;
@@ -116,6 +114,52 @@ $small-screen: 767px;
           }
         }
       }
+    }
+    .right {
+      padding: 15px;
+      h2 {
+        text-align: center;
+        padding-bottom: 10px;
+        border-bottom: 1px solid gray;
+        font-weight: bold;
+      }
+      .cart-table {
+        margin-right: 20px;
+        .cart-table-show {
+          width: 100%;
+          border-collapse: collapse;
+          th,
+          td {
+            border-bottom: 0.5px solid #88888879;
+            vertical-align: middle;
+            text-align: center;
+            padding: 10px 5px;
+          }
+          tr {
+            &:last-child {
+              td {
+                border: none;
+              }
+            }
+          }
+          .view-order {
+            cursor: pointer;
+            padding: 5px;
+            font-size: 26px;
+            &:hover {
+              color: crimson;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: base.$small-screen) {
+  .profile {
+    .bottom {
+      display: flex !important;
+      flex-direction: column-reverse !important;
     }
   }
 }

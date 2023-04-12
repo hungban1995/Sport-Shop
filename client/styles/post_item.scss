@@ -1,0 +1,54 @@
+.postItem {
+  display: grid;
+  grid-template-columns: 29% 69%;
+  column-gap: 2%;
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  padding: 10px;
+  margin: 10px;
+  color: #666;
+  .left {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+  }
+  .right {
+    max-height: 100%;
+    .headerPost {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      .titlePost {
+        p {
+          font-size: 24px;
+          font-weight: bold;
+        }
+      }
+      .infoPost {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    .contentPost {
+      .description {
+        font-weight: bold;
+      }
+      .content {
+        height: 50px;
+        overflow: hidden;
+      }
+    }
+    .action {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

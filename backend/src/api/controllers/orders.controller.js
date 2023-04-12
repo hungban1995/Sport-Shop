@@ -116,7 +116,7 @@ export const deleteOrder = async (req, res, next) => {
   }
 };
 
-//getAll
+//getCount
 export const getCount = async (req, res, next) => {
   try {
     const { error } = await service.getAll(req);
@@ -127,6 +127,43 @@ export const getCount = async (req, res, next) => {
     res.status(200).json({
       success: "Get order success",
       count,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+//byuser
+export const getByUser = async (req, res, next) => {
+  try {
+    const { error } = await service.getByUser(req);
+    if (error) {
+      return next(error);
+    }
+    const { id } = req.params;
+    let orders = await Orders.find(
+      { user: id },
+      {
+        user: 1,
+        status: 1,
+        paymentMethod: 1,
+        orderDetail: 1,
+        totalPrice: 1,
+        createdAt: 1,
+        firstName: 1,
+        lastName: 1,
+      }
+    )
+      .populate({
+        path: "orderDetail.productVariant",
+        select: "-__v -updatedAt -createdAt -inStock -sold",
+      })
+      .populate({
+        path: "user",
+        select: "username",
+      });
+    res.status(200).json({
+      success: "Get order success",
+      orders,
     });
   } catch (error) {
     next(error);

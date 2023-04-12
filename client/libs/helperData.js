@@ -32,3 +32,36 @@ export const PriceVnd = (price) => {
     currency: "VND",
   }).format(price);
 };
+//render attribute
+export const RenderAttribute = (attributes) => {
+  return attributes.map((atb, idx) => {
+    if (atb.k) {
+      return (
+        <li key={idx}>
+          {atb.k} : {atb.v}
+        </li>
+      );
+    } else return null;
+  });
+};
+//render total
+export const renderTotal = (value) => {
+  let total = 0;
+  value.forEach((item) => {
+    let priceItem = item.productVariant.onSale || item.productVariant.price;
+    total += priceItem * item.quantity;
+  });
+  let totalPrice = PriceVnd(total);
+  return totalPrice;
+};
+export const listStyle = (value, bg) => {
+  const styles = {
+    WAITING: { color: "#FACC15", bgColor: "#FEFCE8" },
+    SHIPPING: { color: "#60A5FA", bgColor: "#EFF6F8" },
+    SUCCESS: { color: "#34D399", bgColor: "#ECFDF5" },
+    CANCEL: { color: "#F87171", bgColor: "#FEF2F2" },
+  };
+  const { color, bgColor } = styles[value] || {};
+  const backgroundColor = bg ? bgColor : "#fff";
+  return { color, fontWeight: "bold", backgroundColor };
+};

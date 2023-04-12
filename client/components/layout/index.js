@@ -6,11 +6,24 @@ import ShoppingCart from "../shoppingCart";
 import Footer from "./footer";
 import Header from "./header";
 import { getCartOrder } from "@/stores/cartReducer";
+import BackToTop from "../backToTop";
 function Layout({ children }) {
   const [userId, setUserId] = useState(null);
   const [user, setUser] = useState(null);
   const { count } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 300) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    });
+  }, []);
+
   useEffect(() => {
     if (
       typeof window !== "undefined" &&
@@ -43,6 +56,12 @@ function Layout({ children }) {
       dispatch(getCartOrder(JSON.parse(localStorage.getItem("cart"))));
     } else dispatch(getCartOrder([]));
   }, []);
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   return (
     <div className="layout">
       <Notify />
@@ -50,6 +69,7 @@ function Layout({ children }) {
       <Header user={user} />
       {children}
       <Footer />
+      <BackToTop showButton={showButton} scrollToTop={scrollToTop} />
     </div>
   );
 }

@@ -171,7 +171,7 @@ function Users() {
                                 })
                             ) : (
                                 <tr>
-                                    <td>User not found!</td>
+                                    <td colSpan={8} style={{ textAlign: 'center' }}>User not found!</td>
                                 </tr>
                             )}
                         </tbody>

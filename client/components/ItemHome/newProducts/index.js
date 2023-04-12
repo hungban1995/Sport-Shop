@@ -19,12 +19,12 @@ function NewProducts() {
     getProducts();
   }, []);
   return (
-    <>
+    <div className="new-product-item">
       {products &&
         products.map((product, idx) => {
           return <ProductItem key={idx} product={product} />;
         })}
-    </>
+    </div>
   );
 }
 

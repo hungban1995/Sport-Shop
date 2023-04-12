@@ -1,6 +1,27 @@
 import Slider from "react-slick";
 import SlideItem from "../itemContent";
+import { useEffect } from "react";
+import { useState } from "react";
+import { getData } from "@/libs/fetchData";
 function SlideImg() {
+  const [data, setData] = useState({ products: null, posts: null });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await Promise.all([
+          getData(
+            "products/get-all?sort_by={%22sold%22:-1}&page=1&page_size=3"
+          ),
+
+          getData(`posts/get-all?sort_by=%22-createdAt%22&page=1&page_size=2`),
+        ]);
+        setData({ products: res[0].data.products, posts: res[1].data.posts });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
   var settings = {
     dots: true,
     infinite: true,
@@ -9,12 +30,33 @@ function SlideImg() {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
+    appendDots: (dots) => (
+      <div className="slick-dot-container">
+        <ul style={{ margin: "0px" }}> {dots} </ul>
+      </div>
+    ),
+    customPaging: (i) => (
+      <div
+        style={{
+          width: "100%",
+          opacity: "0",
+        }}
+      >
+        {i + 1}
+      </div>
+    ),
   };
+
   return (
     <Slider {...settings}>
-      <SlideItem />
-      <SlideItem />
-      <SlideItem />
+      {data.posts &&
+        data.posts.map((item, idx) => {
+          return <SlideItem key={idx} name={"blog"} value={item} />;
+        })}
+      {data.products &&
+        data.products.map((item, idx) => {
+          return <SlideItem key={idx} value={item} name={"shop"} />;
+        })}
     </Slider>
   );
 }

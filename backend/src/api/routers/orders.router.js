@@ -9,6 +9,8 @@ const ordersRouter = async (app) => {
   router.patch("/update/:id", controller.updateOrder);
   router.delete("/delete/:id", controller.deleteOrder);
   router.get("/count", controller.getCount);
+  router.get("/by-user/:id", controller.getByUser);
+
   return app.use("/api/orders", router);
 };
 export default ordersRouter;
