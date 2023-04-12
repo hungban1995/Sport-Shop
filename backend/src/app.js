@@ -1,7 +1,7 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import corsConfig from "./configs/cors.config";
-import helmetConfig from "./configs/helmet.config";
+// import helmetConfig from "./configs/helmet.config";
 import connectDB from "./configs/db.connect";
 import staticConfig from "./configs/static.config";
 import parseConfig from "./configs/parse.config";
@@ -32,7 +32,7 @@ const httpServer = http.createServer(app);
 // Use cookie-parser middleware
 app.use(cookieParser());
 
-helmetConfig(app); //Helmet configs
+// helmetConfig(app); //Helmet configs
 corsConfig(app); //CORS configs
 parseConfig(app, express); //Parse config
 headerConfig(app); //Configs to client read file
