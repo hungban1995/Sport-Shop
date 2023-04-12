@@ -55,6 +55,14 @@ app.get("/", (req, res, next) => {
   const myCookie = req.cookies.myCookie;
   res.send(`The value of myCookie is: ${myCookie}`);
 });
+
+app.use((req, res, next) => {
+  res.cookie("myCookie", "myValue", {
+    sameSite: "none",
+    secure: true,
+  });
+  next();
+});
 socketIo(httpServer);
 
 staticConfig(app); //Static configs
