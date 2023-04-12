@@ -1,14 +1,14 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import corsConfig from "./configs/cors.config";
-import helmetConfig from "./configs/helmet.config";
+// import helmetConfig from "./configs/helmet.config";
 import connectDB from "./configs/db.connect";
 import staticConfig from "./configs/static.config";
 import parseConfig from "./configs/parse.config";
 import httpErrorConfig from "./configs/httpErrors.config";
 import morgan from "morgan";
-import headerConfig from "./configs/header.config";
-import cookieParser from "cookie-parser";
+// import headerConfig from "./configs/header.config";
+// import cookieParser from "cookie-parser";
 import {
   categoriesPostsRouter,
   categoriesRouter,
@@ -30,13 +30,11 @@ const app = express(); //Defined app
 //socket-io
 const httpServer = http.createServer(app);
 // Use cookie-parser middleware
-app.use(cookieParser());
-
-
-helmetConfig(app); //Helmet configs
+// app.use(cookieParser());
+// helmetConfig(app); //Helmet configs
 corsConfig(app); //CORS configs
 parseConfig(app, express); //Parse config
-headerConfig(app); //Configs to client read file
+// headerConfig(app); //Configs to client read file
 app.use(morgan("common")); //Morgan configs
 //API routes
 imagesRouter(app);
@@ -55,16 +53,6 @@ imagesRouter(app);
 app.get("/", (req, res, next) => {
   res.send(`Hello`);
 });
-
-// Set SameSite attribute for cookies
-app.use((req, res, next) => {
-  res.cookie("myCookie", "myValue", {
-    sameSite: "none",
-    secure: true,
-  });
-  next();
-});
-
 socketIo(httpServer);
 
 staticConfig(app); //Static configs
