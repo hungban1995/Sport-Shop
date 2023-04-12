@@ -30,7 +30,9 @@ const app = express(); //Defined app
 //socket-io
 const httpServer = http.createServer(app);
 // Use cookie-parser middleware
-app.use(cookieParser());
+app.use(cookieParser('https://api.render.com/deploy/srv-cgn914jh4hsvot4apetg?key=axfUF_Wb4B0', {
+  secure: true
+}));
 
 helmetConfig(app); //Helmet configs
 corsConfig(app); //CORS configs
@@ -52,8 +54,7 @@ notifyRouter(app);
 imagesRouter(app);
 
 app.get("/", (req, res, next) => {
-  const myCookie = req.cookies.myCookie;
-  res.send(`The value of myCookie is: ${myCookie}`);
+  res.send(`Hello`);
 });
 
 // Set SameSite attribute for cookies
