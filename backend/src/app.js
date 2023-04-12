@@ -8,6 +8,7 @@ import parseConfig from "./configs/parse.config";
 import httpErrorConfig from "./configs/httpErrors.config";
 import morgan from "morgan";
 import headerConfig from "./configs/header.config";
+import cookieParser from "cookie-parser";
 import {
   categoriesPostsRouter,
   categoriesRouter,
@@ -28,6 +29,8 @@ connectDB(); //Connect db
 const app = express(); //Defined app
 //socket-io
 const httpServer = http.createServer(app);
+// Use cookie-parser middleware
+app.use(cookieParser());
 
 helmetConfig(app); //Helmet configs
 corsConfig(app); //CORS configs
@@ -49,7 +52,8 @@ notifyRouter(app);
 imagesRouter(app);
 
 app.get("/", (req, res, next) => {
-  res.send("hello");
+  const myCookie = req.cookies.myCookie;
+  res.send(`The value of myCookie is: ${myCookie}`);
 });
 socketIo(httpServer);
 
