@@ -23,7 +23,7 @@ const schema = yup.object({
     .max(new Date(), "Birthday can't be in the future")
     .min(new Date("1900-01-01"), "Birthday must be after 1900-01-01"),
   phoneNumber: yup.string()
-    .matches(/^\+84\d{9}$/, "Invalid phone number"),
+    .matches(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/, "Invalid phone number"),
 })
 function Single() {
   const dispatch = useDispatch()
@@ -98,37 +98,37 @@ function Single() {
         </div>
         <div className="right">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Username</label>
               <input {...register("username")} />
               {errors.username && (
                 <span>Field {errors.username.message}</span>
               )}
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Email</label>
               <input readOnly  {...register("email")} />
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">First Name</label>
               <input {...register("firstName")} />
               {errors.firstName && (
                 <span>Field {errors.firstName.message}</span>
               )}
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Last Name</label>
               <input {...register("lastName")} />
               {errors.lastName && (
                 <span>Field {errors.lastName.message}</span>
               )}
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Birth Day</label>
               <input type="date" {...register("birthday")} value={watch("birthday")} max="2005-01-01" />
               {errors.birthday && <p>{errors.birthday.message}</p>}
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Phone</label>
               <input
                 {...register("phoneNumber")}
@@ -137,20 +137,20 @@ function Single() {
                 <span>Field {errors.phoneNumber.message}</span>
               )}
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Address</label>
               <input
                 {...register("address")}
               />
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Role</label>
               <select {...register("role")}>
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
               </select>
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Password</label>
               <input
                 type="password"
@@ -159,7 +159,7 @@ function Single() {
                 <span>Field {errors.password.message}</span>
               )}
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Confirm Password</label>
               <input
                 type="password"

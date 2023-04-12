@@ -1,5 +1,6 @@
 import Pagination from "@/components/Pagination";
 import SidebarCat from "@/components/SidebarCat";
+import BreadCrumb from "@/components/bread-crumb";
 import ProductItem from "@/components/productItem";
 import { getData } from "@/libs/fetchData";
 import Head from "next/head";
@@ -21,15 +22,9 @@ function Product(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="shop">
-        <div className="title">
-          <div className="content">
-            <span className="page">Shop</span>
-            <div className="bread-crumb">
-              <Link href="/">Trang chủ</Link> &raquo;
-              <span>Shop</span>
-            </div>
-          </div>
-        </div>
+        <BreadCrumb
+          value={{ target: "Shop", items: [{ url: "/", name: "Trang chủ" }] }}
+        />
         <div className="body">
           <div className="sidebarContainer">
             <SidebarCat categories={categories} />
@@ -71,7 +66,7 @@ export async function getServerSideProps({ query }) {
     const productsRes = await getData(`products/get-all?filter_by=${filter}`);
     products = productsRes.data.products;
   } catch (error) {
-    console.log(error.response.data.error);
+    console.log(error);
   }
 
   return { props: { categories, products } };

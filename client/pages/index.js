@@ -1,8 +1,28 @@
 import ItemContent from "@/components/ItemHome/itemContent";
 import NewProducts from "@/components/ItemHome/newProducts";
 import SlideImg from "@/components/ItemHome/slide";
+import { getData } from "@/libs/fetchData";
 import Head from "next/head";
+import { useState } from "react";
+import { useEffect } from "react";
+import { BsStopwatch } from "react-icons/bs";
+import { CiDeliveryTruck } from "react-icons/ci";
+import { TbExchange } from "react-icons/tb";
 export default function Home() {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const res = await getData(
+          "posts/get-all?sort_by={%22createdAt%22:-1}&page=1&page_size=2"
+        );
+        setPosts(res.data.posts);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getPosts();
+  }, []);
   return (
     <>
       <Head>
@@ -14,16 +34,65 @@ export default function Home() {
         <div className="slide">
           <SlideImg />
         </div>
-        <div className="shortContent">
-          <div className="item">
-            <ItemContent />
+        <div className="info-us">
+          <div className="info-us-left">
+            <div className="info-left-content">
+              <span>A LITTLE ABOUT US</span>
+              <h2>WHY CHOOSE US</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
+                tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
+                tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+              </p>
+              <ul>
+                <li>
+                  <CiDeliveryTruck className="icon-info" />
+                  <span>EXPRESS SHIPPING</span>
+                </li>
+                <li>
+                  <BsStopwatch className="icon-info" />
+                  <span>QUICK INSTALLATION</span>
+                </li>
+                <li>
+                  <TbExchange className="icon-info" />
+                  <span>30 DAY RETURN POLICY</span>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="item">
-            <ItemContent />
+          <div className="info-us-right">
+            <div className="info-image">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0570/0947/1558/files/banner11.jpg?v=1656921972"
+                alt="banner"
+              />
+            </div>
           </div>
         </div>
         <div className="new-products">
+          <div className="title-new">
+            <h2>Product New</h2>
+            <span>Don't Miss Today's Featured Deals</span>
+          </div>
           <NewProducts />
+        </div>
+        <div className="post-content">
+          <div className="title-new">
+            <h2>Posts Recent</h2>
+            <span>Don't Miss Today's Featured Info</span>
+          </div>
+
+          <div className="shortContent">
+            {posts &&
+              posts.map((item, idx) => {
+                return (
+                  <div key={idx} className="item">
+                    <ItemContent value={item} name={"blog"} />
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </div>
     </>

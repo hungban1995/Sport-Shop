@@ -135,23 +135,23 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="formVariants">
         <div className="formGroup">
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="sku">Mã Sản Phẩm</label>
             <input type="text" id="sku" {...register("sku")} />
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label>In Stock</label>
             <input {...register("inStock")} type="number" />
             {errors.inStock && <span>Field {errors.inStock.message}</span>}
           </div>
         </div>
         <div className="formGroup">
-          <div className="formInput">
+          <div className="form-input">
             <label>Price</label>
             <input {...register("price")} type="number" step="1000" />
             {errors.price && <span>Field {errors.price.message}</span>}
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label>On Sale</label>
             <input {...register("onSale")} type="number" step="1000" />
             {errors.onSale && <span>Field {errors.onSale.message}</span>}

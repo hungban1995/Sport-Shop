@@ -109,16 +109,16 @@ const SingleProduct = () => {
       <div className="bottom">
         <div className="left">
           <form className="formUpdateProduct" onSubmit={handleSubmit(onSubmit)}>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="title">Tên sản phẩm</label>
               <input type="text" id="title" {...register("title")} />
             </div>
 
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="description">Description</label>
               <textarea id="description" {...register("description")} />
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="">Category</label>
               <div className="selectCat">
                 {categories &&
@@ -166,7 +166,7 @@ const SingleProduct = () => {
                 setActive={setActive}
               />
             </div>
-            <div className="formInput">
+            <div className="form-input">
               <label htmlFor="content">Content</label>
               <CKEditor
                 editor={ClassicEditor}

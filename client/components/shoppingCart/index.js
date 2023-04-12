@@ -1,5 +1,5 @@
 import { IMG_URL } from "@/constant";
-import { PriceVnd } from "@/libs/helperData";
+import { PriceVnd, RenderAttribute, renderTotal } from "@/libs/helperData";
 import {
   getDecrease,
   getIncrease,
@@ -7,15 +7,12 @@ import {
   getShowCart,
 } from "@/stores/cartReducer";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import {
-  AiOutlineClose,
-  AiOutlineCloseCircle,
-  AiOutlineMinus,
-  AiOutlinePlus,
-} from "react-icons/ai";
+import { AiOutlineClose, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 function ShoppingCart() {
+  const router = useRouter();
   const { showCart, cartOrder } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [numItem, setNumItem] = useState(0);
@@ -28,28 +25,7 @@ function ShoppingCart() {
       setNumItem(a);
     } else setNumItem(0);
   }, [cartOrder]);
-  //render attribute
-  const renderAttribute = (attributes) => {
-    return attributes.map((atb, idx) => {
-      if (atb.k) {
-        return (
-          <li key={idx}>
-            {atb.k} : {atb.v}
-          </li>
-        );
-      } else return null;
-    });
-  };
-  //render total
-  const renderTotal = (value) => {
-    let total = 0;
-    value.forEach((item) => {
-      let priceItem = item.productVariant.onSale || item.productVariant.price;
-      total += priceItem * item.quantity;
-    });
-    let totalPrice = PriceVnd(total);
-    return totalPrice;
-  };
+
   //hand add and remove
   const handleRemove = (idx) => {
     dispatch(getRemoveItemCart(idx));
@@ -64,17 +40,20 @@ function ShoppingCart() {
 
   return (
     <div
-      className={"cart " + (showCart ? "active" : "")}
+      className={"shopping-cart " + (showCart ? "active" : "")}
       onClick={() => {
         if (showCart) {
           dispatch(getShowCart(false));
         }
       }}
     >
-      <div className={"cart-content"} onClick={(e) => e.stopPropagation()}>
-        <div className="cart-content__top">
+      <div
+        className={"shopping-cart-content"}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="shopping-cart-content__top">
           <AiOutlineClose
-            className="cart-content__top-close"
+            className="shopping-cart-content__top-close"
             onClick={() => {
               dispatch(getShowCart(false));
             }}
@@ -82,14 +61,14 @@ function ShoppingCart() {
           <span>Shopping Cart</span>
           <span style={{ fontSize: "16px" }}>{numItem} item</span>
         </div>
-        <div className="cart-content__body">
-          <div className="cart-content__body-item">
-            <div className="cart-items">
+        <div className="shopping-cart-content__body">
+          <div className="shopping-cart-content__body-item">
+            <div className="shopping-cart-items">
               {cartOrder.length > 0 ? (
                 cartOrder.map((item, idx) => {
                   return (
-                    <div key={idx} className="cart-item__product">
-                      <div className="cart-item__product-content">
+                    <div key={idx} className="shopping-cart-item__product">
+                      <div className="shopping-cart-item__product-content">
                         <img
                           className="item-img"
                           src={`${IMG_URL}/${item.productVariant.image}`}
@@ -101,14 +80,14 @@ function ShoppingCart() {
                             {PriceVnd(item.productVariant.onSale) ||
                               PriceVnd(item.productVariant.onSale)}
                           </span>
-                          {renderAttribute(item.productVariant.attributes)}
+                          {RenderAttribute(item.productVariant.attributes)}
                         </ul>
                       </div>
-                      <div className="cart-item__action">
+                      <div className="shopping-cart-item__action">
                         <div className="action-quantity">
                           <AiOutlineMinus
                             className={
-                              "cart-item_button " +
+                              "shopping-cart-item_button " +
                               (item.quantity === 1 ? "disable" : "")
                             }
                             onClick={
@@ -118,7 +97,7 @@ function ShoppingCart() {
                           <span>{item.quantity}</span>
                           <AiOutlinePlus
                             className={
-                              "cart-item_button " +
+                              "shopping-cart-item_button " +
                               (item.quantity === item.productVariant.inStock
                                 ? "disable"
                                 : "")
@@ -141,7 +120,7 @@ function ShoppingCart() {
                   );
                 })
               ) : (
-                <div className="cart-item__empty">
+                <div className="shopping-cart-item__empty">
                   <span>
                     Your cart is empty. Go to{" "}
                     <Link href={"/shop"}>Shop now</Link>
@@ -150,10 +129,12 @@ function ShoppingCart() {
               )}
             </div>
             {cartOrder.length > 0 ? (
-              <div className="cart-total">
-                <div className="cart-total__content">
-                  <span className="cart-total__content-title">Total: </span>
-                  <span className="cart-total__content-price">
+              <div className="shopping-cart-total">
+                <div className="shopping-cart-total__content">
+                  <span className="shopping-cart-total__content-title">
+                    Total:{" "}
+                  </span>
+                  <span className="shopping-cart-total__content-price">
                     {renderTotal(cartOrder)}
                   </span>
                 </div>
@@ -161,13 +142,37 @@ function ShoppingCart() {
             ) : null}
           </div>
         </div>
-        <div className="cart-content__bottom">
-          <Link href={"#"} className="button-view-cart">
+        <div className="shopping-cart-content__bottom">
+          <div
+            className={
+              "button-view-cart " + (cartOrder?.length > 0 ? "" : "disable")
+            }
+            onClick={
+              cartOrder?.length > 0
+                ? () => {
+                    dispatch(getShowCart(false));
+                    router.push("/cart");
+                  }
+                : null
+            }
+          >
             <span className="text-view-cart">View Cart</span>
-          </Link>
-          <Link href={"#"} className="button-checkout">
-            <span className="text-checkout">Check out</span>
-          </Link>
+          </div>
+          <div
+            className={
+              "button-checkout " + (cartOrder?.length > 0 ? "" : "disable")
+            }
+            onClick={
+              cartOrder?.length > 0
+                ? () => {
+                    dispatch(getShowCart(false));
+                    router.push("/checkout");
+                  }
+                : null
+            }
+          >
+            <span className={"text-checkout"}>Check out</span>
+          </div>
         </div>
       </div>
     </div>

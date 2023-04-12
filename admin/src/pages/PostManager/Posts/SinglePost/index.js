@@ -134,16 +134,16 @@ function SinglePost() {
           />
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="">Title</label>
             <input {...register("title")} />
             {errors.title && <span>Field {errors.title.message}</span>}
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="">Description</label>
             <input {...register("description")} />
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="">Category</label>
             <div className="selectCat">
               {postsCat &&
@@ -161,7 +161,7 @@ function SinglePost() {
                 })}
             </div>
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="">Content</label>
             <CKEditor
               editor={ClassicEditor}

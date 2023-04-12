@@ -1,0 +1,17 @@
+.slick-dots {
+  position: absolute;
+  bottom: 2px;
+  li {
+    background-color: #fff;
+    border: 2px solid gainsboro;
+    margin: 0 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    padding: 3px;
+
+    &.slick-active {
+      background-color: #000;
+    }
+  }
+}

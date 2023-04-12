@@ -1,9 +1,8 @@
 @use "base";
 .home {
+  overflow: hidden;
   .slide {
-    width: 95%;
-    margin: auto;
-    margin-bottom: 50px;
+    width: 100%;
     .itemContent {
       position: relative;
       overflow: hidden;
@@ -21,8 +20,7 @@
         left: 15%;
         width: auto;
         transition: 0.5s;
-        text-align: center;
-        text-shadow: 5px 5px 10px #156260;
+
         h4 {
           color: #fff;
           font-size: 32px;
@@ -35,59 +33,149 @@
       }
     }
   }
-  .shortContent {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    .item {
+  .info-us {
+    width: 100%;
+    background-color: #000;
+    border-top: 1px solid #fff;
+    display: flex;
+    .info-us-left {
+      width: 50%;
+      color: #fff;
+      padding: 20px;
       display: flex;
-      justify-content: center;
-      .itemContent {
-        margin: 20px;
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        height: 300px;
+      align-items: center;
+      .info-left-content {
+        margin: 30px;
+        color: #666;
+
+        span {
+          font-size: 20px;
+        }
+        h2 {
+          font-size: 26px;
+          font-weight: bold;
+          color: #fff;
+          margin-top: 15px;
+          margin-bottom: 20px;
+        }
+        p {
+          font-size: 18px;
+          line-height: 24px;
+        }
+        ul {
+          display: flex;
+          li {
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .icon-info {
+              font-size: 26px;
+              padding: 10px;
+            }
+            span {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+    .info-us-right {
+      width: 50%;
+      padding: 20px 20px 20px 0;
+      .info-image {
+        margin: 20px 20px 20px 0;
         img {
-          position: absolute;
           width: 100%;
           height: 100%;
-          object-fit: cover;
         }
-        .content {
-          position: absolute;
-          top: 70%;
-          left: 15%;
-          width: auto;
-          transition: 0.5s;
-          text-align: center;
-          text-shadow: 5px 5px 10px #156260;
-          h4 {
-            color: #fff;
-            font-size: 32px;
+      }
+    }
+  }
+  .post-content {
+    .title-new {
+      text-align: center;
+      h2 {
+        font-size: 30px;
+        font-weight: bold;
+        margin: 20px;
+      }
+    }
+    .shortContent {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      .item {
+        display: flex;
+        justify-content: center;
+        .itemContent {
+          margin: 20px;
+          position: relative;
+          overflow: hidden;
+          width: 100%;
+          height: 300px;
+          img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
           }
-          &:hover {
-            filter: none;
-            color: rgb(0, 0, 0);
-            transform: scale(1.3);
+          .content {
+            position: absolute;
+            top: 70%;
+            left: 15%;
+            width: auto;
+            transition: 0.5s;
+            h4 {
+              color: #fff;
+              font-size: 32px;
+            }
+            &:hover {
+              filter: none;
+              color: rgb(0, 0, 0);
+              transform: scale(1.3);
+            }
           }
         }
       }
     }
   }
   .new-products {
-    display: grid;
-    grid-template-columns: auto auto auto auto;
+    .title-new {
+      text-align: center;
+      h2 {
+        font-size: 30px;
+        font-weight: bold;
+        margin: 20px;
+      }
+    }
+    .new-product-item {
+      display: grid;
+      grid-template-columns: auto auto auto auto;
+    }
   }
 }
 @media (max-width: base.$small-screen) {
   .home {
-    .shortContent {
-      display: grid;
-      grid-template-columns: auto;
+    .info-us {
+      flex-direction: column;
+      .info-us-left {
+        padding: unset !important;
+      }
+      .info-us-right {
+        padding: unset;
+        width: 100%;
+        .info-image {
+          margin: 20px;
+        }
+      }
     }
-    .new-products {
-      display: grid;
-      grid-template-columns: auto;
+    .shortContent {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .new-product-item {
+      display: flex !important;
+      flex-direction: column !important;
     }
   }
 }

@@ -1,8 +1,11 @@
+import BreadCrumb from "@/components/bread-crumb";
 import { IMG_URL } from "@/constant";
 import { getData } from "@/libs/fetchData";
 import { PriceVnd } from "@/libs/helperData";
+import { addProductToCart, getShowCart } from "@/stores/cartReducer";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import {
   AiFillStar,
@@ -11,8 +14,11 @@ import {
   AiOutlineStar,
 } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
+import { useDispatch } from "react-redux";
 
 function Product(props) {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [product, setProduct] = useState(null);
   const [imageView, setImageView] = useState("");
   const [priceView, setPriceView] = useState({ price: 0, onSale: 0 });
@@ -58,6 +64,28 @@ function Product(props) {
       } else return null;
     });
   };
+  //add to cart
+  const handleAddToCart = () => {
+    const itemCart = {
+      nameProduct: product.title,
+      productVariant: variantChoose,
+      quantity: quantity,
+    };
+    dispatch(addProductToCart(itemCart));
+    dispatch(getShowCart(true));
+  };
+  //buy now
+  const handleBuyNow = () => {
+    const itemCart = {
+      nameProduct: product.title,
+      productVariant: variantChoose,
+      quantity: quantity,
+    };
+
+    dispatch(addProductToCart(itemCart));
+
+    router.push("/checkout");
+  };
   return (
     <>
       <Head>
@@ -66,16 +94,15 @@ function Product(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="product-id">
-        <div className="title-product">
-          <div className="title-content">
-            <span className="page">Product</span>
-            <div className="bread-crumb">
-              <Link href="/">Trang chủ</Link> &raquo;
-              <Link href="/shop">Shop</Link> &raquo;
-              <span>Product</span>
-            </div>
-          </div>
-        </div>
+        <BreadCrumb
+          value={{
+            target: "Product",
+            items: [
+              { url: "/", name: "Trang chủ" },
+              { url: "/shop", name: "Shop" },
+            ],
+          }}
+        />
         <div className="product-content">
           <div className="product-images">
             <div className="view-image">
@@ -170,14 +197,25 @@ function Product(props) {
                       }
                     />
                   </div>
-                  <div className="button-add">Add to cart</div>
+                  <div className="button-add" onClick={() => handleAddToCart()}>
+                    Add to cart
+                  </div>
                 </div>
                 <div
                   className="product-action-buy"
-                  //  onClick={() => handleRemove(idx)}
+                  onClick={() => handleBuyNow()}
                 >
                   Buy Now
                 </div>
+              </div>
+              <div className="product-more-info">
+                <p>SKU: {variantChoose?.sku}</p>
+                <p>
+                  Categories:{" "}
+                  {product?.category?.map((cat, idx) => {
+                    return <span key={idx}>{cat.title}</span>;
+                  })}
+                </p>
               </div>
             </div>
           </div>

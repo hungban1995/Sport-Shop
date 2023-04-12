@@ -56,12 +56,12 @@ function Login() {
         <span>Customer Login</span>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="formInput">
+        <div className="form-input">
           <label htmlFor="">Email</label>
           <input {...register("email")} type="email" />
           {errors.email && <span>Field {errors.email.message}</span>}
         </div>
-        <div className="formInput">
+        <div className="form-input">
           <label htmlFor="">Password</label>
           <input {...register("password")} type="password" />
           {errors.password && <span>Field {errors.password.message}</span>}

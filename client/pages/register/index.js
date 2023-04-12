@@ -66,17 +66,17 @@ function Register() {
           <div className="titleForm">
             <span>Personal Profile</span>
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="">First Name</label>
             <input {...register("firstName")} />
             {errors.firstName && <span>Field {errors.firstName.message}</span>}
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="">Last Name</label>
             <input {...register("lastName")} />
             {errors.lastName && <span>Field {errors.lastName.message}</span>}
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="">Address</label>
             <input {...register("address")} />
           </div>
@@ -85,17 +85,17 @@ function Register() {
           <div className="titleForm">
             <span>Sign-In Information</span>
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="">Email</label>
             <input {...register("email")} type="email" />
             {errors.email && <span>Field {errors.email.message}</span>}
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="">Password</label>
             <input {...register("password")} type="password" />
             {errors.password && <span>Field {errors.password.message}</span>}
           </div>
-          <div className="formInput">
+          <div className="form-input">
             <label htmlFor="">Confirm Password</label>
             <input {...register("confirmPassword")} type="password" />
             {errors.confirmPassword && (

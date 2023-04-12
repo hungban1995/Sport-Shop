@@ -252,3 +252,16 @@ export const deleteOrder = async (req) => {
     return { error: error };
   }
 };
+
+//get by user
+export const getByUser = async (req) => {
+  try {
+    const decode = await verifyAccessToken(req);
+    if (decode.error) {
+      return { error: { status: 401, error: decode.error } };
+    }
+    return {};
+  } catch (error) {
+    return { error: error };
+  }
+};

@@ -158,7 +158,9 @@ function OrderS() {
                 })
               ) : (
                 <tr>
-                  <td>Order not found!</td>
+                  <td colSpan={8} style={{ textAlign: "center" }}>
+                    Order not found!
+                  </td>
                 </tr>
               )}
             </tbody>

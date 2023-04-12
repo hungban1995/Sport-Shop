@@ -2,7 +2,15 @@ import axios from "axios";
 import { BASE_URL } from "../constant";
 
 //get data
-export const getData = async (url, accessToken) => {
+export const getData = async (url) => {
+  let accessToken;
+  if (
+    typeof window !== "undefined" &&
+    localStorage &&
+    window.localStorage.getItem("accessToken")
+  ) {
+    accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  }
   return await axios({
     method: "GET",
     url: `${BASE_URL}/${url}`,
@@ -13,9 +21,15 @@ export const getData = async (url, accessToken) => {
 };
 //post data
 
-export const postData = async (url, post,accessToken) => {
-
-  // const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+export const postData = async (url, post) => {
+  let accessToken;
+  if (
+    typeof window !== "undefined" &&
+    localStorage &&
+    window.localStorage.getItem("accessToken")
+  ) {
+    accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  }
   return await axios({
     method: "POST",
     url: `${BASE_URL}/${url}`,
@@ -27,7 +41,14 @@ export const postData = async (url, post,accessToken) => {
 };
 //Patch data
 export const patchData = async (url, patch) => {
-  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  let accessToken;
+  if (
+    typeof window !== "undefined" &&
+    localStorage &&
+    window.localStorage.getItem("accessToken")
+  ) {
+    accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  }
   return await axios({
     method: "PATCH",
     url: `${BASE_URL}/${url}`,
@@ -40,7 +61,14 @@ export const patchData = async (url, patch) => {
 
 //Put data
 export const putData = async (url, put) => {
-  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  let accessToken;
+  if (
+    typeof window !== "undefined" &&
+    localStorage &&
+    window.localStorage.getItem("accessToken")
+  ) {
+    accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  }
   return await axios({
     method: "PUT",
     url: `${BASE_URL}/${url}`,
@@ -53,7 +81,14 @@ export const putData = async (url, put) => {
 
 //Delete data
 export const deleteData = async (url) => {
-  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  let accessToken;
+  if (
+    typeof window !== "undefined" &&
+    localStorage &&
+    window.localStorage.getItem("accessToken")
+  ) {
+    accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  }
   return await axios({
     method: "DELETE",
     url: `${BASE_URL}/${url}`,

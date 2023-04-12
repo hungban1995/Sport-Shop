@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,9 +6,11 @@ import Link from "next/link";
 import { getData, patchData, postData } from "../../libs/fetchData";
 import { getNotify } from "@/stores/notifyReducer";
 import { useDispatch } from "react-redux";
-import { generateRandomString, toSlug } from "@/libs/helperData";
 import { useRouter } from "next/router";
 import { IMG_URL } from "@/constant";
+import { PriceVnd, RenderAttribute, listStyle } from "@/libs/helperData";
+import { AiOutlineEye } from "react-icons/ai";
+import moment from "moment";
 const schema = yup.object({
   firstName: yup.string(),
   lastName: yup.string(),
@@ -27,58 +29,56 @@ function Profile() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [imagePath, setImagePath] = useState("");
-  const [avatar, setAvatar] = useState(null);
-  const handleChangeAvatar = (e) => {
-    const file = e.target?.files?.length > 0 ? e.target.files[0] : null;
-    if (file) {
-      setAvatar(file);
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePath(e.target.result);
-      };
-      reader.readAsDataURL(file);
+  const [orderByUser, setOrderByUser] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    if (window && window.localStorage.getItem("userId")) {
+      setCurrentUser(JSON.parse(localStorage.getItem("userId")));
     }
-  };
-  let userId;
-  if (
-    typeof window !== "undefined" &&
-    localStorage &&
-    localStorage.getItem("userId")
-  ) {
-    userId = JSON.parse(localStorage.getItem("userId"));
-  }
+  }, []);
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "all",
-    defaultValues: async () => {
-      if (userId) {
-        try {
-          const res = await getData("users/get-id/" + userId);
-          const values = res.data.user;
-          setAvatar(values.avatar);
-          setImagePath(`${IMG_URL}/${values.avatar}`);
-          if (values.birthday) {
-            const date = new Date(values.birthday);
-            values.birthday = date.toISOString().slice(0, 10);
-          }
-          return values;
-        } catch (error) {
-          console.log(error);
-        }
-      } else return {};
-    },
   });
 
+  //
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (currentUser) {
+          const res1 = await getData("users/get-id/" + currentUser);
+          setUser(res1.data.user);
+          const res2 = await getData("orders/by-user/" + currentUser);
+          setOrderByUser(res2.data.orders);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [currentUser]);
+
+  useEffect(() => {
+    const birthday = moment(user?.birthday).format("YYYY-MM-DD");
+    setValue("firstName", user?.firstName);
+    setValue("lastName", user?.lastName);
+    setValue("email", user?.email);
+    setValue("phoneNumber", user?.phoneNumber);
+    setValue("address", user?.address);
+    setValue("username", user?.username);
+    setValue("birthday", birthday);
+  }, [user, setValue]);
   const onSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append("image", avatar);
-    Object.keys(data).forEach((key) => formData.append(key, data[key]));
     try {
-      const res = await patchData("users/update/" + userId, formData);
+      const res = await patchData("users/update/" + currentUser, data);
       dispatch(
         getNotify({
           success: true,
@@ -95,6 +95,7 @@ function Profile() {
       );
     }
   };
+
   return (
     <div className="profile">
       <div className="title">
@@ -102,18 +103,16 @@ function Profile() {
       </div>
       <div className="bottom">
         <div className="left">
+          <h2>Personal Profile</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="titleForm">
-              <span>Personal Profile</span>
-            </div>
             <div className="upload">
-              <input
+              {/* <input
                 type="file"
                 name="avatar"
                 placeholder="file"
                 className="imageUpload"
                 onChange={handleChangeAvatar}
-              />
+              /> */}
               <img
                 src={
                   imagePath
@@ -124,14 +123,14 @@ function Profile() {
               />
             </div>
             <div className="formGroup">
-              <div className="formInput">
+              <div className="form-input">
                 <label htmlFor="">First Name</label>
                 <input {...register("firstName")} />
                 {errors.firstName && (
                   <span>Field {errors.firstName.message}</span>
                 )}
               </div>
-              <div className="formInput">
+              <div className="form-input">
                 <label htmlFor="">Last Name</label>
                 <input {...register("lastName")} />
                 {errors.lastName && (
@@ -140,17 +139,17 @@ function Profile() {
               </div>
             </div>
             <div className="formGroup">
-              <div className="formInput">
+              <div className="form-input">
                 <label htmlFor="">Phone</label>
                 <input type="string" {...register("phoneNumber")} />
               </div>
-              <div className="formInput">
+              <div className="form-input">
                 <label htmlFor="">Birth Day</label>
                 <input type="date" {...register("birthday")} />
               </div>
             </div>
             <div className="formGroup">
-              <div className="formInput">
+              <div className="form-input">
                 <label htmlFor="">Address</label>
                 <input {...register("address")} />
               </div>
@@ -160,11 +159,11 @@ function Profile() {
               <span>Sign-In Information</span>
             </div>
             <div className="formGroup">
-              <div className="formInput">
+              <div className="form-input">
                 <label htmlFor="">UserName</label>
                 <input {...register("username")} type="text" />
               </div>
-              <div className="formInput">
+              <div className="form-input">
                 <label htmlFor="">Email</label>
                 <input
                   readOnly
@@ -175,11 +174,11 @@ function Profile() {
               </div>
             </div>
             <div className="formGroup">
-              <div className="formInput">
+              <div className="form-input">
                 <label htmlFor="">Password</label>
                 <input {...register("password")} type="password" />
               </div>
-              <div className="formInput">
+              <div className="form-input">
                 <label htmlFor="">Confirm Password</label>
                 <input {...register("confirmPassword")} type="password" />
                 {errors.confirmPassword && (
@@ -190,7 +189,52 @@ function Profile() {
             <button type="submit">Update</button>
           </form>
         </div>
-        <div className="right">order</div>
+        <div className="right">
+          <h2>Danh sánh đơn hàng</h2>
+          <div className="cart-table">
+            <table
+              className="cart-table-show"
+              cellPadding={10}
+              cellSpacing={10}
+            >
+              <thead>
+                <tr>
+                  <th>Order Id</th>
+                  <th>Ngày đặt hàng</th>
+                  <th>Trạng Thái</th>
+                  <th>Phương thức thanh toán</th>
+                  <th>Tổng tiền</th>
+                  <th>Chi tiết</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orderByUser.length > 0 ? (
+                  orderByUser.map((item, idx) => {
+                    return (
+                      <tr key={idx}>
+                        <td>{item._id}</td>
+                        <td>{moment(item.createdAt).format("L")}</td>
+                        <td style={listStyle(item.status)}>{item.status}</td>
+                        <td>{item.paymentMethod}</td>
+                        <td>{PriceVnd(item.totalPrice)}</td>
+                        <td>
+                          <AiOutlineEye className="view-order" />
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan={5} style={{ textAlign: "center" }}>
+                      Your cart is empty. Go to{" "}
+                      <Link href={"/shop"}>Shop now</Link>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

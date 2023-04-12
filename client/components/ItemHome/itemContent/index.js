@@ -1,16 +1,16 @@
+import { IMG_URL } from "@/constant";
 import Link from "next/link";
-import React from "react";
-function ItemContent() {
+function ItemContent({ value, name }) {
   return (
     <div className="itemContent">
-      <Link href={"#"} style={{ textDecoration: "none" }}>
-        <img
-          src="https://cdn.pixabay.com/photo/2016/05/24/16/48/mountains-1412683__340.png"
-          alt="img"
-        />
+      <Link
+        href={`/${name}/${value?._id}`}
+        style={{ textDecoration: "none", color: "#666" }}
+      >
+        <img src={`${IMG_URL}/${value?.images[0]}`} alt="img" />
         <div className="content">
-          <h4>Title</h4>
-          <span>description</span>
+          <h4>{value?.title}</h4>
+          <span>{value?.description}</span>
         </div>
       </Link>
     </div>

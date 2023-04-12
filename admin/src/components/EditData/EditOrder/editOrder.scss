@@ -47,6 +47,9 @@
       &:focus {
         outline: none;
       }
+      option {
+        color: #333;
+      }
     }
     span {
       color: red;

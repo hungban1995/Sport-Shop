@@ -121,7 +121,7 @@ function CategoriesPost() {
               </tr>
             </thead>
             <tbody>
-              {categoriesPost ? (
+              {categoriesPost.length > 0 ? (
                 categoriesPost.map((item, idx) => {
                   return (
                     <tr key={idx}>
@@ -191,7 +191,9 @@ function CategoriesPost() {
                 })
               ) : (
                 <tr>
-                  <td>Category not found!</td>
+                  <td colSpan={5} style={{ textAlign: "center" }}>
+                    Category not found!
+                  </td>
                 </tr>
               )}
             </tbody>

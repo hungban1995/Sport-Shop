@@ -1,0 +1,56 @@
+@use "base";
+
+.blog {
+  .body {
+    display: flex;
+    .sidebarContainer {
+      width: 25%;
+      padding: 0 20px;
+    }
+    .blog-container {
+      width: 75%;
+      padding: 0 20px;
+      .sort {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px;
+      }
+    }
+  }
+}
+@media (max-width: base.$medium-screen) {
+  .shop {
+    .sidebarContainer {
+      display: none;
+    }
+    .productContainer {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      width: 100% !important;
+      .items {
+        display: grid;
+        grid-template-columns: auto auto !important;
+      }
+    }
+  }
+}
+
+@media (max-width: base.$small-screen) {
+  .shop {
+    .sidebarContainer {
+      display: none;
+    }
+    .productContainer {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      width: 100% !important;
+      .items {
+        display: flex !important;
+        justify-content: center;
+        flex-direction: column;
+      }
+    }
+  }
+}
