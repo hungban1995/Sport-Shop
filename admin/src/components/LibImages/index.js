@@ -55,6 +55,13 @@ function LibImages({
       }
     }
   };
+  
+  
+    useEffect(() => {
+    if (!style && setChooseMany) {
+      setChooseMany(selectedImages);
+    }
+  }, [style, selectedImages]);
   //select accept
   const handleAccept = () => {
     if (setChooseMany) {
