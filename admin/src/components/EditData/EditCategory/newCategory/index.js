@@ -9,8 +9,6 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { postData } from "../../../../libs/fetchData";
 import { getNotify } from "../../../../stores/notifyReducer";
-
-import { socket } from "../../../../libs/socket";
 import LibImages from "../../../LibImages";
 import { IMG_URL } from "../../../../constants";
 import { styleUpload } from "../../../../libs/dataRender";
@@ -45,7 +43,6 @@ function NewCategory() {
           message: res.data.success,
         })
       );
-      socket.emit("client-message", res.data.category);
       reset();
       setChooseSingle(null);
       dispatch(setBackground(null));

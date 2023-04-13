@@ -3,13 +3,16 @@ import mongoose from "mongoose";
 const notifySchema = new mongoose.Schema(
   {
     recipient: {
-      type: Array,
+      type: String,
       ref: "users",
-      required: true,
     },
     sender: {
       type: String,
       ref: "users",
+    },
+    ofId: {
+      type: String,
+      required: true,
     },
     message: {
       type: String,
@@ -22,6 +25,9 @@ const notifySchema = new mongoose.Schema(
     read: {
       type: Boolean,
       default: false,
+    },
+    details: {
+      type: Object,
     },
   },
   { timestamps: true }

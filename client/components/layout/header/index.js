@@ -30,6 +30,9 @@ function Header(props) {
   useEffect(() => {
     setUser(props.user);
   }, [props.user]);
+  const handleClick = () => {
+    setIsActive("");
+  };
   return (
     <div className="header">
       <div className="logo">
@@ -42,16 +45,24 @@ function Header(props) {
             <FiMenu /> Menu
           </span>
           <li>
-            <Link href="/">Home</Link>
+            <Link onClick={() => handleClick()} href="/">
+              Home
+            </Link>
           </li>
           <li>
-            <Link href="/shop">Shop</Link>
+            <Link onClick={() => handleClick()} href="/shop">
+              Shop
+            </Link>
           </li>
           <li>
-            <Link href="/blog">Blog</Link>
+            <Link onClick={() => handleClick()} href="/blog">
+              Blog
+            </Link>
           </li>
           <li>
-            <Link href="/info">Info</Link>
+            <Link onClick={() => handleClick()} href="/info">
+              Info
+            </Link>
           </li>
           <MdOutlineArrowBackIosNew
             className="icon"
@@ -67,7 +78,9 @@ function Header(props) {
           {user ? (
             <div className="user">
               <div className="action">
-                <Link href="/profile">Profile</Link>
+                <Link onClick={() => handleClick()} href="/profile">
+                  Profile
+                </Link>
               </div>
               <div
                 className="action"
@@ -85,10 +98,14 @@ function Header(props) {
           ) : (
             <div className="user">
               <div className="action">
-                <Link href="/login">Login</Link>
+                <Link onClick={() => handleClick()} href="/login">
+                  Login
+                </Link>
               </div>
               <div className="action">
-                <Link href="/register">Register</Link>
+                <Link onClick={() => handleClick()} href="/register">
+                  Register
+                </Link>
               </div>
             </div>
           )}
@@ -127,7 +144,9 @@ function Header(props) {
           {user ? (
             <div className="user">
               <div className="action">
-                <Link href="/profile">Profile</Link>
+                <Link onClick={() => handleClick()} href="/profile">
+                  Profile
+                </Link>
               </div>
               <div
                 className="action"
@@ -145,10 +164,14 @@ function Header(props) {
           ) : (
             <div className="user">
               <div className="action">
-                <Link href="/login">Login</Link>
+                <Link onClick={() => handleClick()} href="/login">
+                  Login
+                </Link>
               </div>
               <div className="action">
-                <Link href="/register">Register</Link>
+                <Link onClick={() => handleClick()} href="/register">
+                  Register
+                </Link>
               </div>
             </div>
           )}

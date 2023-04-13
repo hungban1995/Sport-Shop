@@ -2,20 +2,27 @@ import React, { useEffect, useRef, useState } from "react";
 import "./navbar.scss";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiBell } from "react-icons/fi";
-import { getData } from "../../../libs/fetchData";
+import { getData, postData } from "../../../libs/fetchData";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getRefresh } from "../../../stores/usersReducer";
 import { BLANK_AVT, IMG_URL } from "../../../constants";
 import { socket } from "../../../libs/socket";
-
+import { BiMessageCheck } from "react-icons/bi";
+import { GoPrimitiveDot } from "react-icons/go";
+import moment from "moment";
+import { getNotify } from "../../../stores/notifyReducer";
 function Navbar() {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [userId, setUserId] = useState(null);
   const [valueSearch, setValueSearch] = useState("");
-  const [severMessage, setServerMessage] = useState([]);
+  const [serverMessage, setServerMessage] = useState([]);
+  const [notifyMessage, setNotifyMessage] = useState(0);
+  const [refresh, setRefresh] = useState(0);
+  const [viewNotify, setViewNotify] = useState(false);
+  const [listId, setListId] = useState([]);
   const myRef = useRef();
   //cancel click
   useEffect(() => {
@@ -44,12 +51,48 @@ function Navbar() {
   useEffect(() => {}, [valueSearch]);
   //listen sever
   useEffect(() => {
-    const tmp = severMessage;
     socket.on("server-message", (data) => {
-      tmp.push(data);
-      setServerMessage([...tmp]);
+      setRefresh((f) => f + 1);
     });
   }, []);
+  useEffect(() => {
+    getData("notifications/")
+      .then((res) => setServerMessage(res.data.notifications))
+      .catch((err) => console.log(err));
+  }, [refresh]);
+
+  useEffect(() => {
+    let numUnread = 0;
+    serverMessage.forEach((item) => {
+      if (item.read === false) {
+        numUnread++;
+      }
+    });
+    setNotifyMessage(numUnread);
+  }, [serverMessage]);
+  //read notify
+  const handleReadNotify = async (id) => {
+    const dataUpdate = [id];
+    console.log(dataUpdate);
+    try {
+      const res = await postData("notifications/read", dataUpdate);
+      dispatch(
+        getNotify({
+          status: "success",
+          message: res.data.success,
+        })
+      );
+      setRefresh((f) => f + 1);
+    } catch (error) {
+      console.log(error);
+      dispatch(
+        getNotify({
+          status: "error",
+          message: error.response.data.error,
+        })
+      );
+    }
+  };
   return (
     <div className="navbar">
       <div className="wrapper">
@@ -62,9 +105,58 @@ function Navbar() {
           <AiOutlineSearch />
         </div>
         <div className="items">
-          <div className="item">
+          <div className="item" onClick={() => setViewNotify(!viewNotify)}>
             <FiBell className="icon" />
-            <div className="counter">{severMessage?.length}</div>
+            <div className="counter">{notifyMessage}</div>
+            <div
+              className={"list-message " + (viewNotify ? "" : "hide")}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="list-message-header">
+                <span>Notifications</span>{" "}
+                <span className="icon-message-header">
+                  <BiMessageCheck />
+                  <span className="text-read">Read All</span>
+                </span>
+              </div>
+              <div className="list-message-content">
+                {serverMessage &&
+                  serverMessage.map((item, idx) => {
+                    return (
+                      <div key={idx} className="item-message">
+                        <div className="item-message-img">
+                          <img
+                            src={
+                              item.sender
+                                ? `${IMG_URL}/${item.sender?.avatar}`
+                                : BLANK_AVT
+                            }
+                            alt="avatar"
+                          />
+                        </div>
+                        <div className="item-message-content">
+                          <p>
+                            {item.sender?.username || "some one"} has been{" "}
+                            {item.message}
+                          </p>
+                          <span>{moment(item.createdAt).fromNow()}</span>
+                        </div>
+                        <div className="item-message-action">
+                          <GoPrimitiveDot
+                            className={
+                              "icon-action " + (item?.read ? "read" : "")
+                            }
+                            onClick={() => handleReadNotify(item._id)}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+              <div className="list-message-bottom">
+                <span>View all activity</span>
+              </div>
+            </div>
           </div>
           <div className="item" onClick={() => setActive(!active)}>
             <span>{currentUser.username || "username"}</span>

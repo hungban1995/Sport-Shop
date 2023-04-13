@@ -7,6 +7,7 @@ import {
   renderTotal,
   toSlug,
 } from "@/libs/helperData";
+import { socket } from "@/libs/socket";
 import { getCartOrder, getResetCart } from "@/stores/cartReducer";
 import { getNotify } from "@/stores/notifyReducer";
 import { getOrder } from "@/stores/orderReducer";
@@ -115,6 +116,12 @@ function Checkout() {
         })
       );
       dispatch(getOrder(orderRes.data.order));
+      socket.emit("client-message", {
+        message: "create orders",
+        sender: user,
+        details: orderRes.data.order,
+        ofId: orderRes.data.order._id,
+      });
       localStorage.removeItem("cart");
       dispatch(getResetCart());
       router.push("/thankyou");

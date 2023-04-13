@@ -20,7 +20,7 @@ function Login() {
     try {
       dispatch(getLoading(true))
       const res = await postData("users/login", data);
-      dispatch(getLoading(true))
+      dispatch(getLoading(false))
 
       if (res.data.user.role !== 'admin') {
         dispatch(getNotify({
@@ -41,7 +41,7 @@ function Login() {
       localStorage.setItem('userId', JSON.stringify(res.data.user._id))
       dispatch(getRefresh())
     } catch (error) {
-      dispatch(getLoading(true))
+      dispatch(getLoading(false))
 
       dispatch(getNotify({
         status: 'error',
