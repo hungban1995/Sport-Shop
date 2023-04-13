@@ -38,6 +38,7 @@ function LibImages({
     getImages();
     setSelectedImages([]);
   }, [refreshImage, pageNum, pageSize]);
+
   //choseImg
   const handleChooseImg = (idx) => {
     const selectedImage = images[idx];
@@ -55,9 +56,11 @@ function LibImages({
       }
     }
   };
+
   
   
     useEffect(() => {
+
     if (!style && setChooseMany) {
       setChooseMany(selectedImages);
     }

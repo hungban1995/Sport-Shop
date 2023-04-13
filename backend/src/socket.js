@@ -1,4 +1,5 @@
 import { Server } from "socket.io";
+import Notify from "./api/models/notify.model";
 
 export const socketIo = (httpServer) => {
   const io = new Server(httpServer, {
@@ -11,10 +12,17 @@ export const socketIo = (httpServer) => {
   io.on("connection", (socket) => {
     console.log("Connected socket.");
     //listen client
-    socket.on("client-message", (data) => {
-      console.log("client Data.", data);
+    socket.on("client-message", async (data) => {
+      //save data
+      try {
+        await Notify.create(data);
+      } catch (error) {
+        return {
+          error: { status: 401, error: decode.error },
+        };
+      }
       //sent client
-      io.emit("server-message", data);
+      io.emit("server-message", "You have new message");
     });
     socket.on("disconnect", (data) => {
       io.emit("Socket disconnect");

@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { patchData } from "../../../libs/fetchData";
 import { getNotify } from "../../../stores/notifyReducer";
 import { status } from "../../../constants";
+import { socket } from "../../../libs/socket";
 const schema = yup.object().shape({
   firstName: yup.string().required(),
 });
@@ -34,7 +35,7 @@ function EditOrder() {
     setValue("phoneNumber", updateOrder?.order?.phoneNumber);
     setValue("status", updateOrder?.order?.status);
   }, [updateOrder, setValue]);
-  //create
+  //update
   const onSubmit = async (data) => {
     try {
       const res = await patchData(
@@ -48,6 +49,14 @@ function EditOrder() {
         })
       );
       reset();
+      socket.emit("client-message", {
+        message: "update orders",
+        sender: res.data.updateBy,
+        recipient: updateOrder?.order?.user,
+        details: res.data.order,
+        ofId: updateOrder?.order?._id,
+      });
+
       dispatch(setBackground(null));
       dispatch(getUpdateOrder(false));
       dispatch(refreshOrders());

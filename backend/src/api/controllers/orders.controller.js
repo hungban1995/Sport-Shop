@@ -80,13 +80,17 @@ export const getById = async (req, res, next) => {
 //update
 export const updateOrder = async (req, res, next) => {
   try {
-    const { error, id, valueUpdate } = await service.updateOrder(req);
+    const { error, id, valueUpdate, updateBy } = await service.updateOrder(req);
     if (error) {
       return next(error);
     }
-    await Orders.findByIdAndUpdate(id, valueUpdate, { new: true });
+    const updateOrder = await Orders.findByIdAndUpdate(id, valueUpdate, {
+      new: true,
+    });
     res.status(200).json({
       success: "Update order success",
+      order: updateOrder,
+      updateBy,
     });
   } catch (error) {
     next(error);

@@ -1,4 +1,5 @@
 .navbar {
+  box-sizing: border-box;
   height: 50px;
   border-bottom: 0.5px solid #c9c6c6;
   display: flex;
@@ -31,6 +32,105 @@
         margin-right: 20px;
         align-items: center;
         position: relative;
+        &:first-child {
+          .list-message {
+            cursor: default !important;
+            box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+            border: 1px solid rgba(201, 201, 201, 0.47);
+            z-index: 3;
+            right: 0;
+            background-color: #fff;
+            position: absolute;
+            width: 350px;
+            top: 110%;
+            border-radius: 5px;
+            .list-message-header {
+              font-size: 18px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 20px;
+              border-bottom: 1px solid rgba(128, 128, 128, 0.642);
+              .icon-message-header {
+                cursor: pointer;
+                padding: 5px;
+                position: relative;
+                .text-read {
+                  position: absolute;
+                  display: none;
+                  top: -40%;
+                  font-size: 13px;
+                  width: 55px;
+                  background-color: #9999999c;
+                  color: lightcoral;
+                  right: -50%;
+                  border-radius: 5%;
+                }
+                &:hover {
+                  .text-read {
+                    display: block;
+                  }
+                }
+              }
+            }
+            .list-message-content {
+              display: flex;
+              flex-direction: column;
+              height: 250px;
+              overflow: auto;
+              &::-webkit-scrollbar {
+                display: none;
+              }
+              .item-message {
+                padding: 5px;
+                border-bottom: 1px solid rgba(128, 128, 128, 0.642);
+                height: 50px;
+                display: flex;
+                justify-content: space-between;
+                .item-message-img {
+                  margin-right: 5px;
+                  overflow: hidden;
+                  img {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                  }
+                }
+                .item-message-content {
+                  display: flex;
+                  flex-direction: column;
+                }
+                .item-message-action {
+                  display: flex;
+                  align-items: center;
+                  font-size: 20px;
+                  .icon-action {
+                    color: rgb(95, 234, 95);
+                    padding: 5px;
+                    cursor: pointer;
+                    &.read {
+                      color: #c9c6c6;
+                    }
+                  }
+                }
+              }
+            }
+            .list-message-bottom {
+              border-top: 1px solid rgba(128, 128, 128, 0.642);
+              text-align: center;
+              padding: 20px;
+              span {
+                cursor: pointer;
+                border-bottom: 1px solid gray;
+              }
+            }
+          }
+          &.hide {
+            display: none;
+          }
+        }
+
         .icon {
           font-size: 20px;
         }

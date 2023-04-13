@@ -227,7 +227,7 @@ export const updateOrder = async (req) => {
         });
       }
     }
-    return { id, valueUpdate };
+    return { id, valueUpdate, updateBy: decode._id };
   } catch (error) {
     return { error: error };
   }

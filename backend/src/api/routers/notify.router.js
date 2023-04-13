@@ -3,8 +3,21 @@ import express from "express";
 
 const router = express.Router();
 const notifyRouter = async (app) => {
+  router.get("/", async (req, res, next) => {
+    try {
+      const notifications = await Notify.find({})
+        .sort({
+          createdAt: "desc",
+        })
+        .populate({ path: "sender", select: "role username avatar" });
+
+      res.status(200).json({ success: "success", notifications });
+    } catch (error) {
+      next(error);
+    }
+  });
   //lay theo danh sach
-  router.get("/:recipientId", async (req, res, next) => {
+  router.get("/recipient/:id", async (req, res, next) => {
     try {
       const { recipientId } = req.params;
       const notifications = await Notify.find({ recipient: recipientId }).sort({
@@ -16,16 +29,20 @@ const notifyRouter = async (app) => {
     }
   });
 
-  // Đánh dấu một thông báo đã đọc
-  router.patch("/:id/read", async (req, res, next) => {
+  // Đánh dấu thông báo đã đọc
+  router.post("/read", async (req, res, next) => {
     try {
-      const { id } = req.params;
-      const notify = await Notify.findByIdAndUpdate(
-        id,
-        { read: true },
-        { new: true }
-      );
-      res.status(200).json({ success: "Read", notify });
+      const listId = req.body;
+      let id;
+      for (id of listId) {
+        const checkRead = await Notify.findById(id);
+        await Notify.findByIdAndUpdate(
+          id,
+          { read: !checkRead.read },
+          { new: true }
+        );
+      }
+      res.status(200).json({ success: "Success" });
     } catch (error) {
       next(error);
     }
