@@ -57,7 +57,10 @@ function LibImages({
     }
   };
 
-  useEffect(() => {
+  
+  
+    useEffect(() => {
+
     if (!style && setChooseMany) {
       setChooseMany(selectedImages);
     }

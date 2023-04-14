@@ -1,6 +1,8 @@
 // import cors from "cors";
 // const corsConfig = (app) => {
+
 //   const whitelist = ["http://localhost:3000", "http://localhost:3050"];
+
 
 //   const corsOptionsDelegate = function (req, callback) {
 //     let corsOptions;
@@ -26,3 +28,4 @@ const corsConfig = (app) => {
 };
 
 export default corsConfig;
+
