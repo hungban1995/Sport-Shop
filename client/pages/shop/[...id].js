@@ -3,6 +3,7 @@ import { IMG_URL } from "@/constant";
 import { getData } from "@/libs/fetchData";
 import { PriceVnd } from "@/libs/helperData";
 import { addProductToCart, getShowCart } from "@/stores/cartReducer";
+import { getLoading } from "@/stores/notifyReducer";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -26,6 +27,7 @@ function Product(props) {
   const [active, setActive] = useState(0);
   const [quantity, setQuantity] = useState(1);
   useEffect(() => {
+    dispatch(getLoading(true));
     let productItem = props.product;
     setProduct(productItem);
     setImageView(productItem.images[0]);
@@ -34,6 +36,7 @@ function Product(props) {
       onSale: productItem.variants[0].onSale,
     });
     setVariantChoose(productItem.variants[0]);
+    dispatch(getLoading(false));
   }, [props.product]);
   //render star
   const RenderStart = (rate) => {

@@ -4,6 +4,7 @@ export const notifySlice = createSlice({
   initialState: {
     notify: null,
     alert: {},
+    loading: false,
   },
   reducers: {
     //get notify
@@ -20,8 +21,12 @@ export const notifySlice = createSlice({
     clearAlert: (state) => {
       state.notify = state;
     },
+    //get loading
+    getLoading: (state, action) => {
+      state.loading = action.payload;
+    },
   },
 });
-export const { getNotify, clearNotify, getAlert, clearAlert } =
+export const { getNotify, clearNotify, getAlert, clearAlert, getLoading } =
   notifySlice.actions;
 export default notifySlice.reducer;

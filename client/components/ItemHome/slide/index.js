@@ -3,11 +3,15 @@ import SlideItem from "../itemContent";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getData } from "@/libs/fetchData";
+import { useDispatch } from "react-redux";
+import { getLoading } from "@/stores/notifyReducer";
 function SlideImg() {
+  const dispatch = useDispatch();
   const [data, setData] = useState({ products: null, posts: null });
   useEffect(() => {
     const fetchData = async () => {
       try {
+        dispatch(getLoading(true));
         const res = await Promise.all([
           getData(
             "products/get-all?sort_by={%22sold%22:-1}&page=1&page_size=3"
@@ -15,9 +19,12 @@ function SlideImg() {
 
           getData(`posts/get-all?sort_by=%22-createdAt%22&page=1&page_size=2`),
         ]);
+        dispatch(getLoading(false));
+
         setData({ products: res[0].data.products, posts: res[1].data.posts });
       } catch (error) {
         console.log(error);
+        dispatch(getLoading(false));
       }
     };
     fetchData();

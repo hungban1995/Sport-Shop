@@ -3,16 +3,23 @@ import SidebarCat from "@/components/SidebarCat";
 import BreadCrumb from "@/components/bread-crumb";
 import ProductItem from "@/components/productItem";
 import { getData } from "@/libs/fetchData";
+import { getLoading } from "@/stores/notifyReducer";
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 function Product(props) {
+  const dispatch = useDispatch();
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   useEffect(() => {
+    dispatch(getLoading(true));
+
     setCategories(props.categories);
     setProducts(props.products);
+    dispatch(getLoading(false));
   }, [props]);
   return (
     <>
