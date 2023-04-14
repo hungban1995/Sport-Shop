@@ -2,27 +2,36 @@ import ItemContent from "@/components/ItemHome/itemContent";
 import NewProducts from "@/components/ItemHome/newProducts";
 import SlideImg from "@/components/ItemHome/slide";
 import { getData } from "@/libs/fetchData";
+import { getLoading } from "@/stores/notifyReducer";
 import Head from "next/head";
 import { useState } from "react";
 import { useEffect } from "react";
 import { BsStopwatch } from "react-icons/bs";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { TbExchange } from "react-icons/tb";
+import { useDispatch } from "react-redux";
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
     const getPosts = async () => {
       try {
+        dispatch(getLoading(true));
         const res = await getData(
           "posts/get-all?sort_by={%22createdAt%22:-1}&page=1&page_size=2"
         );
+        dispatch(getLoading(true));
+
         setPosts(res.data.posts);
       } catch (error) {
+        dispatch(getLoading(false));
+
         console.log(error);
       }
     };
     getPosts();
   }, []);
+
   return (
     <>
       <Head>
@@ -84,14 +93,17 @@ export default function Home() {
           </div>
 
           <div className="shortContent">
-            {posts &&
+            {posts.length > 0 ? (
               posts.map((item, idx) => {
                 return (
                   <div key={idx} className="item">
                     <ItemContent value={item} name={"blog"} />
                   </div>
                 );
-              })}
+              })
+            ) : (
+              <div>Posts not found!</div>
+            )}
           </div>
         </div>
       </div>

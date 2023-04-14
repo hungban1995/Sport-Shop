@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { postData } from "../../libs/fetchData";
-import { getNotify } from "@/stores/notifyReducer";
+import { getLoading, getNotify } from "@/stores/notifyReducer";
 import { useDispatch } from "react-redux";
 import { generateRandomString, toSlug } from "@/libs/helperData";
 import { useRouter } from "next/router";
@@ -38,7 +38,11 @@ function Register() {
     const newData = { ...data, username };
     console.log(newData);
     try {
+      dispatch(getLoading(true));
+
       const res = await postData("users/register", newData);
+      dispatch(getLoading(false));
+
       dispatch(
         getNotify({
           success: true,
@@ -47,6 +51,7 @@ function Register() {
       );
       router.push("/login");
     } catch (error) {
+      dispatch(getLoading(false));
       console.log(error);
       dispatch(
         getNotify({

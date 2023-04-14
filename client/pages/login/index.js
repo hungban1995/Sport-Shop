@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { postData } from "../../libs/fetchData";
-import { getNotify } from "@/stores/notifyReducer";
+import { getLoading, getNotify } from "@/stores/notifyReducer";
 import { useDispatch } from "react-redux";
 import { getCount } from "@/stores/userReducer";
 const schema = yup.object({
@@ -25,7 +25,10 @@ function Login() {
   });
   const onSubmit = async (data) => {
     try {
+      dispatch(getLoading(true));
       const res = await postData("users/login", data);
+      dispatch(getLoading(false));
+
       localStorage.setItem("accessToken", JSON.stringify(res.data.accessToken));
       localStorage.setItem(
         "refreshToken",
@@ -41,6 +44,8 @@ function Login() {
       dispatch(getCount());
       router.push("/");
     } catch (error) {
+      dispatch(getLoading(false));
+
       console.log(error);
       dispatch(
         getNotify({

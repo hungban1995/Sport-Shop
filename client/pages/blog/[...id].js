@@ -1,21 +1,28 @@
 import BreadCrumb from "@/components/bread-crumb";
 import { IMG_URL } from "@/constant";
 import { getData } from "@/libs/fetchData";
+import { getLoading } from "@/stores/notifyReducer";
 import moment from "moment";
 import Head from "next/head";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 function Post(props) {
+  const dispatch = useDispatch();
+
   const [post, setPost] = useState(null);
   useEffect(() => {
+    dispatch(getLoading(true));
     setPost(props.post);
+    dispatch(getLoading(false));
   }, [props.post]);
   //- render Content
   const RenderPostContent = () => {
     return { __html: post && post?.content };
   };
+  if (!post) return <div>Post not found!</div>;
   return (
     <>
       <Head>

@@ -7,6 +7,7 @@ import Footer from "./footer";
 import Header from "./header";
 import { getCartOrder } from "@/stores/cartReducer";
 import BackToTop from "../backToTop";
+import LoadingData from "../Loading";
 function Layout({ children }) {
   const [userId, setUserId] = useState(null);
   const [user, setUser] = useState(null);
@@ -65,6 +66,7 @@ function Layout({ children }) {
   return (
     <div className="layout">
       <Notify />
+      <LoadingData />
       <ShoppingCart />
       <Header user={user} />
       {children}

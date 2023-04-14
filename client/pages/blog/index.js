@@ -4,12 +4,15 @@ import BreadCrumb from "@/components/bread-crumb";
 import PostItem from "@/components/postsItem";
 import ProductItem from "@/components/productItem";
 import { getData } from "@/libs/fetchData";
+import { getLoading } from "@/stores/notifyReducer";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 function Product(props) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [posts, setProducts] = useState([]);
   const [categoriesPosts, setCategoriesPosts] = useState([]);
   const [pageNum, setPageNum] = useState(1);
@@ -18,15 +21,19 @@ function Product(props) {
   const [sort_by, set_sort_by] = useState("");
   const [filter_by, set_filter_by] = useState("");
   useEffect(() => {
+    dispatch(getLoading(true));
     setCategoriesPosts(props.categoriesPosts);
     setProducts(props.posts);
     setCount(props.count);
+    dispatch(getLoading(false));
   }, [props]);
   useEffect(() => {
     router.push(
       `?page=${pageNum}&page_size=${pageSize}&sort_by=${sort_by}&filter_by=${filter_by}`
     );
   }, [pageNum, pageSize, sort_by, filter_by]);
+  if (posts.length === 0) return <div>Posts not found!</div>;
+
   return (
     <>
       <Head>
