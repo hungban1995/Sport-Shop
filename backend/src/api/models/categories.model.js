@@ -5,6 +5,10 @@ const categoriesSchema = new mongoose.Schema(
     description: { type: String },
     image: { type: String },
     numProducts: { type: Number },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   { timestamps: true }
 );

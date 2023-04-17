@@ -64,6 +64,9 @@
           transform: translateX(-110%);
         }
       }
+      &.active {
+        background-color: red;
+      }
     }
   }
   &:hover {

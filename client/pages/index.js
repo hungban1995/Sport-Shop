@@ -21,7 +21,6 @@ export default function Home() {
           "posts/get-all?sort_by={%22createdAt%22:-1}&page=1&page_size=2"
         );
         dispatch(getLoading(true));
-
         setPosts(res.data.posts);
       } catch (error) {
         dispatch(getLoading(false));

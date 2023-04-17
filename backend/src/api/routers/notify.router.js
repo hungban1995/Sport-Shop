@@ -29,6 +29,19 @@ const notifyRouter = async (app) => {
     }
   });
 
+  //lay theo order id
+  router.get("/order/:id", async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const activity = await Notify.find({ ofId: id }).sort({
+        createdAt: "desc",
+      });
+      res.status(200).json({ success: "Lay thành công", activity });
+    } catch (error) {
+      next(error);
+    }
+  });
+
   // Đánh dấu thông báo đã đọc
   router.post("/read", async (req, res, next) => {
     try {

@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 function ProductItem({ product }) {
   const dispatch = useDispatch();
   const router = useRouter();
+  const [isWishList, setIsWishList] = useState(false);
   //render star
   const RenderStart = (rate) => {
     let ratingArr = [];
@@ -67,7 +68,10 @@ function ProductItem({ product }) {
         <img src={`${IMG_URL}/${product.images[0]}`} alt={product.title} />
       </div>
       <div className="action">
-        <div className="wishList">
+        <div
+          className={"wishList " + (isWishList ? "active" : "")}
+          onClick={() => setIsWishList(!isWishList)}
+        >
           <span className="des">Add to WithList</span>
           <CiHeart />
         </div>

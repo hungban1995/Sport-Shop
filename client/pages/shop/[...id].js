@@ -26,6 +26,26 @@ function Product(props) {
   const [variantChoose, setVariantChoose] = useState(null);
   const [active, setActive] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [isWishList, setIsWishList] = useState(false);
+  const [currentTab, setCurrentTab] = useState("1");
+  const [tabs, setTabs] = useState([
+    {
+      id: 1,
+      tabTitle: "Description",
+      title: "Description",
+      content: null,
+    },
+    {
+      id: 2,
+      tabTitle: "Review",
+      title: "Product review",
+      content: null,
+    },
+  ]);
+
+  const handleTabClick = (e) => {
+    setCurrentTab(e.target.id);
+  };
   useEffect(() => {
     dispatch(getLoading(true));
     let productItem = props.product;
@@ -36,6 +56,20 @@ function Product(props) {
       onSale: productItem.variants[0].onSale,
     });
     setVariantChoose(productItem.variants[0]);
+    setTabs([
+      {
+        id: 1,
+        tabTitle: "Description",
+        title: productItem?.description,
+        content: productItem?.content,
+      },
+      {
+        id: 2,
+        tabTitle: "Review",
+        title: "Product review",
+        content: productItem?.ratings,
+      },
+    ]);
     dispatch(getLoading(false));
   }, [props.product]);
   //render star
@@ -89,6 +123,9 @@ function Product(props) {
 
     router.push("/checkout");
   };
+  const RenderPostContent = () => {
+    return { __html: product && product?.content };
+  };
   return (
     <>
       <Head>
@@ -139,7 +176,10 @@ function Product(props) {
                 <span className="price-sale">{PriceVnd(priceView.onSale)}</span>{" "}
                 <span className="price-max">{PriceVnd(priceView.price)}</span>
               </div>
-              <div className="wish-list">
+              <div
+                className={"wish-list " + (isWishList ? "active" : "")}
+                onClick={() => setIsWishList(!isWishList)}
+              >
                 <span className="des">Add to WithList</span>
                 <CiHeart />
               </div>
@@ -223,7 +263,56 @@ function Product(props) {
             </div>
           </div>
         </div>
-        <div className="product-about">tag</div>
+        <div className="product-about">
+          <div className="tabs">
+            <button
+              id="1"
+              disabled={currentTab === "1"}
+              onClick={handleTabClick}
+            >
+              Description
+            </button>
+            <button
+              id="2"
+              disabled={currentTab === "2"}
+              onClick={handleTabClick}
+            >
+              Review
+            </button>
+          </div>
+          <div className="content">
+            <div>
+              {currentTab === "1" ? (
+                <div>
+                  <p
+                    style={{
+                      textAlign: "center",
+                      margin: "10px",
+                      fontWeight: "bold",
+                    }}
+                    className="title"
+                  >
+                    {product.description}
+                  </p>
+                  <div dangerouslySetInnerHTML={RenderPostContent()}></div>
+                </div>
+              ) : (
+                <div>
+                  <p className="title">Product review</p>
+                  <div className="list-rating">
+                    {product.ratings.length > 0 ? (
+                      product.ratings.map((rating, idx) => {
+                        return <div className="item-rating" key={idx}></div>;
+                      })
+                    ) : (
+                      <div>No reviews yet</div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

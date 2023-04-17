@@ -117,7 +117,7 @@ function Checkout() {
       );
       dispatch(getOrder(orderRes.data.order));
       socket.emit("client-message", {
-        message: "create orders",
+        message: "create order",
         sender: user,
         details: orderRes.data.order,
         ofId: orderRes.data.order._id,

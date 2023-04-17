@@ -3,6 +3,10 @@ const { Schema } = mongoose;
 
 const ProductsSchema = new Schema(
   {
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     title: { type: String, required: true },
     description: { type: String },
     content: { type: String },

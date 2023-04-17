@@ -3,6 +3,10 @@ const { Schema } = mongoose;
 
 const ProductVariantSchema = new Schema(
   {
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     ofProduct: { type: String, ref: "products" },
     attributes: { type: Array, default: [] },
     image: { type: String },
