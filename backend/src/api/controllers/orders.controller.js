@@ -147,6 +147,7 @@ export const getByUser = async (req, res, next) => {
     let orders = await Orders.find(
       { user: id },
       {
+        address: 1,
         user: 1,
         status: 1,
         paymentMethod: 1,

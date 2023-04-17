@@ -3,6 +3,10 @@ import * as yup from "yup";
 
 const usersSchema = new mongoose.Schema(
   {
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     email: {

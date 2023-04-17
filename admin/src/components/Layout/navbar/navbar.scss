@@ -38,11 +38,11 @@
             box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
             border: 1px solid rgba(201, 201, 201, 0.47);
             z-index: 3;
-            right: 0;
+            right: 0%;
             background-color: #fff;
             position: absolute;
             width: 350px;
-            top: 110%;
+            top: 150%;
             border-radius: 5px;
             .list-message-header {
               font-size: 18px;
@@ -87,6 +87,9 @@
                 height: 50px;
                 display: flex;
                 justify-content: space-between;
+                &:last-child {
+                  border-bottom: unset;
+                }
                 .item-message-img {
                   margin-right: 5px;
                   overflow: hidden;
@@ -120,9 +123,11 @@
               border-top: 1px solid rgba(128, 128, 128, 0.642);
               text-align: center;
               padding: 20px;
-              span {
-                cursor: pointer;
-                border-bottom: 1px solid gray;
+              .view-activity {
+                text-decoration: none;
+                &:hover {
+                  opacity: 0.8;
+                }
               }
             }
           }

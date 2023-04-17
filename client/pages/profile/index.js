@@ -11,6 +11,9 @@ import { IMG_URL } from "@/constant";
 import { PriceVnd, RenderAttribute, listStyle } from "@/libs/helperData";
 import { AiOutlineEye } from "react-icons/ai";
 import moment from "moment";
+import OrderDetail from "@/components/orderDetail";
+import { FiEdit } from "react-icons/fi";
+import OrderActivity from "@/components/ativityOrder";
 const schema = yup.object({
   firstName: yup.string(),
   lastName: yup.string(),
@@ -26,13 +29,13 @@ const schema = yup.object({
     .oneOf([yup.ref("password"), null], "Passwords does not match"),
 });
 function Profile() {
-  const router = useRouter();
   const dispatch = useDispatch();
   const [imagePath, setImagePath] = useState("");
   const [orderByUser, setOrderByUser] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
-
+  const [updateOrder, setUpdateOrder] = useState({ update: false, order: {} });
   const [user, setUser] = useState({});
+  const [orderId, setOrderId] = useState("");
 
   useEffect(() => {
     if (window && window.localStorage.getItem("userId")) {
@@ -101,7 +104,7 @@ function Profile() {
       <div className="title">
         <span>My Account</span>
       </div>
-      <div className="bottom">
+      <div className="body">
         <div className="left">
           <h2>Personal Profile</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -218,7 +221,16 @@ function Profile() {
                         <td>{item.paymentMethod}</td>
                         <td>{PriceVnd(item.totalPrice)}</td>
                         <td>
-                          <AiOutlineEye className="view-order" />
+                          <AiOutlineEye
+                            className="view-order"
+                            onClick={() => setOrderId(item._id)}
+                          />
+                          <FiEdit
+                            className="update-order"
+                            onClick={() => {
+                              setUpdateOrder({ update: true, order: item });
+                            }}
+                          />
                         </td>
                       </tr>
                     );
@@ -234,8 +246,10 @@ function Profile() {
               </tbody>
             </table>
           </div>
+          {orderId ? <OrderActivity orderId={orderId} /> : null}
         </div>
       </div>
+      <OrderDetail updateOrder={updateOrder} />
     </div>
   );
 }

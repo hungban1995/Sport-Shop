@@ -22,7 +22,6 @@ function Navbar() {
   const [notifyMessage, setNotifyMessage] = useState(0);
   const [refresh, setRefresh] = useState(0);
   const [viewNotify, setViewNotify] = useState(false);
-  const [listId, setListId] = useState([]);
   const myRef = useRef();
   //cancel click
   useEffect(() => {
@@ -73,15 +72,9 @@ function Navbar() {
   //read notify
   const handleReadNotify = async (id) => {
     const dataUpdate = [id];
-    console.log(dataUpdate);
     try {
-      const res = await postData("notifications/read", dataUpdate);
-      dispatch(
-        getNotify({
-          status: "success",
-          message: res.data.success,
-        })
-      );
+      await postData("notifications/read", dataUpdate);
+
       setRefresh((f) => f + 1);
     } catch (error) {
       console.log(error);
@@ -154,7 +147,9 @@ function Navbar() {
                   })}
               </div>
               <div className="list-message-bottom">
-                <span>View all activity</span>
+                <Link className="view-activity" to={"/activity"}>
+                  View all activity
+                </Link>
               </div>
             </div>
           </div>

@@ -8,6 +8,10 @@ const PostsSchema = new mongoose.Schema(
     images: { type: Array, default: [] },
     author: { type: String, ref: "users" },
     comment: { type: Array, default: [], ref: "postComment" },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   { timestamps: true }
 );

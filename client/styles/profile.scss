@@ -1,5 +1,4 @@
 @use "base";
-$small-screen: 767px;
 .profile {
   display: flex;
   flex-direction: column;
@@ -18,7 +17,7 @@ $small-screen: 767px;
       font-weight: bold;
     }
   }
-  .bottom {
+  .body {
     width: 100%;
     display: grid;
     grid-template-columns: 49% 49%;
@@ -124,7 +123,10 @@ $small-screen: 767px;
         font-weight: bold;
       }
       .cart-table {
+        width: 100%;
+        overflow: auto;
         margin-right: 20px;
+        max-height: 400px;
         .cart-table-show {
           width: 100%;
           border-collapse: collapse;
@@ -150,14 +152,26 @@ $small-screen: 767px;
               color: crimson;
             }
           }
+          .update-order {
+            cursor: pointer;
+            padding: 5px;
+            font-size: 26px;
+            &:hover {
+              color: crimson;
+            }
+          }
         }
+      }
+      .activity {
+        margin-top: 20px;
+        border: 1px solid rgba(128, 128, 128, 0.571);
       }
     }
   }
 }
 @media (max-width: base.$small-screen) {
   .profile {
-    .bottom {
+    .body {
       display: flex !important;
       flex-direction: column-reverse !important;
     }

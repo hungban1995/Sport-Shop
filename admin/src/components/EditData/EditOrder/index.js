@@ -50,7 +50,7 @@ function EditOrder() {
       );
       reset();
       socket.emit("client-message", {
-        message: "update orders",
+        message: "update order",
         sender: res.data.updateBy,
         recipient: updateOrder?.order?.user,
         details: res.data.order,

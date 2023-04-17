@@ -3,6 +3,10 @@ import { status, payment } from "../constants";
 
 const ordersSchema = new mongoose.Schema(
   {
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     address: { type: String, required: true },
