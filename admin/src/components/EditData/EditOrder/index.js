@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
-import "./editOrder.scss";
+import "./edit-order.scss";
 import { setBackground } from "../../../stores/themeWebReducer";
 
 import { getUpdateOrder, refreshOrders } from "../../../stores/ordersReducer";
@@ -71,7 +71,7 @@ function EditOrder() {
   };
   return (
     <div
-      className={"editOrder " + (updateOrder?.edit === true ? "active" : "")}
+      className={"edit-order " + (updateOrder?.edit === true ? "active" : "")}
     >
       <div className="header">
         <span>Order Edit</span>
@@ -84,7 +84,7 @@ function EditOrder() {
           }}
         />
       </div>
-      <form className="formCreate" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form-create" onSubmit={handleSubmit(onSubmit)}>
         {updateOrder?.order?.status === "WAITING" ? (
           <>
             <label>First Name</label>

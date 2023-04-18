@@ -103,15 +103,15 @@ function SinglePost() {
         <h1>Edit Post:</h1>
       </div>
       <div className="bottom">
-        <div className="imageUpload">
+        <div className="image-upload">
           <label>Image</label>
-          <div className="actionUpload" onClick={() => setActive(true)}>
+          <div className="action-upload" onClick={() => setActive(true)}>
             {chooseMany.length > 0 ? (
               chooseMany.map((item, idx) => {
                 return (
                   <div key={idx} style={{ display: "inline-flex" }}>
                     <img
-                      className="viewImg"
+                      className="view-image"
                       src={`${IMG_URL}/${item?.url}`}
                       alt=""
                     />
@@ -120,7 +120,7 @@ function SinglePost() {
               })
             ) : (
               <img
-                className="viewImg"
+                className="view-image"
                 src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
                 alt=""
               />

@@ -1,7 +1,6 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Loading from "../components/loading";
 import { listStyle, PriceVnd, renderNumber } from "../libs/dataRender";
 import { getData } from "../libs/fetchData";
 import './home.scss'
@@ -124,7 +123,7 @@ function Home() {
                 return (
                   <tr key={idx}>
                     <td>
-                      <span className="cellWithImg">
+                      <span className="cell-with-image">
                         <img
                           alt="img"
                           src={
@@ -132,7 +131,7 @@ function Home() {
                               ? `${IMG_URL}/${product.images[0]}`
                               : BLANK_IMG
                           }
-                          className="cellImg"
+                          className="cell-img"
                         />
                         {product.title}
                       </span>

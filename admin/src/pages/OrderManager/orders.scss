@@ -16,7 +16,7 @@
     .select {
       display: flex;
       align-items: center;
-      .selectDel {
+      .select-del {
         display: none;
         margin-right: 10px;
         padding: 5px;
@@ -38,7 +38,7 @@
     background: #fff;
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
     border-radius: 5px;
-    .tableData {
+    .table-data {
       position: relative;
       overflow-x: auto;
       width: 100%;
@@ -62,7 +62,7 @@
 
         .action {
           position: relative;
-          .editBtn {
+          .edit-button {
             padding: 3px;
             border-radius: 5px;
             color: darkblue;
@@ -73,7 +73,7 @@
               color: lightblue;
             }
           }
-          .deleteBtn {
+          .delete-button {
             padding: 3px;
 
             background-color: aliceblue;

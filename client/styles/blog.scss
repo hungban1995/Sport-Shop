@@ -18,30 +18,14 @@
     }
   }
 }
-@media (max-width: base.$medium-screen) {
-  .shop {
-    .sidebarContainer {
-      display: none;
-    }
-    .productContainer {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      width: 100% !important;
-      .items {
-        display: grid;
-        grid-template-columns: auto auto !important;
-      }
-    }
-  }
-}
 
 @media (max-width: base.$small-screen) {
-  .shop {
+  .blog {
     .sidebarContainer {
       display: none;
     }
-    .productContainer {
+    .blog-container {
+      padding: unset !important;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -50,6 +34,10 @@
         display: flex !important;
         justify-content: center;
         flex-direction: column;
+        .postItem {
+          display: flex !important;
+          flex-direction: column;
+        }
       }
     }
   }

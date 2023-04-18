@@ -60,7 +60,7 @@ $small-screen: 768px;
           margin-left: 10px;
         }
       }
-      .itemList {
+      .item-list {
         padding: 5px 0;
         .accordion {
           border-radius: 10px;
@@ -72,7 +72,7 @@ $small-screen: 768px;
           display: flex;
           width: 100%;
           position: relative;
-          .arrowIcon {
+          .arrow-icon {
             position: absolute;
             right: 0;
             height: 20px;
@@ -84,7 +84,7 @@ $small-screen: 768px;
           }
           &.active {
             background-color: #ece8ff;
-            .arrowIcon {
+            .arrow-icon {
               transform: rotate(90deg);
               position: absolute;
               right: 0;
@@ -109,7 +109,7 @@ $small-screen: 768px;
           overflow: hidden;
           background-color: rgb(231, 236, 241);
           border-radius: 5px;
-          .panelItem {
+          .panel-item {
             margin: 5px;
             padding: 5px;
             border-radius: 10px;
@@ -165,11 +165,11 @@ $small-screen: 768px;
     flex: unset;
     .center {
       .item,
-      .itemList {
+      .item-list {
         span {
           display: none;
         }
-        .arrowIcon {
+        .arrow-icon {
           display: none;
         }
       }

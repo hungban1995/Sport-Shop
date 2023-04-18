@@ -41,9 +41,6 @@ function Header(props) {
       </div>
       <div className={`list ${isActive}`}>
         <ul className={`menuList`}>
-          <span className="menuListTitle">
-            <FiMenu /> Menu
-          </span>
           <li>
             <Link onClick={() => handleClick()} href="/">
               Home
@@ -71,12 +68,9 @@ function Header(props) {
             }}
           />
         </ul>
-        <div className="menuUser">
-          <span className="menuListTitle">
-            <CiUser className="icon" /> User
-          </span>
+        <div className="menu-use-response">
           {user ? (
-            <div className="user">
+            <div className="user-response">
               <div className="action">
                 <Link onClick={() => handleClick()} href="/profile">
                   Profile
@@ -96,7 +90,7 @@ function Header(props) {
               </div>
             </div>
           ) : (
-            <div className="user">
+            <div className="user-response">
               <div className="action">
                 <Link onClick={() => handleClick()} href="/login">
                   Login

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BLANK_IMG, IMG_URL } from "../../constants/index";
 import moment from "moment";
-import "./postItem.scss";
+import "./post-item.scss";
 import { useDispatch } from "react-redux";
 import { getAlert } from "../../stores/notifyReducer";
 import AlertMessage from "../notifications/alert";
@@ -17,7 +17,7 @@ function PostItem(props) {
     return { __html: post && post.content };
   };
   return (
-    <div className="postItem">
+    <div className="post-item">
       <div className="left">
         <img
           alt="img"
@@ -27,12 +27,12 @@ function PostItem(props) {
         />
       </div>
       <div className="right">
-        <div className="headerPost">
-          <div className="titlePost">
+        <div className="header-post">
+          <div className="title-post">
             <p>{post?.title}</p>
             <span>{post?.author?.username}</span>
           </div>
-          <div className="infoPost">
+          <div className="info-post">
             <span>
               Create at: {moment(post?.createdAt).format("DD/MM/YYYY")}
             </span>
@@ -41,7 +41,7 @@ function PostItem(props) {
             </span>
           </div>
         </div>
-        <div className="contentPost">
+        <div className="content-post">
           <p className="description">{post?.description}</p>
           <div
             className="content"
@@ -59,7 +59,7 @@ function PostItem(props) {
             View and Edit
           </div>
           <div
-            className="deleteButton"
+            className="delete-button"
             onClick={() => {
               dispatch(
                 getAlert({

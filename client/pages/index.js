@@ -20,11 +20,10 @@ export default function Home() {
         const res = await getData(
           "posts/get-all?sort_by={%22createdAt%22:-1}&page=1&page_size=2"
         );
-        dispatch(getLoading(true));
+        dispatch(getLoading(false));
         setPosts(res.data.posts);
       } catch (error) {
         dispatch(getLoading(false));
-
         console.log(error);
       }
     };

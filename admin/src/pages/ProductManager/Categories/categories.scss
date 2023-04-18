@@ -35,7 +35,7 @@
     .select {
       display: flex;
       align-items: center;
-      .selectDel {
+      .select-del {
         display: none;
         margin-right: 10px;
         padding: 5px;
@@ -57,7 +57,7 @@
     background: #fff;
     border-radius: 5px;
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-    .tableData {
+    .table-data {
       position: relative;
       overflow-x: auto;
       width: 100%;
@@ -68,10 +68,10 @@
         max-height: 100%;
         border-collapse: collapse;
 
-        .cellWithImg {
+        .cell-with-image {
           display: flex;
           align-items: center;
-          .cellImg {
+          .cell-img {
             width: 35px;
             height: 35px;
             border-radius: 5px;
@@ -79,7 +79,7 @@
             margin-right: 10px;
           }
         }
-        .cellWithRole {
+        .cell-with-role {
           text-align: center;
           .admin {
             border-radius: 5px;
@@ -109,7 +109,7 @@
 
         .action {
           position: relative;
-          .editBtn {
+          .edit-button {
             padding: 3px;
             border-radius: 5px;
             color: darkblue;
@@ -120,7 +120,7 @@
               color: lightblue;
             }
           }
-          .deleteBtn {
+          .delete-button {
             padding: 3px;
 
             background-color: aliceblue;

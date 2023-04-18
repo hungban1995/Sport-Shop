@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     .item-message {
+      align-items: center;
       display: flex;
       margin-bottom: 10px;
       .item-message-img {
@@ -26,6 +27,14 @@
         }
       }
       .item-message-content {
+      }
+      .item-message-action {
+        margin: 10px;
+        cursor: pointer;
+        padding: 5px;
+        &:hover {
+          color: red;
+        }
       }
     }
   }

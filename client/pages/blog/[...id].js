@@ -14,9 +14,7 @@ function Post(props) {
 
   const [post, setPost] = useState(null);
   useEffect(() => {
-    dispatch(getLoading(true));
     setPost(props.post);
-    dispatch(getLoading(false));
   }, [props.post]);
   //- render Content
   const RenderPostContent = () => {

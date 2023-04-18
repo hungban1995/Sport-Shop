@@ -21,11 +21,9 @@ function Product(props) {
   const [sort_by, set_sort_by] = useState("");
   const [filter_by, set_filter_by] = useState("");
   useEffect(() => {
-    dispatch(getLoading(true));
     setCategoriesPosts(props.categoriesPosts);
     setProducts(props.posts);
     setCount(props.count);
-    dispatch(getLoading(false));
   }, [props]);
   useEffect(() => {
     router.push(

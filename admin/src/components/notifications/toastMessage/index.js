@@ -40,7 +40,7 @@ function ToastMessage() {
     }
   };
   return (
-    <div className={manyDel?.active ? "toastContainer" : "hidden"}>
+    <div className={manyDel?.active ? "toast-container" : "hidden"}>
       <div className="header">
         <span>{manyDel?.value?.header}</span>
         <AiOutlineClose

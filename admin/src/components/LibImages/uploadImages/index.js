@@ -45,12 +45,12 @@ function UploadImages({ multiple }) {
     }
   };
   return (
-    <div className="uploadImg">
-      <BiUpload className="iconUpload" />
+    <div className="upload-img">
+      <BiUpload className="icon-upload" />
       <input
         type="file"
         onChange={handleChange}
-        className="imgUpload"
+        className="img-upload"
         multiple={multiple}
       />
     </div>

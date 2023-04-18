@@ -5,7 +5,6 @@ import { PriceVnd } from "@/libs/helperData";
 import { addProductToCart, getShowCart } from "@/stores/cartReducer";
 import { getLoading } from "@/stores/notifyReducer";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import {
@@ -28,26 +27,11 @@ function Product(props) {
   const [quantity, setQuantity] = useState(1);
   const [isWishList, setIsWishList] = useState(false);
   const [currentTab, setCurrentTab] = useState("1");
-  const [tabs, setTabs] = useState([
-    {
-      id: 1,
-      tabTitle: "Description",
-      title: "Description",
-      content: null,
-    },
-    {
-      id: 2,
-      tabTitle: "Review",
-      title: "Product review",
-      content: null,
-    },
-  ]);
 
   const handleTabClick = (e) => {
     setCurrentTab(e.target.id);
   };
   useEffect(() => {
-    dispatch(getLoading(true));
     let productItem = props.product;
     setProduct(productItem);
     setImageView(productItem.images[0]);
@@ -56,21 +40,6 @@ function Product(props) {
       onSale: productItem.variants[0].onSale,
     });
     setVariantChoose(productItem.variants[0]);
-    setTabs([
-      {
-        id: 1,
-        tabTitle: "Description",
-        title: productItem?.description,
-        content: productItem?.content,
-      },
-      {
-        id: 2,
-        tabTitle: "Review",
-        title: "Product review",
-        content: productItem?.ratings,
-      },
-    ]);
-    dispatch(getLoading(false));
   }, [props.product]);
   //render star
   const RenderStart = (rate) => {
@@ -217,7 +186,7 @@ function Product(props) {
               </div>
               <div className="product-action">
                 <div className="product-action-cart">
-                  <div className="action-add">
+                  <div className="action-add-product">
                     <AiOutlineMinus
                       className={
                         "product-item_button " +
@@ -240,7 +209,10 @@ function Product(props) {
                       }
                     />
                   </div>
-                  <div className="button-add" onClick={() => handleAddToCart()}>
+                  <div
+                    className="button-add-product"
+                    onClick={() => handleAddToCart()}
+                  >
                     Add to cart
                   </div>
                 </div>
@@ -292,7 +264,7 @@ function Product(props) {
                     }}
                     className="title"
                   >
-                    {product.description}
+                    {product?.description}
                   </p>
                   <div dangerouslySetInnerHTML={RenderPostContent()}></div>
                 </div>
@@ -300,8 +272,8 @@ function Product(props) {
                 <div>
                   <p className="title">Product review</p>
                   <div className="list-rating">
-                    {product.ratings.length > 0 ? (
-                      product.ratings.map((rating, idx) => {
+                    {product?.ratings.length > 0 ? (
+                      product?.ratings.map((rating, idx) => {
                         return <div className="item-rating" key={idx}></div>;
                       })
                     ) : (

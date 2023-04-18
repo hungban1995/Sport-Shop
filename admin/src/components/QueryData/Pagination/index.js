@@ -73,7 +73,7 @@ function Pagination({ count, pageSize, pageNum, values }) {
         />
       </div>
       <div className="right">
-        <select name="pageSize" className="pageSize" onChange={handleChange}>
+        <select name="pageSize" className="page-size" onChange={handleChange}>
           {values &&
             values.map((item, idx) => {
               return (

@@ -67,7 +67,7 @@ function Users() {
                 </div>
                 <div className={"select"}>
                     <span
-                        className={"selectDel " + (isCheck.length > 0 ? "active" : "")}
+                        className={"select-del " + (isCheck.length > 0 ? "active" : "")}
                         onClick={() => {
                             dispatch(setBackground({ active: true, type: "manyDel" }));
                             dispatch(
@@ -95,7 +95,7 @@ function Users() {
                 </div>
             </div>
             <div className="body">
-                <div className="tableData">
+                <div className="table-data">
                     <table cellSpacing={10} cellPadding={10}>
                         <thead>
                             <tr>
@@ -126,24 +126,24 @@ function Users() {
                                             </td>
                                             <td>{user._id}</td>
                                             <td>
-                                                <span className='cellWithImg'><img
+                                                <span className='cell-with-image'><img
                                                     alt="avatar"
                                                     src={
                                                         user.avatar
                                                             ? `${IMG_URL}/${user.avatar}`
                                                             : BLANK_AVT
                                                     }
-                                                    className="cellImg"
+                                                    className="cell-img"
                                                 /> {user.username} </span>
                                             </td>
                                             <td>{moment(user.birthday).format("L") || null}</td>
                                             <td>{user.email}</td>
                                             <td>{user.fullName}</td>
-                                            <td className='cellWithRole'><span className={`${user.role}`}>{user.role}</span></td>
+                                            <td className='cell-with-role'><span className={`${user.role}`}>{user.role}</span></td>
                                             <td className="action">
                                                 <AlertDel idItem={user._id} />
                                                 <span
-                                                    className="editBtn"
+                                                    className="edit-button"
                                                     onClick={() => {
                                                         navigate(user._id);
                                                     }}
@@ -152,7 +152,7 @@ function Users() {
                                                 </span>
                                                 {"  "}
                                                 <span
-                                                    className="deleteBtn"
+                                                    className="delete-button"
                                                     onClick={() => {
                                                         dispatch(
                                                             getAlert({

@@ -133,8 +133,8 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
   }, [varUpdate, setValue]);
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="formVariants">
-        <div className="formGroup">
+      <form onSubmit={handleSubmit(onSubmit)} className="form-variants">
+        <div className="form-group">
           <div className="form-input">
             <label htmlFor="sku">Mã Sản Phẩm</label>
             <input type="text" id="sku" {...register("sku")} />
@@ -145,7 +145,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
             {errors.inStock && <span>Field {errors.inStock.message}</span>}
           </div>
         </div>
-        <div className="formGroup">
+        <div className="form-group">
           <div className="form-input">
             <label>Price</label>
             <input {...register("price")} type="number" step="1000" />
@@ -157,18 +157,18 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
             {errors.onSale && <span>Field {errors.onSale.message}</span>}
           </div>
         </div>
-        <div className="imageUpload">
+        <div className="image-upload">
           <label>Image</label>
-          <div className="actionUpload" onClick={() => setActive(true)}>
+          <div className="action-upload" onClick={() => setActive(true)}>
             {chooseSingle ? (
               <img
-                className="viewImg"
+                className="view-image"
                 src={`${IMG_URL}/${chooseSingle}`}
                 alt=""
               />
             ) : (
               <img
-                className="viewImg"
+                className="view-image"
                 src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
                 alt=""
               />
@@ -182,7 +182,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
           />
         </div>
         {fields.map((field, index) => (
-          <div key={field.id} className="formSelect">
+          <div key={field.id} className="form-select">
             <label>{`Thuộc tính ${index + 1}`}</label>
             <input
               placeholder="Tên (Ví dụ:Màu sắc, kích thước...)"
@@ -199,7 +199,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
 
             <span
               type="button"
-              className="actionRemove"
+              className="action-remove"
               onClick={() => remove(index)}
             >
               <IoIosRemove /> Xóa
@@ -208,7 +208,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
         ))}
         <span
           type="button"
-          className="actionAdd"
+          className="action-add"
           onClick={() => append({ k: "", v: "" })}
         >
           <IoIosAdd /> Thêm
@@ -230,7 +230,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
           <button type="submit">Create</button>
         )}
       </form>
-      <table className="tbVariant">
+      <table className="table-variants">
         <thead>
           <tr>
             <th>Ma san pham</th>
@@ -264,7 +264,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
                   <td className="action">
                     <AlertDel idItem={variant._id} idDel={setIdDel} />
                     <span
-                      className="editBtn"
+                      className="edit-button"
                       onClick={() => {
                         setVarUpdate({
                           edit: true,
@@ -276,7 +276,7 @@ function CreateVariants({ setVariantId, variantId, currentVariants }) {
                       Sửa
                     </span>{" "}
                     <span
-                      className="deleteBtn"
+                      className="delete-button"
                       onClick={() => {
                         dispatch(
                           getAlert({

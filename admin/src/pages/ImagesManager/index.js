@@ -32,7 +32,7 @@ function ImagesManager() {
         </div>
         <div className={"select"}>
           <span
-            className={"selectDel " + (chooseMany.length > 0 ? "active" : "")}
+            className={"select-del " + (chooseMany.length > 0 ? "active" : "")}
             onClick={() => {
               handleDelImg();
             }}
