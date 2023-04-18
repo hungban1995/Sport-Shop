@@ -35,7 +35,7 @@ $small-screen: 768px;
     .select {
       display: flex;
       align-items: center;
-      .selectDel {
+      .select-del {
         display: none;
         margin-right: 10px;
         padding: 5px;
@@ -58,7 +58,7 @@ $small-screen: 768px;
     border-radius: 5px;
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
     width: 100%;
-    .tableData {
+    .table-data {
       position: relative;
       overflow-x: auto;
       width: 100%;
@@ -68,10 +68,10 @@ $small-screen: 768px;
         width: 100%;
         max-height: 100%;
         border-collapse: collapse;
-        .cellWithImg {
+        .cell-with-image {
           display: flex;
           align-items: center;
-          .cellImg {
+          .cell-img {
             width: 32px;
             height: 32px;
             border-radius: 50%;
@@ -79,7 +79,7 @@ $small-screen: 768px;
             margin-right: 20px;
           }
         }
-        .cellWithRole {
+        .cell-with-role {
           text-align: center;
           .admin {
             border-radius: 5px;
@@ -109,7 +109,7 @@ $small-screen: 768px;
 
         .action {
           position: relative;
-          .editBtn {
+          .edit-button {
             padding: 3px;
             border-radius: 5px;
             color: darkblue;
@@ -120,7 +120,7 @@ $small-screen: 768px;
               color: lightblue;
             }
           }
-          .deleteBtn {
+          .delete-button {
             padding: 3px;
 
             background-color: aliceblue;

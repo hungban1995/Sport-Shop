@@ -1,8 +1,8 @@
 $small-screen: 768px;
-.containerImg {
+.container-images {
   display: none;
   text-align: right;
-  .actionUpload {
+  .action-upload {
     margin-top: 10px;
     .actionUpload__accept {
       margin: 5px;
@@ -21,15 +21,15 @@ $small-screen: 768px;
       border: 0.1px solid rgb(247, 74, 74);
     }
   }
-  .libImages {
+  .lib-images {
     display: grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
     padding: 5px;
     background: #fff;
-    .hideImg {
+    .hide-images {
       filter: blur(2px);
     }
-    .imageItem {
+    .image-item {
       padding: 10px;
       transition: all 0.3s ease-in;
       img {
@@ -41,7 +41,7 @@ $small-screen: 768px;
         box-sizing: border-box;
         transition: all 0.3s ease-out;
 
-        &.hideImg {
+        &.hide-images {
           filter: blur(3px);
         }
       }
@@ -56,7 +56,7 @@ $small-screen: 768px;
   }
 }
 @media (max-width: $small-screen) {
-  .libImages {
+  .lib-images {
     display: grid;
     grid-template-columns: 50% 50%;
     padding: 5px;

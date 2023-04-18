@@ -78,7 +78,7 @@ function CategoriesPost() {
         </div>
         <div className={"select"}>
           <span
-            className={"selectDel " + (isCheck.length > 0 ? "active" : "")}
+            className={"select-del " + (isCheck.length > 0 ? "active" : "")}
             onClick={() => {
               dispatch(setBackground({ active: true, type: "manyDel" }));
               dispatch(
@@ -107,7 +107,7 @@ function CategoriesPost() {
       </div>
 
       <div className="body">
-        <div className="tableData">
+        <div className="table-data">
           <table cellSpacing={10} cellPadding={10}>
             <thead>
               <tr>
@@ -135,7 +135,7 @@ function CategoriesPost() {
                       </td>
                       <td>{item._id}</td>
                       <td>
-                        <span className="cellWithImg">
+                        <span className="cell-with-image">
                           <img
                             alt="img"
                             src={
@@ -143,7 +143,7 @@ function CategoriesPost() {
                                 ? `${IMG_URL}/${item.image}`
                                 : BLANK_IMG
                             }
-                            className="cellImg"
+                            className="cell-img"
                           />
                           {item.title}
                         </span>
@@ -153,7 +153,7 @@ function CategoriesPost() {
                       <td className="action">
                         <AlertDel idItem={item._id} />
                         <span
-                          className="editBtn"
+                          className="edit-button"
                           onClick={() => {
                             dispatch(
                               setBackground({
@@ -170,7 +170,7 @@ function CategoriesPost() {
                         </span>
                         {"  "}
                         <span
-                          className="deleteBtn"
+                          className="delete-button"
                           onClick={() => {
                             dispatch(
                               getAlert({

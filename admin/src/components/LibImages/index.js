@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./libImages.scss";
+import "./lib-images.scss";
 import { getData } from "../../libs/fetchData";
 import { IMG_URL } from "../../constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,10 +57,7 @@ function LibImages({
     }
   };
 
-  
-  
-    useEffect(() => {
-
+  useEffect(() => {
     if (!style && setChooseMany) {
       setChooseMany(selectedImages);
     }
@@ -74,9 +71,12 @@ function LibImages({
   };
 
   return (
-    <div className={"containerImg " + (active ? "active" : "")} style={style}>
+    <div
+      className={"container-images " + (active ? "active" : "")}
+      style={style}
+    >
       {style ? (
-        <div className="actionUpload">
+        <div className="action-upload">
           <span className="actionUpload__accept" onClick={() => handleAccept()}>
             Chọn ảnh
           </span>
@@ -91,8 +91,8 @@ function LibImages({
           </span>
         </div>
       ) : null}
-      <div className="libImages">
-        <div className={selectedImages.length > 0 ? "hideImg" : ""}>
+      <div className="lib-images">
+        <div className={selectedImages.length > 0 ? "hide-images" : ""}>
           <UploadImages multiple={true} />
         </div>
         {images.length > 0 ? (
@@ -102,14 +102,14 @@ function LibImages({
                 key={idx}
                 className={
                   selectedImages.includes(item)
-                    ? "imageItem active"
-                    : "imageItem"
+                    ? "image-item active"
+                    : "image-item"
                 }
               >
                 <img
                   className={
                     selectedImages.length > 0 && !selectedImages.includes(item)
-                      ? "hideImg"
+                      ? "hide-images"
                       : ""
                   }
                   src={`${IMG_URL}/${item.url}`}

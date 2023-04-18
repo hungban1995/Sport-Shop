@@ -25,7 +25,7 @@ function OrderActivity({ orderId }) {
 
   useEffect(() => {
     const statusByDate = {};
-    activityOrder.forEach((item, idx) => {
+    activityOrder.forEach((item) => {
       const date = moment(item.createdAt).format("L");
       if (!statusByDate[date]) {
         statusByDate[date] = [];
@@ -38,26 +38,51 @@ function OrderActivity({ orderId }) {
     });
     setLogItem(statusByDate);
   }, [activityOrder]);
-
+  const renderColor = (value) => {
+    let style = { backgroundColor: "" };
+    if (value.status === "WAITING") {
+      style.backgroundColor = "#FACC15";
+    }
+    if (value.status === "SHIPPING") {
+      style.backgroundColor = "#60A5FA";
+    }
+    if (value.status === "SUCCESS") {
+      style.backgroundColor = "#34D399";
+    }
+    if (value.status === "CANCEL") {
+      style.backgroundColor = "#F87171";
+    }
+    return style;
+  };
   return (
     <div className="activity">
-      <h2>Order Activity</h2>
+      <h2 className="activity-title">Order Activity</h2>
       <div className="detail-activity">
         {Object.keys(logItem).map((date, index) => {
           return (
-            <div key={index}>
+            <div key={index} className="activity-item">
               <p>{date}</p>
-              <div>
-                {logItem[date].map((item, idx) => {
-                  return (
-                    <p key={idx}>
-                      <span>{item.time} </span>
+              {logItem[date].map((item, idx) => {
+                return (
+                  <div className="log-item" key={idx}>
+                    <div className="log-item-media">
+                      <div
+                        className="log-point"
+                        style={renderColor(item)}
+                      ></div>
+                      <div
+                        className="log-time-line"
+                        style={renderColor(item)}
+                      ></div>
+                    </div>
+                    <div className="log-item-content">
+                      <p>{item.time} </p>
                       <span>{item.message} </span>
                       <span>status {item.status}</span>
-                    </p>
-                  );
-                })}
-              </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           );
         })}

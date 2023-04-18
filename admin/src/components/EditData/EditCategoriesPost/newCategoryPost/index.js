@@ -62,7 +62,7 @@ function NewCategoryPost() {
     }
   };
   return (
-    <div className={"newCat " + (createCatPost ? "active" : "")}>
+    <div className={"new-cat " + (createCatPost ? "active" : "")}>
       <div className="header">
         <span>Create Category</span>
         <AiOutlineClose
@@ -76,18 +76,18 @@ function NewCategoryPost() {
           }}
         />
       </div>
-      <div className="imageUpload">
+      <div className="image-upload">
         <label>Image</label>
-        <div className="actionUpload" onClick={() => setActive(true)}>
+        <div className="action-upload" onClick={() => setActive(true)}>
           {chooseSingle ? (
             <img
-              className="viewImg"
+              className="view-image"
               src={`${IMG_URL}/${chooseSingle}`}
               alt=""
             />
           ) : (
             <img
-              className="viewImg"
+              className="view-image"
               src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
               alt=""
             />
@@ -100,7 +100,7 @@ function NewCategoryPost() {
           setActive={setActive}
         />
       </div>
-      <form className="formCreate" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form-create" onSubmit={handleSubmit(onSubmit)}>
         <label>Title</label>
         <input {...register("title")} />
         {errors.title && <span>Field {errors.title.message}</span>}

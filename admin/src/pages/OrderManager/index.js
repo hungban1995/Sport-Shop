@@ -65,7 +65,7 @@ function OrderS() {
         <span>Danh sách đơn hàng:</span>
         <div className={"select"}>
           <span
-            className={"selectDel " + (isCheck.length > 0 ? "active" : "")}
+            className={"select-del " + (isCheck.length > 0 ? "active" : "")}
             onClick={() => {
               dispatch(setBackground({ active: true, type: "manyDel" }));
               dispatch(
@@ -93,7 +93,7 @@ function OrderS() {
         </div>
       </div>
       <div className="body">
-        <div className="tableData">
+        <div className="table-data">
           <table cellSpacing={10} cellPadding={10}>
             <thead>
               <tr>
@@ -131,7 +131,7 @@ function OrderS() {
                       <td className="action">
                         <AlertDel idItem={order._id} />
                         <span
-                          className="editBtn"
+                          className="edit-button"
                           onClick={() => {
                             navigate(order._id);
                           }}
@@ -140,7 +140,7 @@ function OrderS() {
                         </span>
                         {"  "}
                         <span
-                          className="deleteBtn"
+                          className="delete-button"
                           onClick={() => {
                             dispatch(
                               getAlert({

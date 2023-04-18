@@ -1,4 +1,4 @@
-.newCat {
+.new-cat {
   position: fixed;
   display: none;
   top: 10%;
@@ -35,15 +35,15 @@
   &.active {
     display: block;
   }
-  .imageUpload {
+  .image-upload {
     text-align: center;
     width: 100%;
     position: relative;
-    .actionUpload {
+    .action-upload {
       padding: 5px;
       background-color: white;
       cursor: pointer;
-      .viewImg {
+      .view-image {
         width: 100px;
         height: 100px;
         border-radius: 5px;
@@ -51,7 +51,7 @@
       }
     }
   }
-  .formCreate {
+  .form-create {
     display: flex;
     flex-direction: column;
     padding: 15px;

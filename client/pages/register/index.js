@@ -39,10 +39,8 @@ function Register() {
     console.log(newData);
     try {
       dispatch(getLoading(true));
-
       const res = await postData("users/register", newData);
       dispatch(getLoading(false));
-
       dispatch(
         getNotify({
           success: true,

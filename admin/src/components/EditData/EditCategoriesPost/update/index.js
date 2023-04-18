@@ -68,7 +68,7 @@ function UpdateCategoryPost() {
     }
   };
   return (
-    <div className={"updateCat " + (catPostEdit?.edit ? "active" : "")}>
+    <div className={"update-cat " + (catPostEdit?.edit ? "active" : "")}>
       <div className="header">
         <span>Edit Category</span>
         <AiOutlineClose
@@ -80,18 +80,18 @@ function UpdateCategoryPost() {
           }}
         />
       </div>
-      <div className="imageUpload">
+      <div className="image-upload">
         <label>Image</label>
-        <div className="actionUpload" onClick={() => setActive(true)}>
+        <div className="action-upload" onClick={() => setActive(true)}>
           {chooseSingle ? (
             <img
-              className="viewImg"
+              className="view-image"
               src={`${IMG_URL}/${chooseSingle}`}
               alt=""
             />
           ) : (
             <img
-              className="viewImg"
+              className="view-image"
               src="https://t3.ftcdn.net/jpg/02/18/21/86/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg"
               alt=""
             />
@@ -104,7 +104,7 @@ function UpdateCategoryPost() {
           setActive={setActive}
         />
       </div>
-      <form className="formUpdate" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form-update" onSubmit={handleSubmit(onSubmit)}>
         <label>Title</label>
         <input {...register("title")} />
         {errors.title && <span>Field {errors.title.message}</span>}

@@ -106,7 +106,7 @@ function Products() {
         </div>
         <div className={"select"}>
           <span
-            className={"selectDel " + (isCheck.length > 0 ? "active" : "")}
+            className={"select-del " + (isCheck.length > 0 ? "active" : "")}
             onClick={() => {
               dispatch(setBackground({ active: true, type: "manyDel" }));
               dispatch(
@@ -134,7 +134,7 @@ function Products() {
         </div>
       </div>
       <div className="body">
-        <div className="tableData">
+        <div className="table-data">
           <table cellSpacing={5} cellPadding={5}>
             <thead>
               <tr>
@@ -166,7 +166,7 @@ function Products() {
                       </td>
                       <td>{product._id}</td>
                       <td>
-                        <span className="cellWithImg">
+                        <span className="cell-with-image">
                           <img
                             alt="img"
                             src={
@@ -174,7 +174,7 @@ function Products() {
                                 ? `${IMG_URL}/${product.images[0]}`
                                 : BLANK_IMG
                             }
-                            className="cellImg"
+                            className="cell-img"
                           />
                           {product.title}
                         </span>
@@ -195,7 +195,7 @@ function Products() {
                       <td className="action">
                         <AlertDel idItem={product._id} />
                         <span
-                          className="editBtn"
+                          className="edit-button"
                           onClick={() => {
                             navigate(product._id);
                           }}
@@ -204,7 +204,7 @@ function Products() {
                         </span>
                         {"  "}
                         <span
-                          className="deleteBtn"
+                          className="delete-button"
                           onClick={() => {
                             dispatch(
                               getAlert({

@@ -5,7 +5,7 @@ function FilterData({ valueFilter, typeFilter, set_filter_by }) {
     set_filter_by(e.target.value);
   };
   return (
-    <select name="filterBy" className="filterBy" onChange={handleChange}>
+    <select name="filter-by" className="filter-by" onChange={handleChange}>
       <option value="">Lọc theo: {typeFilter.name} </option>
       {valueFilter &&
         valueFilter.map((item, idx) => {

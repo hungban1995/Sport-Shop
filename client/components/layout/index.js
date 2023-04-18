@@ -8,13 +8,30 @@ import Header from "./header";
 import { getCartOrder } from "@/stores/cartReducer";
 import BackToTop from "../backToTop";
 import LoadingData from "../Loading";
+import { Router } from "next/router";
+import { getLoading } from "@/stores/notifyReducer";
 function Layout({ children }) {
   const [userId, setUserId] = useState(null);
   const [user, setUser] = useState(null);
   const { count } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(false);
-
+  useEffect(() => {
+    const start = () => {
+      dispatch(getLoading(true));
+    };
+    const end = () => {
+      dispatch(getLoading(false));
+    };
+    Router.events.on("routeChangeStart", start);
+    Router.events.on("routeChangeComplete", end);
+    Router.events.on("routeChangeError", end);
+    return () => {
+      Router.events.off("routeChangeStart", start);
+      Router.events.off("routeChangeComplete", end);
+      Router.events.off("routeChangeError", end);
+    };
+  }, []);
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.pageYOffset > 300) {

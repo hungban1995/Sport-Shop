@@ -1,0 +1,44 @@
+.activity {
+  margin: 10px;
+  border: 1px solid rgba(128, 128, 128, 0.453);
+  border-radius: 5px;
+  .activity-title {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #00000045;
+  }
+  .detail-activity {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .activity-item {
+      p {
+        color: #666;
+        font-size: 22px;
+      }
+      .log-item {
+        margin: 5px;
+        display: flex;
+        height: 50px;
+        .log-item-media {
+          display: flex;
+          flex-direction: column;
+          margin-right: 20px;
+          align-items: center;
+          justify-content: center;
+          .log-point {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+          }
+          .log-time-line {
+            margin-top: 5px;
+            width: 5px;
+            height: 100%;
+          }
+        }
+        .log-item-content {
+        }
+      }
+    }
+  }
+}

@@ -52,7 +52,7 @@ function SideBar() {
               <span>Người Dùng</span>
             </div>
           </Link>
-          <div className="itemList">
+          <div className="item-list">
             <button
               className={"accordion " + (isActiveProduct ? "active" : "")}
               onClick={() => {
@@ -60,14 +60,14 @@ function SideBar() {
                 setIsActiveProduct(!isActiveProduct);
               }}
             >
-              <MdOutlineKeyboardArrowRight className="arrowIcon" />
+              <MdOutlineKeyboardArrowRight className="arrow-icon" />
               <BsBoxSeam className="icon" />
               <span>Sản Phẩm</span>
             </button>
             <div className={"panel " + (isActiveProduct ? "active" : "")}>
               <Link to="categories">
                 <div
-                  className={"panelItem " + (activeTab === 3 && "active")}
+                  className={"panel-item " + (activeTab === 3 && "active")}
                   onClick={() => {
                     setActiveTab(3);
                   }}
@@ -78,7 +78,7 @@ function SideBar() {
               </Link>
               <Link to="products">
                 <div
-                  className={"panelItem " + (activeTab === 4 && "active")}
+                  className={"panel-item " + (activeTab === 4 && "active")}
                   onClick={() => {
                     setActiveTab(4);
                   }}
@@ -89,7 +89,7 @@ function SideBar() {
               </Link>
             </div>
           </div>
-          <div className="itemList">
+          <div className="item-list">
             <button
               className={"accordion " + (isActivePost ? "active" : "")}
               onClick={() => {
@@ -97,14 +97,14 @@ function SideBar() {
                 setActiveTab(0);
               }}
             >
-              <MdOutlineKeyboardArrowRight className="arrowIcon" />
+              <MdOutlineKeyboardArrowRight className="arrow-icon" />
               <MdPostAdd className="icon" />
               <span>Bài Đăng</span>
             </button>
             <div className={"panel " + (isActivePost ? "active" : "")}>
               <Link to="categories-posts">
                 <div
-                  className={"panelItem " + (activeTab === 5 && "active")}
+                  className={"panel-item " + (activeTab === 5 && "active")}
                   onClick={() => {
                     setActiveTab(5);
                   }}
@@ -115,7 +115,7 @@ function SideBar() {
               </Link>
               <Link to="posts">
                 <div
-                  className={"panelItem " + (activeTab === 6 && "active")}
+                  className={"panel-item " + (activeTab === 6 && "active")}
                   onClick={() => {
                     setActiveTab(6);
                   }}

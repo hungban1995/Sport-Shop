@@ -40,17 +40,17 @@
     margin: 20px;
     .left {
       .formCreateProduct {
-        .imageUpload {
+        .image-upload {
           flex: 1;
           text-align: center;
           width: 100%;
           position: relative;
           z-index: 11;
-          .actionUpload {
+          .action-upload {
             padding: 5px;
             background-color: white;
             cursor: pointer;
-            .viewImg {
+            .view-image {
               padding: 5px;
               width: 100px;
               height: 100px;

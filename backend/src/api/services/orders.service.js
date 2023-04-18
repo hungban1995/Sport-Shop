@@ -197,16 +197,15 @@ export const updateOrder = async (req) => {
     //     1         -1     0          +1
     //      1        0         0         0
     if (order.status === "WAITING" && valueUpdate.status === "SHIPPING") {
-      let i;
-      let newInStock;
-      let newSold;
-      for (i of order.orderDetail) {
-        const updateVariant = await ProductsVariants.findById(i.productVariant);
-        newInStock = updateVariant.inStock - i.quantity;
-        newSold = updateVariant.sold + i.quantity;
-        await ProductsVariants.findByIdAndUpdate(i.productVariant, {
+      let item;
+      let newInStock = 0;
+      for (item of order.orderDetail) {
+        const updateVariant = await ProductsVariants.findById(
+          item.productVariant
+        );
+        newInStock = updateVariant.inStock - item.quantity;
+        await ProductsVariants.findByIdAndUpdate(item.productVariant, {
           inStock: newInStock,
-          sold: newSold,
         });
       }
     }
@@ -214,15 +213,27 @@ export const updateOrder = async (req) => {
       (order.status === "SHIPPING" && valueUpdate.status === "CANCEL") ||
       valueUpdate.status === "WAITING"
     ) {
-      let i;
-      let newInStock;
-      let newSold;
-      for (i of order.orderDetail) {
-        const updateVariant = await ProductsVariants.findById(i.productVariant);
-        newInStock = updateVariant.inStock + i.quantity;
-        newSold = updateVariant.sold - i.quantity;
-        await ProductsVariants.findByIdAndUpdate(i.productVariant, {
+      let item;
+      let newInStock = 0;
+      for (item of order.orderDetail) {
+        const updateVariant = await ProductsVariants.findById(
+          item.productVariant
+        );
+        newInStock = updateVariant.inStock + item.quantity;
+        await ProductsVariants.findByIdAndUpdate(item.productVariant, {
           inStock: newInStock,
+        });
+      }
+    }
+    if (valueUpdate.status === "SUCCESS") {
+      let item;
+      let newSold = 0;
+      for (item of order.orderDetail) {
+        const updateVariant = await ProductsVariants.findById(
+          item.productVariant
+        );
+        newSold = updateVariant.sold + item.quantity;
+        await ProductsVariants.findByIdAndUpdate(item.productVariant, {
           sold: newSold,
         });
       }

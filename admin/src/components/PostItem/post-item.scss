@@ -1,4 +1,4 @@
-.postItem {
+.post-item {
   display: grid;
   grid-template-columns: 29% 69%;
   column-gap: 2%;
@@ -22,22 +22,22 @@
   .right {
     margin: 10px;
     max-height: 100%;
-    .headerPost {
+    .header-post {
       padding: 10px;
       display: flex;
       justify-content: space-between;
-      .titlePost {
+      .title-post {
         p {
           font-size: 24px;
           font-weight: bold;
         }
       }
-      .infoPost {
+      .info-post {
         display: flex;
         flex-direction: column;
       }
     }
-    .contentPost {
+    .content-post {
       .description {
         font-weight: bold;
       }
@@ -63,7 +63,7 @@
           color: lightblue;
         }
       }
-      .deleteButton {
+      .delete-button {
         background-color: aliceblue;
         padding: 2px 5px;
         border-radius: 5px;

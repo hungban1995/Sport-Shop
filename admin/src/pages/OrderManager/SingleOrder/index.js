@@ -59,7 +59,7 @@ function SingleOrder() {
             order?.status === "SHIPPING" || order?.status === "WAITING"
               ? () => {
                   dispatch(getUpdateOrder({ edit: true, order: order }));
-                  dispatch(setBackground({ active: true, type: "editOrder" }));
+                  dispatch(setBackground({ active: true, type: "edit-order" }));
                 }
               : undefined
           }

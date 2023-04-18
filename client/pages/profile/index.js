@@ -125,7 +125,7 @@ function Profile() {
                 alt="upload"
               />
             </div>
-            <div className="formGroup">
+            <div className="form-group">
               <div className="form-input">
                 <label htmlFor="">First Name</label>
                 <input {...register("firstName")} />
@@ -141,7 +141,7 @@ function Profile() {
                 )}
               </div>
             </div>
-            <div className="formGroup">
+            <div className="form-group">
               <div className="form-input">
                 <label htmlFor="">Phone</label>
                 <input type="string" {...register("phoneNumber")} />
@@ -151,7 +151,7 @@ function Profile() {
                 <input type="date" {...register("birthday")} />
               </div>
             </div>
-            <div className="formGroup">
+            <div className="form-group">
               <div className="form-input">
                 <label htmlFor="">Address</label>
                 <input {...register("address")} />
@@ -161,7 +161,7 @@ function Profile() {
             <div className="titleForm">
               <span>Sign-In Information</span>
             </div>
-            <div className="formGroup">
+            <div className="form-group">
               <div className="form-input">
                 <label htmlFor="">UserName</label>
                 <input {...register("username")} type="text" />
@@ -176,7 +176,7 @@ function Profile() {
                 />
               </div>
             </div>
-            <div className="formGroup">
+            <div className="form-group">
               <div className="form-input">
                 <label htmlFor="">Password</label>
                 <input {...register("password")} type="password" />

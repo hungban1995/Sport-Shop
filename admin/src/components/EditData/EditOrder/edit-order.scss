@@ -1,4 +1,4 @@
-.editOrder {
+.edit-order {
   position: fixed;
   display: none;
   top: 10%;
@@ -35,7 +35,7 @@
   &.active {
     display: block;
   }
-  .formCreate {
+  .form-create {
     display: flex;
     flex-direction: column;
     padding: 15px;

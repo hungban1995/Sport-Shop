@@ -47,7 +47,7 @@
         display: none;
       }
     }
-    .menuUser {
+    .menu-use-response {
       display: none;
     }
   }
@@ -204,20 +204,44 @@
           display: block;
         }
       }
-      .menuUser {
-        padding: 10px;
+      .menu-use-response {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
         display: flex;
-        flex-direction: column;
-        span {
+        .user-response {
           display: flex;
-          align-items: center;
-        }
-        .action {
-          padding: 10px;
-          margin: 0 20px;
-          font-size: 16px;
-          a {
-            text-decoration: none;
+          width: 100%;
+          .action {
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid rgba(128, 128, 128, 0.512);
+            flex: 1;
+            text-align: center;
+
+            &:first-child {
+              background-color: white;
+              a {
+                padding: 10px;
+                text-decoration: none;
+                color: #000;
+              }
+              &:hover {
+                background-color: orange;
+              }
+            }
+            &:last-child {
+              background-color: black;
+              a {
+                padding: 10px;
+                text-decoration: none;
+                color: white;
+              }
+              &:hover {
+                background-color: orange;
+              }
+            }
           }
         }
       }

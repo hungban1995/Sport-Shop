@@ -5,7 +5,7 @@ function SortData({ valueSort, set_sort_by }) {
     set_sort_by(e.target.value);
   };
   return (
-    <select name="sortBy" className="sortBy" onChange={handleChange}>
+    <select name="sort-by" className="sort-by" onChange={handleChange}>
       <option value="">Sắp xếp:</option>
       {valueSort &&
         valueSort.map((value, idx) => {
