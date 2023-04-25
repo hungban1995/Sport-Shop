@@ -1,3 +1,5 @@
+import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+
 export const toSlug = (str) => {
   str = str.toLowerCase();
   str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -64,4 +66,19 @@ export const listStyle = (value, bg) => {
   const { color, bgColor } = styles[value] || {};
   const backgroundColor = bg ? bgColor : "#fff";
   return { color, fontWeight: "bold", backgroundColor };
+};
+
+//render star
+export const RenderStar = (value) => {
+  let star;
+
+  Number.isInteger(value) ? (star = value) : (star = Math.ceil(value));
+  const starArray = [1, 2, 3, 4, 5];
+  return starArray.map((idx) => {
+    return (
+      <span key={idx}>
+        {idx < star ? <BsStarFill /> : idx > star ? <BsStar /> : <BsStarHalf />}
+      </span>
+    );
+  });
 };

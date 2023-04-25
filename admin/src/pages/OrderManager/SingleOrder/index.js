@@ -93,7 +93,7 @@ function SingleOrder() {
                         </li>
                         <li>
                           <span>
-                            {item.nameProduct}{" "}
+                            {item.product.title}{" "}
                             <ul>
                               {item.productVariant.attributes.map((atb, i) => {
                                 return (

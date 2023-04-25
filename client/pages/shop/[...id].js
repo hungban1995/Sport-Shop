@@ -1,9 +1,9 @@
+import Rating from "@/components/RatingProduct";
 import BreadCrumb from "@/components/bread-crumb";
 import { IMG_URL } from "@/constant";
 import { getData } from "@/libs/fetchData";
-import { PriceVnd } from "@/libs/helperData";
+import { PriceVnd, RenderStar } from "@/libs/helperData";
 import { addProductToCart, getShowCart } from "@/stores/cartReducer";
-import { getLoading } from "@/stores/notifyReducer";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -41,23 +41,7 @@ function Product(props) {
     });
     setVariantChoose(productItem.variants[0]);
   }, [props.product]);
-  //render star
-  const RenderStart = (rate) => {
-    let ratingArr = [];
-    rate?.map((item) => ratingArr.push(item.rating));
-    let average = 0;
-    if (ratingArr.length > 0) {
-      average = ratingArr.reduce((a, b) => a + b, 0) / ratingArr.length;
-    }
-    const star = [1, 2, 3, 4, 5];
-    return star.map((idx) => {
-      return (
-        <div key={idx}>
-          {idx <= average ? <AiFillStar /> : <AiOutlineStar />}
-        </div>
-      );
-    });
-  };
+
   //render attribute
   const renderAttribute = (attributes) => {
     return attributes.map((atb, idx) => {
@@ -73,7 +57,7 @@ function Product(props) {
   //add to cart
   const handleAddToCart = () => {
     const itemCart = {
-      nameProduct: product.title,
+      product: product._id,
       productVariant: variantChoose,
       quantity: quantity,
     };
@@ -83,7 +67,7 @@ function Product(props) {
   //buy now
   const handleBuyNow = () => {
     const itemCart = {
-      nameProduct: product.title,
+      product: product,
       productVariant: variantChoose,
       quantity: quantity,
     };
@@ -136,9 +120,13 @@ function Product(props) {
             <div className="product-info__header">
               <h2 className="product-info-name">{product?.title}</h2>
               <div className="product-info-rating">
-                {RenderStart(product?.ratings)}{" "}
+                <div className="product-info-rating__number">
+                  <span className="view-star">{product?.star}</span>
+                  {RenderStar(product?.star)}
+                </div>
                 <span className="product-info-rating__text">
-                  {product?.ratings > 0 ? product?.ratings.length : "No"} review
+                  {product?.ratings.length > 0 ? product?.ratings.length : "No"}{" "}
+                  review
                 </span>
               </div>
               <div className="product-info-price">
@@ -253,36 +241,25 @@ function Product(props) {
             </button>
           </div>
           <div className="content">
-            <div>
-              {currentTab === "1" ? (
-                <div>
-                  <p
-                    style={{
-                      textAlign: "center",
-                      margin: "10px",
-                      fontWeight: "bold",
-                    }}
-                    className="title"
-                  >
-                    {product?.description}
-                  </p>
-                  <div dangerouslySetInnerHTML={RenderPostContent()}></div>
+            {currentTab === "1" ? (
+              <div>
+                <p className="title-content">{product?.description}</p>
+                <div dangerouslySetInnerHTML={RenderPostContent()}></div>
+              </div>
+            ) : (
+              <div>
+                <p className="title-content">Customer review</p>
+                <div className="list-rating">
+                  {product?.ratings.length > 0 ? (
+                    product?.ratings.map((rating, idx) => {
+                      return <Rating key={idx} rating={rating} />;
+                    })
+                  ) : (
+                    <div>No reviews yet</div>
+                  )}
                 </div>
-              ) : (
-                <div>
-                  <p className="title">Product review</p>
-                  <div className="list-rating">
-                    {product?.ratings.length > 0 ? (
-                      product?.ratings.map((rating, idx) => {
-                        return <div className="item-rating" key={idx}></div>;
-                      })
-                    ) : (
-                      <div>No reviews yet</div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -84,7 +84,7 @@ function Cart() {
                             />
                             <ul className="cell-item-content">
                               <span className="cell-name">
-                                {item.nameProduct}
+                                {item.product.title}
                               </span>
                               {RenderAttribute(item.productVariant.attributes)}
                             </ul>

@@ -20,14 +20,31 @@ const ProductsSchema = new Schema(
     },
     ratings: [
       {
-        user: { type: String, ref: "users" },
-        rating: { type: Number },
+        user: { type: String, required: true, ref: "users" },
+        rating: { type: Number, required: true },
         comment: { type: String },
+        orderId: { type: String, required: true },
+        createData: { type: Date, default: Date.now() },
       },
     ],
   },
   { timestamps: true }
 );
+// Virtuals
+ProductsSchema.virtual("star").get(function () {
+  let star = 0;
+  let sum = 0;
+  let ratings = [];
+  if (this.ratings) {
+    ratings = this.ratings;
+  }
+  ratings.forEach((item) => {
+    sum += item.rating;
+  });
+  star = sum / ratings.length;
+  return star;
+});
+ProductsSchema.set("toJSON", { virtuals: true });
 const Products =
   mongoose.models.products || mongoose.model("products", ProductsSchema);
 

@@ -10,9 +10,9 @@ const productsRouter = async (app) => {
 
   router.delete("/delete/:id", controller.deleteProduct); //delete product
 
-  router.post("/ratings/:id", controller.createRating); //create product
+  router.post("/ratings/:id", controller.createRating); //create rating product
 
-  router.put("/ratings/:id", controller.updateRating); //update rating
+  // router.put("/ratings/:id", controller.updateRating); //update rating
 
   return app.use("/api/products", router);
 };

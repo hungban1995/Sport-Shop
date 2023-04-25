@@ -1,5 +1,5 @@
 import { IMG_URL } from "@/constant";
-import { PriceVnd } from "@/libs/helperData";
+import { PriceVnd, RenderStar } from "@/libs/helperData";
 import { addProductToCart, getShowCart } from "@/stores/cartReducer";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -13,23 +13,6 @@ function ProductItem({ product }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const [isWishList, setIsWishList] = useState(false);
-  //render star
-  const RenderStart = (rate) => {
-    let ratingArr = [];
-    rate?.map((item) => ratingArr.push(item.rating));
-    let average = 0;
-    if (ratingArr.length > 0) {
-      average = ratingArr.reduce((a, b) => a + b, 0) / ratingArr.length;
-    }
-    const star = [1, 2, 3, 4, 5];
-    return star.map((idx) => {
-      return (
-        <div key={idx}>
-          {idx <= average ? <AiFillStar /> : <AiOutlineStar />}
-        </div>
-      );
-    });
-  };
 
   //render price
   const renderPrice = (value) => {
@@ -51,7 +34,7 @@ function ProductItem({ product }) {
   //add to cart
   const handleAddToCart = (product) => {
     const itemCart = {
-      nameProduct: product.title,
+      product: product,
       productVariant: product.variants[0],
       quantity: 1,
     };
@@ -91,7 +74,7 @@ function ProductItem({ product }) {
         )}
       </div>
       <div className="product_item_content">
-        <div className="itemRating">{RenderStart(product.ratings)}</div>
+        <div className="itemRating">{RenderStar(product.star)}</div>
         <div className="itemTitle">{product?.title}</div>
         <div className="itemPrice">{renderPrice(product?.variants)}</div>
       </div>

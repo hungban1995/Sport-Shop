@@ -2,15 +2,18 @@ import axios from "axios";
 import { BASE_URL } from "../constants";
 
 //get data
-export const getData = async (url) => {
+export const getData = async (url, controller) => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
-  return await axios({
-    method: "GET",
-    url: `${BASE_URL}/${url}`,
-    headers: {
-      Authorization: accessToken,
+  return await axios(
+    {
+      method: "GET",
+      url: `${BASE_URL}/${url}`,
+      headers: {
+        Authorization: accessToken,
+      },
     },
-  });
+    { signal: controller }
+  );
 };
 //post data
 export const postData = async (url, post) => {

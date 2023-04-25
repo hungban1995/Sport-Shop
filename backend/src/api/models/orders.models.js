@@ -14,7 +14,7 @@ const ordersSchema = new mongoose.Schema(
     phoneNumber: { type: String, required: true },
     orderDetail: [
       {
-        nameProduct: String,
+        product: { type: String, required: true, ref: "products" },
         productVariant: {
           required: true,
           type: mongoose.Schema.Types.ObjectId,

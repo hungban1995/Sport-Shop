@@ -21,7 +21,7 @@ export const createOrder = async (req) => {
         return {
           error: {
             status: 400,
-            error: `Product ${item.nameProduct} with variant was deleted or does not exist`,
+            error: `Product with variant was deleted or does not exist`,
           },
         };
       }
@@ -29,7 +29,7 @@ export const createOrder = async (req) => {
         return {
           error: {
             status: 400,
-            error: `Product ${item.nameProduct} with variant is out stock`,
+            error: `Product with variant is out stock`,
           },
         };
       }
@@ -37,7 +37,7 @@ export const createOrder = async (req) => {
         return {
           error: {
             status: 400,
-            error: `Product ${item.nameProduct} with variant is is not enough`,
+            error: `Product with variant is is not enough`,
           },
         };
       }
@@ -88,6 +88,10 @@ export const getById = async (req) => {
       .populate({
         path: "user",
         select: "username",
+      })
+      .populate({
+        path: "orderDetail.product",
+        select: "title",
       });
     if (!order) {
       return { error: { status: 404, error: "Not have a order" } };

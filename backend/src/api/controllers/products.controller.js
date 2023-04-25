@@ -86,7 +86,9 @@ export const getById = async (req, res, next) => {
     const { id } = req.params;
     const product = await Products.findById(id, { __v: 0 })
       .populate({ path: "category", select: "title" })
-      .populate({ path: "variants", select: "-createdAt -updatedAt -__v" });
+      .populate({ path: "variants", select: "-createdAt -updatedAt -__v" })
+      .populate({ path: "ratings.user", select: "username avatar" });
+
     if (!product) {
       return next({ status: 404, error: "No product found" });
     }
@@ -158,49 +160,42 @@ export const deleteProduct = async (req, res, next) => {
 //create rating
 export const createRating = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const product = await Products.findById(id);
-    if (!product) {
-      return next({
-        status: 404,
-        error: "Product not found",
-      });
+    const { error, product } = await service.createRating(req);
+    if (error) {
+      return next(error);
     }
-    const { user, rating, comment } = req.body;
-    product.ratings.push({ user, rating, comment });
-    await product.save();
-
     res.status(201).json({
       success: "New rating added successfully",
+      product,
     });
   } catch (error) {
     next(error);
   }
 };
-//update rating
-export const updateRating = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const { user, rating, comment } = req.body;
+// //update rating
+// export const updateRating = async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const { rating, comment } = req.body;
 
-    const updatedProduct = await Products.findByIdAndUpdate(
-      id,
-      { $push: { ratings: { user, rating, comment } } },
-      { new: true }
-    );
+//     const updatedProduct = await Products.findByIdAndUpdate(
+//       id,
+//       { $push: { ratings: { rating, comment } } },
+//       { new: true }
+//     );
 
-    if (!updatedProduct) {
-      return next({
-        status: 404,
-        error: "Product not found",
-      });
-    }
+//     if (!updatedProduct) {
+//       return next({
+//         status: 404,
+//         error: "Product not found",
+//       });
+//     }
 
-    res.status(200).json({
-      success: "Rating update successfully",
-      product: updatedProduct,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+//     res.status(200).json({
+//       success: "Rating update successfully",
+//       product: updatedProduct,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };

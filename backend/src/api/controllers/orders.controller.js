@@ -46,6 +46,10 @@ export const getAll = async (req, res, next) => {
         path: "user",
         select: "username",
       })
+      .populate({
+        path: "orderDetail.product",
+        select: "title",
+      })
       .skip((page - 1) * page_size)
       .limit(page_size)
       .sort(valueSort);
@@ -165,6 +169,10 @@ export const getByUser = async (req, res, next) => {
       .populate({
         path: "user",
         select: "username",
+      })
+      .populate({
+        path: "orderDetail.product",
+        select: "title",
       });
     res.status(200).json({
       success: "Get order success",

@@ -46,10 +46,13 @@ function SinglePost() {
   });
   //setDefault Value
   useEffect(() => {
+    let controller = new AbortController();
+
     const getPostData = async () => {
       try {
-        const res = await getData(`posts/get-id/${id}`);
+        const res = await getData(`posts/get-id/${id}`, controller.signal);
         const { title, description, images, content, category } = res.data.post;
+        controller = null;
         setValue("title", title);
         setValue("description", description);
         setTextValue(content);
@@ -65,6 +68,10 @@ function SinglePost() {
       }
     };
     getPostData();
+    return () => {
+      let test = controller?.abort();
+      console.log(test);
+    };
   }, [id, setValue, setTextValue]);
 
   //update

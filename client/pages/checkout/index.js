@@ -79,7 +79,7 @@ function Checkout() {
   //submit create
   const onSubmit = async (data) => {
     const orderDetail = orderItems.map((item) => ({
-      nameProduct: item.nameProduct,
+      product: item.product,
       productVariant: item.productVariant._id,
       quantity: item.quantity,
     }));
@@ -226,7 +226,7 @@ function Checkout() {
                         alt="product"
                       />
                       <ul className="item-content">
-                        <span className="item-name">{item.nameProduct}</span>
+                        <span className="item-name">{item.product.title}</span>
                         {RenderAttribute(item.productVariant.attributes)}
                       </ul>
                       <div className="item-quantity">
