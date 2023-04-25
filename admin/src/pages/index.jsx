@@ -13,28 +13,34 @@ function Home() {
   const dispatch = useDispatch()
   const [data, setData] = useState({ ordersSuccess: null, ordersLatest: null, products: null, countOrder: null })
   useEffect(() => {
+    //create a controller
+    let controller = new AbortController()
     const fetchData = async () => {
       try {
         dispatch(getLoading(true))
         const res = await Promise.all([
-          getData('products/get-all?sort_by={%22sold%22:-1}&page=1&page_size=5'),
+          getData('products/get-all?sort_by={%22sold%22:-1}&page=1&page_size=5', controller.signal),
           getData(
-            `orders/get-all?filter_by={%22status%22:%22SUCCESS%22}`
+            `orders/get-all?filter_by={%22status%22:%22SUCCESS%22}`, controller.signal
           ), getData(
-            `orders/count`
+            `orders/count`, controller.signal
           ),
           getData(
-            `orders/get-all?sort_by=%22-createdAt%22&page=1&page_size=5`
+            `orders/get-all?sort_by=%22-createdAt%22&page=1&page_size=5`, controller.signal
           )
         ])
         setData({ ordersSuccess: res[1].data.orders, ordersLatest: res[3].data.orders, products: res[0].data.products, countOrder: res[2].data.count })
         dispatch(getLoading(false))
+        // remove the controller
+        controller = null
       } catch (error) {
         console.log(error);
         dispatch(getLoading(false))
       }
     }
     fetchData()
+    //aborts the request when the component umounts
+    return () => controller?.abort()
   }, [])
   //render Revenue
   const renderRevenue = (value) => {

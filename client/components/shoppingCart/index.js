@@ -75,7 +75,9 @@ function ShoppingCart() {
                           alt="product"
                         />
                         <ul className="item-content">
-                          <span className="item-name">{item.nameProduct}</span>
+                          <span className="item-name">
+                            {item.product.title}
+                          </span>
                           <span className="item-price">
                             {PriceVnd(item.productVariant.onSale) ||
                               PriceVnd(item.productVariant.onSale)}
