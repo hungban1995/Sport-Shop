@@ -57,9 +57,12 @@
             margin-right: 5px;
             position: relative;
             .view-star {
+              color: gainsboro;
+              background-color: #000;
               position: absolute;
               top: 0;
-              // display: none;
+              left: -30px;
+              display: none;
             }
             &:hover {
               .view-star {

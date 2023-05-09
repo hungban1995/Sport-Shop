@@ -1,7 +1,10 @@
 import { Server } from "socket.io";
 import Notify from "./api/models/notify.model";
+import http from "http";
+import app from "./app.js";
+const httpServer = http.createServer(app);
 
-export const socketIo = (httpServer) => {
+export const socketIo = () => {
   const io = new Server(httpServer, {
     cors: {
       origin: true,
