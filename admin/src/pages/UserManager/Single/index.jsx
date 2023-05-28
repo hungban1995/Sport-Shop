@@ -26,6 +26,7 @@ const schema = yup.object({
     .matches(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/, "Invalid phone number"),
 })
 function Single() {
+  const userLogin= localStorage.getItem('userId')
   const dispatch = useDispatch()
   const { id } = useParams()
   const navigate = useNavigate()
@@ -58,6 +59,13 @@ function Single() {
   });
   const password = watch("password");
   const onSubmit = async (data) => {
+    if(userLogin===id){
+       dispatch(getNotify({
+        status: 'error',
+        message: "Bạn không thể sửa thông tin của bạn!"
+      }))
+      return
+    }
     const newData = { ...data, avatar: chooseSingle }
     try {
       const res = await patchData("users/update/" + id, newData);
