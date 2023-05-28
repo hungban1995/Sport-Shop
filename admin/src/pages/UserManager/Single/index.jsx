@@ -26,7 +26,8 @@ const schema = yup.object({
     .matches(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/, "Invalid phone number"),
 })
 function Single() {
-  const userLogin= localStorage.getItem('userId')
+  const userLogin=     JSON.parse(localStorage.getItem('userId'))
+
   const dispatch = useDispatch()
   const { id } = useParams()
   const navigate = useNavigate()
